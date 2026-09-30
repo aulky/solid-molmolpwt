@@ -11,9 +11,10 @@ Dokumentasi resmi instalasi, konfigurasi, dan deployment production untuk aplika
 4. [Kloning Repositori & Konfigurasi Environment](#4-kloning-repositori--konfigurasi-environment)
 5. [Migrasi Database & Build Produksi](#5-migrasi-database--build-produksi)
 6. [Service Daemon Otomatis (OpenRC / PM2)](#6-service-daemon-otomatis-openrc--pm2)
-7. [Nginx Reverse Proxy & Sertifikat SSL HTTPS](#7-nginx-reverse-proxy--sertifikat-ssl-https)
-8. [Opsi Alternatif: Deployment via Docker](#8-opsi-alternatif-deployment-via-docker)
-9. [Operasional & Perawatan Rutin](#9-operasional--perawatan-rutin)
+7. [Setup Akses Domain via Cloudflare Tunnel (cloudflared)](#7-setup-akses-domain-via-cloudflare-tunnel-cloudflared--paling-mudah--aman)
+8. [Alternatif Tradisional: Nginx Reverse Proxy & SSL Certbot](#8-alternatif-tradisional-nginx-reverse-proxy--ssl-certbot)
+9. [Opsi Alternatif: Deployment via Docker](#9-opsi-alternatif-deployment-via-docker)
+10. [Operasional & Perawatan Rutin](#10-operasional--perawatan-rutin)
 
 ---
 
@@ -232,7 +233,93 @@ pm2 startup
 
 ---
 
-## 7. Nginx Reverse Proxy & Sertifikat SSL HTTPS
+## 7. Setup Akses Domain via Cloudflare Tunnel (cloudflared) — *Paling Mudah & Aman*
+
+Menggunakan **Cloudflare Tunnel (`cloudflared`)** adalah cara paling modern dan aman untuk menghubungkan server Alpine Linux Anda ke domain internet:
+- **Tanpa Buka Port**: Port `80` dan `443` di firewall / router tidak perlu dibuka sama sekali.
+- **SSL / HTTPS Otomatis**: Sertifikat SSL dikelola penuh oleh Cloudflare secara gratis.
+- **Perlindungan DDoS & CDN Caching**: Lalu lintas website terlindungi oleh jaringan global Cloudflare.
+- **Dukungan IP Dinamis / CGNAT**: Tetap bekerja meskipun server Anda tidak memiliki IP publik statis.
+
+### Langkah 1: Pasang `cloudflared` di Alpine Linux
+
+Jalankan perintah ini sebagai `root`:
+```bash
+# Unduh binary resmi cloudflared untuk Linux AMD64
+curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /usr/local/bin/cloudflared
+
+# Berikan izin eksekusi
+chmod +x /usr/local/bin/cloudflared
+
+# Verifikasi instalasi
+cloudflared --version
+```
+*(Jika server Anda menggunakan arsitektur ARM64 / Raspberry Pi, ganti URL di atas dengan `cloudflared-linux-arm64`)*.
+
+---
+
+### Langkah 2: Buat Tunnel di Cloudflare Dashboard (Cara Termudah)
+
+1. Buka dashboard Cloudflare: [dash.cloudflare.com](https://dash.cloudflare.com)
+2. Masuk ke menu **Zero Trust** (di bilah menu kiri).
+3. Pilih **Networks** ➔ **Tunnels** ➔ Klik tombol **Add a tunnel**.
+4. Pilih opsi **Cloudflared** lalu klik **Next**.
+5. Beri nama tunnel Anda, misalnya: `molmol-production` ➔ Klik **Save tunnel**.
+6. Pada bagian **Choose your environment**, pilih **Linux** ➔ **64-bit**.
+7. Anda akan melihat kotak perintah seperti ini:
+   ```bash
+   cloudflared service install eyJhIjoi...TOKEN_PANJANG_ANDA...
+   ```
+8. Salin dan jalankan perintah tersebut langsung di terminal Alpine Linux Anda!
+
+> **PENTING UNTUK ALPINE LINUX (OpenRC)**:  
+> Jika `cloudflared service install` memunculkan pesan tentang systemd, cukup buatkan service OpenRC dengan perintah berikut:
+>
+> ```bash
+> # Buat file service OpenRC untuk cloudflared
+> cat << 'EOF' > /etc/init.d/cloudflared
+> #!/sbin/openrc-run
+> name="cloudflared"
+> description="Cloudflare Tunnel Daemon"
+> command="/usr/local/bin/cloudflared"
+> command_args="tunnel run --token TOKEN_PANJANG_ANDA"
+> command_background="true"
+> pidfile="/run/${RC_SVCNAME}.pid"
+>
+> depend() {
+>     need net
+> }
+> EOF
+>
+> # Ganti TOKEN_PANJANG_ANDA di atas dengan token dari dashboard Cloudflare!
+> chmod +x /etc/init.d/cloudflared
+> rc-update add cloudflared default
+> rc-service cloudflared start
+> ```
+
+---
+
+### Langkah 3: Arahkan Domain ke Aplikasi Mol-Mol
+
+Kembali ke halaman dashboard Cloudflare Zero Trust:
+1. Klik **Next** menuju tab **Public Hostnames**.
+2. Masukkan rincian domain:
+   - **Subdomain**: (kosongkan jika domain utama, atau isi misal `app` / `order`)
+   - **Domain**: Pilih domain Anda (contoh: `molmol.id` atau `domainanda.com`)
+   - **Type**: Pilih **`HTTP`**
+   - **URL**: Ketik **`localhost:3001`**
+3. (Opsional tapi disarankan) Klik **Additional application settings**:
+   - Di tab **HTTP Settings**, aktifkan **No TLS Verify** (jika pakai HTTPS internal).
+   - Pastikan **Maximum Request Body Size** diset ke **100MB** agar upload foto menu & bukti transfer lancar.
+4. Klik **Save tunnel**.
+
+**Selesai!** Website Anda sekarang langsung bisa diakses melalui `https://domainanda.com` dengan SSL HTTPS hijau aktif secara instan!
+
+---
+
+## 8. Alternatif Tradisional: Nginx Reverse Proxy & SSL Certbot
+
+Gunakan opsi ini jika Anda **tidak** menggunakan Cloudflare Tunnel dan ingin membuka port 80/443 secara manual di server VPS:
 
 ### A. Pasang Nginx & Certbot
 ```bash
@@ -309,7 +396,7 @@ rc-update add crond default
 
 ---
 
-## 8. Opsi Alternatif: Deployment via Docker
+## 9. Opsi Alternatif: Deployment via Docker
 
 Jika ingin mendeploy via Docker container di Alpine Linux:
 
@@ -378,14 +465,15 @@ docker compose up -d
 
 ---
 
-## 9. Operasional & Perawatan Rutin
+## 10. Operasional & Perawatan Rutin
 
 | Kebutuhan | Perintah |
 |---|---|
-| Cek status server aplikasi | `rc-service molmol status` |
-| Restart server setelah pembaruan kode | `rc-service molmol restart` |
-| Cek log aktivitas server | `tail -f /var/log/messages` |
+| Cek status server aplikasi | `rc-service molmol status` atau `pm2 status` |
+| Restart server setelah pembaruan kode | `rc-service molmol restart` atau `pm2 restart molmol-app` |
+| Cek log aktivitas server | `pm2 logs` atau `tail -f /var/log/messages` |
+| Cek status tunnel Cloudflare | `rc-service cloudflared status` |
 | Reset database total menyisakan akun admin | `cd /var/www/molmol && pnpm db:reset:admin-only` |
 | Bersihkan data transaksi / order saja | `cd /var/www/molmol && pnpm db:clear:orders` |
 | Ganti password akun admin | `cd /var/www/molmol && pnpm db:set-password <password_baru>` |
-| Update kode dari repository GitHub | `git pull && pnpm install && pnpm build && rc-service molmol restart` |
+| Update kode dari repository GitHub | `git pull && pnpm install && pnpm build && pm2 restart molmol-app` |
