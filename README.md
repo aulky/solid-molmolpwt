@@ -153,7 +153,8 @@ Proyek ini telah dilengkapi script siap pakai untuk memudahkan operasional dan p
 
 | Perintah | Deskripsi |
 |---|---|
-| `pnpm db:push` | Menerapkan perubahan skema Drizzle langsung ke MySQL |
+| `pnpm db:init` | Menginisialisasi seluruh 13 tabel database & data awal (Aman untuk MariaDB & MySQL) |
+| `pnpm db:push` | Menerapkan perubahan skema Drizzle langsung ke database |
 | `pnpm db:seed` | Mengisi data awal (pengaturan toko, menu, batch PO, dan admin) |
 | `pnpm db:set-password <pass>` | Menyetel / mengubah kata sandi akun admin secara instan |
 | `pnpm db:clear:orders` | Mengosongkan data transaksi & order saja (tanpa menghapus menu/PO) |

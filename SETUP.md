@@ -149,11 +149,8 @@ cd /var/www/molmol
 # Pasang seluruh dependensi proyek
 pnpm install --frozen-lockfile
 
-# Terapkan skema database Drizzle ke MariaDB
-pnpm db:push
-
-# Isi database dengan data awal
-pnpm db:seed
+# Inisialisasi skema tabel & data awal (kompatibel penuh MariaDB & MySQL)
+pnpm db:init
 
 # Atur password admin yang diinginkan
 pnpm db:set-password GantiPasswordAdminAman2026!
