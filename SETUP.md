@@ -307,10 +307,13 @@ Kembali ke halaman dashboard Cloudflare Zero Trust:
    - **Subdomain**: (kosongkan jika domain utama, atau isi misal `app` / `order`)
    - **Domain**: Pilih domain Anda (contoh: `molmol.id` atau `domainanda.com`)
    - **Type**: Pilih **`HTTP`**
-   - **URL**: Ketik **`localhost:3001`**
+   - **URL**: 
+     - **Jika sudah memasang Nginx (Direkomendasikan)**: Ketik **`localhost:80`** (atau `localhost`).  
+       *(Aliran: Internet ➔ Cloudflare Tunnel ➔ Nginx Port 80 ➔ Node.js Port 3001. Dengan cara ini, Nginx menangani cache file statis, folder `/uploads/`, dan limit upload gambar secara optimal).*
+     - **Jika langsung tanpa Nginx**: Ketik **`localhost:3001`**.
 3. (Opsional tapi disarankan) Klik **Additional application settings**:
-   - Di tab **HTTP Settings**, aktifkan **No TLS Verify** (jika pakai HTTPS internal).
-   - Pastikan **Maximum Request Body Size** diset ke **100MB** agar upload foto menu & bukti transfer lancar.
+   - Di tab **HTTP Settings**, jika mengarahkan ke Nginx, masukkan **HTTP Host Header**: `domain-anda.com` (sesuai domain Anda).
+   - Pastikan **Maximum Request Body Size** diset ke **100MB** agar upload foto menu & bukti transfer tidak terpotong.
 4. Klik **Save tunnel**.
 
 **Selesai!** Website Anda sekarang langsung bisa diakses melalui `https://domainanda.com` dengan SSL HTTPS hijau aktif secara instan!
