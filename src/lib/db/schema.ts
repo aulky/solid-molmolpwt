@@ -1,6 +1,5 @@
 import {
   mysqlTable,
-  serial,
   int,
   varchar,
   text,
@@ -15,7 +14,7 @@ import { relations } from "drizzle-orm";
 
 // 1. Categories
 export const categories = mysqlTable("categories", {
-  id: serial("id").primaryKey(),
+  id: int("id").autoincrement().primaryKey(),
   name: varchar("name", { length: 100 }).notNull(),
   slug: varchar("slug", { length: 120 }).notNull().unique(),
   sortOrder: int("sort_order").default(0).notNull(),
@@ -24,7 +23,7 @@ export const categories = mysqlTable("categories", {
 
 // 2. Media Table (local storage records)
 export const media = mysqlTable("media", {
-  id: serial("id").primaryKey(),
+  id: int("id").autoincrement().primaryKey(),
   path: varchar("path", { length: 255 }).notNull(),
   mime: varchar("mime", { length: 100 }).notNull(),
   width: int("width"),
@@ -37,7 +36,7 @@ export const media = mysqlTable("media", {
 
 // 3. Menu Items Master
 export const menuItems = mysqlTable("menu_items", {
-  id: serial("id").primaryKey(),
+  id: int("id").autoincrement().primaryKey(),
   sku: varchar("sku", { length: 50 }).notNull().unique(),
   slug: varchar("slug", { length: 120 }).notNull().unique(),
   name: varchar("name", { length: 150 }).notNull(),
@@ -59,7 +58,7 @@ export const menuItems = mysqlTable("menu_items", {
 
 // 4. Batches (PO Waves)
 export const batches = mysqlTable("batches", {
-  id: serial("id").primaryKey(),
+  id: int("id").autoincrement().primaryKey(),
   code: varchar("code", { length: 30 }).notNull().unique(), // e.g. PO-2026-10-A
   title: varchar("title", { length: 150 }).notNull(),
   slug: varchar("slug", { length: 150 }).notNull().unique(),
@@ -94,7 +93,7 @@ export const batches = mysqlTable("batches", {
 
 // 5. Batch Items
 export const batchItems = mysqlTable("batch_items", {
-  id: serial("id").primaryKey(),
+  id: int("id").autoincrement().primaryKey(),
   batchId: int("batch_id").notNull(),
   menuItemId: int("menu_item_id").notNull(),
   priceOverride: int("price_override"),
@@ -105,7 +104,7 @@ export const batchItems = mysqlTable("batch_items", {
 
 // 6. Stock Movements Audit
 export const stockMovements = mysqlTable("stock_movements", {
-  id: serial("id").primaryKey(),
+  id: int("id").autoincrement().primaryKey(),
   batchItemId: int("batch_item_id").notNull(),
   delta: int("delta").notNull(), // + or -
   reason: mysqlEnum("reason", [
@@ -169,7 +168,7 @@ export const orders = mysqlTable("orders", {
 
 // 8. Order Items (Snapshot)
 export const orderItems = mysqlTable("order_items", {
-  id: serial("id").primaryKey(),
+  id: int("id").autoincrement().primaryKey(),
   orderId: char("order_id", { length: 36 }).notNull(),
   batchItemId: int("batch_item_id").notNull(),
   menuItemId: int("menu_item_id").notNull(),
@@ -182,7 +181,7 @@ export const orderItems = mysqlTable("order_items", {
 
 // 9. Order Status History
 export const orderStatusHistory = mysqlTable("order_status_history", {
-  id: serial("id").primaryKey(),
+  id: int("id").autoincrement().primaryKey(),
   orderId: char("order_id", { length: 36 }).notNull(),
   fromStatus: varchar("from_status", { length: 50 }),
   toStatus: varchar("to_status", { length: 50 }).notNull(),
@@ -194,7 +193,7 @@ export const orderStatusHistory = mysqlTable("order_status_history", {
 
 // 10. Telegram Subscriptions
 export const telegramSubscriptions = mysqlTable("telegram_subscriptions", {
-  id: serial("id").primaryKey(),
+  id: int("id").autoincrement().primaryKey(),
   orderId: char("order_id", { length: 36 }),
   chatId: varchar("chat_id", { length: 64 }).notNull(),
   username: varchar("username", { length: 100 }),
@@ -205,7 +204,7 @@ export const telegramSubscriptions = mysqlTable("telegram_subscriptions", {
 
 // 11. Admin Users
 export const adminUsers = mysqlTable("admin_users", {
-  id: serial("id").primaryKey(),
+  id: int("id").autoincrement().primaryKey(),
   username: varchar("username", { length: 50 }).notNull().unique(),
   passwordHash: varchar("password_hash", { length: 255 }).notNull(),
   displayName: varchar("display_name", { length: 100 }).notNull(),
