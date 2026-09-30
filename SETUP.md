@@ -170,9 +170,10 @@ exit
 
 Pilih salah satu metode daemon di bawah ini:
 
-### Opsi A: Menggunakan Service Asli Alpine Linux (OpenRC) — *Direkomendasikan*
+### Opsi A: Menggunakan Service Bawaan Alpine Linux (OpenRC) — *Direkomendasikan (Paling Ringan & Tanpa PM2)*
 
-Buat file init script OpenRC:
+Jika Anda login sebagai `root` (atau tanpa user khusus):
+Buat file service:
 ```bash
 nano /etc/init.d/molmol
 ```
@@ -185,7 +186,6 @@ name="molmol"
 description="Mol-Mol Purwokerto Pre-Order Web Application"
 command="/usr/bin/node"
 command_args="/var/www/molmol/.output/server/index.mjs"
-command_user="molmol:molmol"
 directory="/var/www/molmol"
 command_background="true"
 pidfile="/run/${RC_SVCNAME}.pid"
@@ -211,23 +211,24 @@ rc-service molmol status
 
 ---
 
-### Opsi B: Menggunakan Process Manager PM2
+### Opsi B: Menggunakan Process Manager PM2 (Sebagai User Root)
+
+Alpine Linux menggunakan sistem init **`openrc`**. Jika Anda langsung login sebagai `root` (tanpa membuat user baru):
 
 ```bash
-npm install -g pm2
-su - molmol
 cd /var/www/molmol
 
-# Jalankan service server
+# 1. Jalankan aplikasi dengan PM2
 pm2 start .output/server/index.mjs --name "molmol-app" --node-args="--max-old-space-size=512"
 
-# Simpan state pm2
+# 2. Simpan daftar proses aktif
 pm2 save
-exit
 
-# Aktifkan startup otomatis PM2 di Alpine Linux
-pm2 startup alpine -u molmol --hp /home/molmol
+# 3. Aktifkan auto-start saat reboot (gunakan openrc)
+pm2 startup
 ```
+
+> **Catatan**: Jika PM2 menampilkan instruksi perintah setelah `pm2 startup`, salin dan jalankan perintah tersebut (biasanya `rc-update add pm2-root default`).
 
 ---
 
