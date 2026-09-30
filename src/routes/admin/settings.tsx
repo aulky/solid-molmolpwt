@@ -1,0 +1,632 @@
+import { createSignal, onMount, Show, For } from "solid-js";
+import { AdminLayout } from "~/components/admin/AdminLayout";
+import {
+  Save,
+  Loader2,
+  CheckCircle2,
+  QrCode,
+  Plus,
+  Trash2,
+  MapPin,
+  Navigation,
+  ExternalLink,
+} from "lucide-solid";
+
+interface BankAccountRow {
+  bankName: string;
+  bankAccountNo: string;
+  bankAccountName: string;
+}
+
+export default function AdminSettingsPage() {
+  const [storeName, setStoreName] = createSignal("");
+  const [storeTagline, setStoreTagline] = createSignal("");
+  const [pickupAddress, setPickupAddress] = createSignal("");
+  const [pickupLatitude, setPickupLatitude] = createSignal<string | number>("");
+  const [pickupLongitude, setPickupLongitude] = createSignal<string | number>("");
+  const [pickupMapsUrl, setPickupMapsUrl] = createSignal("");
+  const [isDetectingGps, setIsDetectingGps] = createSignal(false);
+  const [bankAccounts, setBankAccounts] = createSignal<BankAccountRow[]>([
+    { bankName: "BCA", bankAccountNo: "", bankAccountName: "" },
+  ]);
+  const [qrisImagePath, setQrisImagePath] = createSignal("");
+  const [flatDeliveryFee, setFlatDeliveryFee] = createSignal(10000);
+  const [freeDeliveryMin, setFreeDeliveryMin] = createSignal(75000);
+  const [allowDelivery, setAllowDelivery] = createSignal(true);
+  const [allowCod, setAllowCod] = createSignal(true);
+  const [announcementText, setAnnouncementText] = createSignal("");
+  const [announcementActive, setAnnouncementActive] = createSignal(false);
+  const [adminPhone, setAdminPhone] = createSignal("");
+  const [adminTelegramChatId, setAdminTelegramChatId] = createSignal("");
+  const [trackRequirePhone, setTrackRequirePhone] = createSignal(false);
+
+  const [isLoading, setIsLoading] = createSignal(false);
+  const [isSaving, setIsSaving] = createSignal(false);
+  const [successMsg, setSuccessMsg] = createSignal(false);
+
+  const fetchSettings = async () => {
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/admin/settings", { credentials: "include" });
+      const data = await res.json();
+      if (data) {
+        setStoreName(data.storeName || "");
+        setStoreTagline(data.storeTagline || "");
+        setPickupAddress(data.pickupAddress || "");
+        setPickupLatitude(
+          data.pickupLatitude !== null && data.pickupLatitude !== undefined
+            ? data.pickupLatitude
+            : ""
+        );
+        setPickupLongitude(
+          data.pickupLongitude !== null && data.pickupLongitude !== undefined
+            ? data.pickupLongitude
+            : ""
+        );
+        setPickupMapsUrl(data.pickupMapsUrl || "");
+        if (Array.isArray(data.bankAccounts) && data.bankAccounts.length > 0) {
+          setBankAccounts(data.bankAccounts);
+        } else if (data.bankAccountNo) {
+          setBankAccounts([
+            {
+              bankName: data.bankName || "BCA",
+              bankAccountNo: data.bankAccountNo || "",
+              bankAccountName: data.bankAccountName || "",
+            },
+          ]);
+        }
+        setQrisImagePath(data.qrisImagePath || "");
+        setFlatDeliveryFee(data.flatDeliveryFee ?? 10000);
+        setFreeDeliveryMin(data.freeDeliveryMin ?? 75000);
+        setAllowDelivery(Boolean(data.allowDelivery));
+        setAllowCod(Boolean(data.allowCod));
+        setAnnouncementText(data.announcementText || "");
+        setAnnouncementActive(Boolean(data.announcementActive));
+        setAdminPhone(data.adminPhone || "");
+        setAdminTelegramChatId(data.adminTelegramChatId || "");
+        setTrackRequirePhone(Boolean(data.trackRequirePhone));
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  onMount(() => {
+    fetchSettings();
+  });
+
+  const addBankAccount = () => {
+    setBankAccounts([
+      ...bankAccounts(),
+      { bankName: "BCA", bankAccountNo: "", bankAccountName: storeName() || "Mol-Mol Purwokerto" },
+    ]);
+  };
+
+  const removeBankAccount = (index: number) => {
+    if (bankAccounts().length <= 1) {
+      alert("Minimal harus ada 1 rekening bank toko.");
+      return;
+    }
+    setBankAccounts(bankAccounts().filter((_, i) => i !== index));
+  };
+
+  const updateBankAccount = (index: number, field: keyof BankAccountRow, val: string) => {
+    const list = [...bankAccounts()];
+    list[index] = { ...list[index], [field]: val };
+    setBankAccounts(list);
+  };
+
+  const handleQrisUpload = async (e: Event) => {
+    const input = e.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) return;
+
+    try {
+      const formData = new FormData();
+      formData.append("file", input.files[0]);
+      formData.append("category", "settings");
+
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setQrisImagePath(data.path);
+      }
+    } catch (err) {
+      console.error("QRIS upload error:", err);
+    }
+  };
+
+  const handleGetAdminGps = () => {
+    if (typeof window === "undefined" || !navigator.geolocation) {
+      alert("Browser tidak mendukung geolokasi GPS.");
+      return;
+    }
+
+    setIsDetectingGps(true);
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        setIsDetectingGps(false);
+        const lat = Number(pos.coords.latitude.toFixed(7));
+        const lng = Number(pos.coords.longitude.toFixed(7));
+        setPickupLatitude(lat);
+        setPickupLongitude(lng);
+        setPickupMapsUrl(`https://maps.google.com/?q=${lat},${lng}`);
+
+        // Otomatis reverse-geocode jika alamat pengambilan masih kosong
+        if (!pickupAddress() || pickupAddress().trim() === "") {
+          try {
+            const res = await fetch(`/api/geocode?lat=${lat}&lng=${lng}`);
+            if (res.ok) {
+              const data = await res.json();
+              if (data.formattedAddress) {
+                setPickupAddress(data.formattedAddress);
+              }
+            }
+          } catch {}
+        }
+      },
+      (err) => {
+        setIsDetectingGps(false);
+        alert(`Gagal mengambil titik GPS: ${err.message}`);
+      },
+      { enableHighAccuracy: true, timeout: 10000 }
+    );
+  };
+
+  const handleSave = async (e: Event) => {
+    e.preventDefault();
+    setIsSaving(true);
+    setSuccessMsg(false);
+
+    try {
+      const validBankAccounts = bankAccounts().map((b) => ({
+        bankName: b.bankName.trim(),
+        bankAccountNo: b.bankAccountNo.trim(),
+        bankAccountName: b.bankAccountName.trim(),
+      }));
+
+      const primaryBank = validBankAccounts[0] || {
+        bankName: "BCA",
+        bankAccountNo: "",
+        bankAccountName: "",
+      };
+
+      const payload = {
+        storeName: storeName().trim(),
+        storeTagline: storeTagline().trim(),
+        pickupAddress: pickupAddress().trim() || null,
+        pickupLatitude: pickupLatitude() !== "" ? Number(pickupLatitude()) : null,
+        pickupLongitude: pickupLongitude() !== "" ? Number(pickupLongitude()) : null,
+        pickupMapsUrl: pickupMapsUrl().trim() || null,
+        bankName: primaryBank.bankName,
+        bankAccountNo: primaryBank.bankAccountNo,
+        bankAccountName: primaryBank.bankAccountName,
+        bankAccounts: validBankAccounts,
+        qrisImagePath: qrisImagePath().trim() || null,
+        flatDeliveryFee: Number(flatDeliveryFee()),
+        freeDeliveryMin: freeDeliveryMin() ? Number(freeDeliveryMin()) : null,
+        allowDelivery: allowDelivery(),
+        allowCod: allowCod(),
+        announcementText: announcementText().trim() || null,
+        announcementActive: announcementActive(),
+        adminPhone: adminPhone().trim(),
+        adminTelegramChatId: adminTelegramChatId().trim() || null,
+        trackRequirePhone: trackRequirePhone(),
+      };
+
+      const res = await fetch("/api/admin/settings", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Gagal menyimpan pengaturan");
+      }
+
+      setSuccessMsg(true);
+      setTimeout(() => setSuccessMsg(false), 3000);
+    } catch (err: any) {
+      alert(err?.message || "Terjadi kesalahan");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  return (
+    <AdminLayout title="Pengaturan Toko CMS">
+      <form onSubmit={handleSave} class="space-y-6 max-w-3xl">
+        {/* Identitas Toko */}
+        <div class="card-surface p-6 bg-white border border-[#E8E8EC] space-y-4">
+          <h3 class="font-heading font-bold text-base text-[#0A0A0A] pb-2 border-b border-[#E8E8EC]">
+            Identitas Toko & Kontak
+          </h3>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+            <div>
+              <label class="block font-semibold text-[#0A0A0A] mb-1">Nama Toko</label>
+              <input
+                type="text"
+                required
+                value={storeName()}
+                onInput={(e) => setStoreName(e.currentTarget.value)}
+                class="input-base text-xs"
+              />
+            </div>
+
+            <div>
+              <label class="block font-semibold text-[#0A0A0A] mb-1">Nomor WhatsApp Admin</label>
+              <input
+                type="text"
+                required
+                value={adminPhone()}
+                onInput={(e) => setAdminPhone(e.currentTarget.value)}
+                placeholder="628xxxxxxxxxx"
+                class="input-base text-xs font-mono"
+              />
+            </div>
+
+            <div class="sm:col-span-2">
+              <label class="block font-semibold text-[#0A0A0A] mb-1">Tagline Toko</label>
+              <input
+                type="text"
+                value={storeTagline()}
+                onInput={(e) => setStoreTagline(e.currentTarget.value)}
+                class="input-base text-xs"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Alamat & Titik Koordinat Pengambilan (Pickup) */}
+        <div class="card-surface p-4 sm:p-6 bg-white border border-[#E8E8EC] space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E8E8EC]">
+            <div>
+              <h3 class="font-heading font-bold text-base text-[#0A0A0A]">
+                Alamat & Titik Koordinat Pengambilan (Pickup)
+              </h3>
+              <p class="text-xs text-[#6B6B6B]">
+                Tentukan alamat outlet toko tempat pembeli mengambil pesanan mandiri (Pickup).
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={handleGetAdminGps}
+              disabled={isDetectingGps()}
+              class="btn-secondary btn-sm flex items-center justify-center gap-1.5 text-xs cursor-pointer w-full sm:w-auto shrink-0 h-9 px-3.5"
+            >
+              <Show when={isDetectingGps()} fallback={<Navigation size={13} />}>
+                <Loader2 size={13} class="animate-spin" />
+              </Show>
+              <span>{isDetectingGps() ? "Mendeteksi..." : "Deteksi GPS Toko"}</span>
+            </button>
+          </div>
+
+          <div class="space-y-3 text-xs">
+            <div>
+              <label class="block font-semibold text-[#0A0A0A] mb-1">
+                Alamat Lengkap Outlet Pengambilan (Pickup)
+              </label>
+              <textarea
+                rows={2}
+                value={pickupAddress()}
+                onInput={(e) => setPickupAddress(e.currentTarget.value)}
+                placeholder="Contoh: Jl. Prof. Dr. Suharso No. 45, Arcawinangun, Purwokerto Timur"
+                class="input-base text-xs"
+              />
+              <span class="text-[11px] text-[#6B6B6B] block mt-1">
+                Alamat ini akan ditampilkan kepada pembeli saat memilih metode Ambil di Tempat.
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block font-semibold text-[#0A0A0A] mb-1">Latitude Titik Toko</label>
+                <input
+                  type="text"
+                  value={pickupLatitude()}
+                  onInput={(e) => {
+                    setPickupLatitude(e.currentTarget.value);
+                    if (e.currentTarget.value && pickupLongitude()) {
+                      setPickupMapsUrl(`https://maps.google.com/?q=${e.currentTarget.value},${pickupLongitude()}`);
+                    }
+                  }}
+                  placeholder="Contoh: -7.4243120"
+                  class="input-base text-xs font-mono"
+                />
+              </div>
+
+              <div>
+                <label class="block font-semibold text-[#0A0A0A] mb-1">Longitude Titik Toko</label>
+                <input
+                  type="text"
+                  value={pickupLongitude()}
+                  onInput={(e) => {
+                    setPickupLongitude(e.currentTarget.value);
+                    if (pickupLatitude() && e.currentTarget.value) {
+                      setPickupMapsUrl(`https://maps.google.com/?q=${pickupLatitude()},${e.currentTarget.value}`);
+                    }
+                  }}
+                  placeholder="Contoh: 109.2486710"
+                  class="input-base text-xs font-mono"
+                />
+              </div>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label class="block font-semibold text-[#0A0A0A]">
+                  Tautan Google Maps Titik Outlet
+                </label>
+                <Show when={pickupMapsUrl()}>
+                  <a
+                    href={pickupMapsUrl()}
+                    target="_blank"
+                    rel="noreferrer"
+                    class="text-[#6366F1] hover:underline text-[11px] inline-flex items-center gap-1 font-mono"
+                  >
+                    <span>Uji Buka di Google Maps</span>
+                    <ExternalLink size={12} />
+                  </a>
+                </Show>
+              </div>
+              <input
+                type="text"
+                value={pickupMapsUrl()}
+                onInput={(e) => setPickupMapsUrl(e.currentTarget.value)}
+                placeholder="https://maps.google.com/?q=-7.4243120,109.2486710"
+                class="input-base text-xs font-mono"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Rekening & QRIS */}
+        <div class="card-surface p-4 sm:p-6 bg-white border border-[#E8E8EC] space-y-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E8E8EC]">
+            <div>
+              <h3 class="font-heading font-bold text-base text-[#0A0A0A]">
+                Pembayaran QRIS & Rekening Bank
+              </h3>
+              <p class="text-xs text-[#6B6B6B]">
+                Kelola daftar rekening bank tujuan transfer dan upload barcode QRIS toko.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={addBankAccount}
+              class="btn-secondary btn-sm flex items-center justify-center gap-1.5 text-xs cursor-pointer w-full sm:w-auto shrink-0 h-9 px-3.5"
+            >
+              <Plus size={14} />
+              <span>Tambah Rekening Bank</span>
+            </button>
+          </div>
+
+          <div class="space-y-3">
+            <span class="text-xs font-semibold text-[#0A0A0A] block">
+              Daftar Nomor Rekening Aktif
+            </span>
+            <For each={bankAccounts()}>
+              {(acc, idx) => (
+                <div class="p-3.5 rounded-[6px] border border-[#E8E8EC] bg-[#FAFAFA] space-y-3">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[11px] font-mono font-semibold text-[#6366F1] uppercase">
+                      Rekening #{idx() + 1} {idx() === 0 ? "(Utama)" : ""}
+                    </span>
+                    <Show when={bankAccounts().length > 1}>
+                      <button
+                        type="button"
+                        onClick={() => removeBankAccount(idx())}
+                        class="text-[#EF4444] hover:text-[#DC2626] text-xs flex items-center gap-1 cursor-pointer"
+                        title="Hapus Rekening"
+                      >
+                        <Trash2 size={13} />
+                        <span>Hapus</span>
+                      </button>
+                    </Show>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                    <div>
+                      <label class="block font-medium text-[#0A0A0A] mb-1">Nama Bank / E-Wallet</label>
+                      <input
+                        type="text"
+                        required
+                        value={acc.bankName}
+                        onInput={(e) => updateBankAccount(idx(), "bankName", e.currentTarget.value)}
+                        placeholder="Contoh: BCA / Mandiri / SeaBank"
+                        class="input-base text-xs bg-white"
+                      />
+                    </div>
+
+                    <div>
+                      <label class="block font-medium text-[#0A0A0A] mb-1">Nomor Rekening</label>
+                      <input
+                        type="text"
+                        required
+                        value={acc.bankAccountNo}
+                        onInput={(e) => updateBankAccount(idx(), "bankAccountNo", e.currentTarget.value)}
+                        placeholder="Contoh: 0461234567"
+                        class="input-base text-xs font-mono bg-white"
+                      />
+                    </div>
+
+                    <div>
+                      <label class="block font-medium text-[#0A0A0A] mb-1">Atas Nama Rekening</label>
+                      <input
+                        type="text"
+                        required
+                        value={acc.bankAccountName}
+                        onInput={(e) => updateBankAccount(idx(), "bankAccountName", e.currentTarget.value)}
+                        placeholder="Contoh: Mol-Mol Purwokerto"
+                        class="input-base text-xs bg-white"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </For>
+          </div>
+
+          <div class="pt-3 border-t border-[#E8E8EC] text-xs space-y-2">
+            <label class="block font-semibold text-[#0A0A0A]">
+              Foto Barcode QRIS Resmi Toko
+            </label>
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              onChange={handleQrisUpload}
+              class="text-xs file:mr-2 file:py-1 file:px-2.5 file:rounded file:border-0 file:text-xs file:bg-[#6366F1]/10 file:text-[#6366F1] cursor-pointer"
+            />
+            <Show when={qrisImagePath()}>
+              <div class="mt-2 flex items-center gap-3 p-2 bg-[#FAFAFA] rounded border border-[#E8E8EC] w-fit">
+                <img
+                  src={qrisImagePath()}
+                  alt="QRIS Toko"
+                  class="w-32 h-auto rounded border border-[#E8E8EC] bg-white object-contain"
+                />
+                <button
+                  type="button"
+                  onClick={() => setQrisImagePath("")}
+                  class="btn-destructive btn-sm text-[11px] h-7"
+                >
+                  Hapus QRIS
+                </button>
+              </div>
+            </Show>
+          </div>
+        </div>
+
+        {/* Pengiriman & Ongkir */}
+        <div class="card-surface p-6 bg-white border border-[#E8E8EC] space-y-4">
+          <h3 class="font-heading font-bold text-base text-[#0A0A0A] pb-2 border-b border-[#E8E8EC]">
+            Ketentuan Pengiriman & Tarif
+          </h3>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+            <div>
+              <label class="block font-semibold text-[#0A0A0A] mb-1">Ongkir Flat Standar (Rp)</label>
+              <input
+                type="number"
+                min={0}
+                required
+                value={flatDeliveryFee()}
+                onInput={(e) => setFlatDeliveryFee(Number(e.currentTarget.value))}
+                class="input-base text-xs font-mono"
+              />
+            </div>
+
+            <div>
+              <label class="block font-semibold text-[#0A0A0A] mb-1">Minimal Belanja Gratis Ongkir (Rp)</label>
+              <input
+                type="number"
+                min={0}
+                value={freeDeliveryMin()}
+                onInput={(e) => setFreeDeliveryMin(Number(e.currentTarget.value))}
+                class="input-base text-xs font-mono"
+              />
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-6 pt-2 text-xs">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={allowDelivery()}
+                onChange={(e) => setAllowDelivery(e.currentTarget.checked)}
+                class="rounded text-[#6366F1] focus:ring-0"
+              />
+              <span class="font-medium text-[#0A0A0A]">Aktifkan Layanan Antar Kurir</span>
+            </label>
+
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={allowCod()}
+                onChange={(e) => setAllowCod(e.currentTarget.checked)}
+                class="rounded text-[#6366F1] focus:ring-0"
+              />
+              <span class="font-medium text-[#0A0A0A]">Aktifkan Layanan COD (Bayar di Tempat)</span>
+            </label>
+          </div>
+        </div>
+
+        {/* Banner Pengumuman & Telegram */}
+        <div class="card-surface p-6 bg-white border border-[#E8E8EC] space-y-4">
+          <h3 class="font-heading font-bold text-base text-[#0A0A0A] pb-2 border-b border-[#E8E8EC]">
+            Pengumuman & Notifikasi Bot Telegram
+          </h3>
+
+          <div class="space-y-3 text-xs">
+            <div>
+              <label class="block font-semibold text-[#0A0A0A] mb-1">
+                Teks Pengumuman Promo / Info Batch PO
+              </label>
+              <input
+                type="text"
+                value={announcementText()}
+                onInput={(e) => setAnnouncementText(e.currentTarget.value)}
+                placeholder="Contoh: Pre-Order Batch Oktober telah dibuka! Kuota terbatas."
+                class="input-base text-xs"
+              />
+            </div>
+
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={announcementActive()}
+                onChange={(e) => setAnnouncementActive(e.currentTarget.checked)}
+                class="rounded text-[#6366F1] focus:ring-0"
+              />
+              <span class="font-medium text-[#0A0A0A]">Tampilkan Banner Pengumuman di Halaman Depan</span>
+            </label>
+
+            <div class="pt-2">
+              <label class="block font-semibold text-[#0A0A0A] mb-1">
+                Telegram Chat ID Admin (Grup/Pribadi)
+              </label>
+              <input
+                type="text"
+                value={adminTelegramChatId()}
+                onInput={(e) => setAdminTelegramChatId(e.currentTarget.value)}
+                placeholder="Contoh: -100123456789 atau ID Chat"
+                class="input-base text-xs font-mono"
+              />
+              <span class="text-[11px] text-[#6B6B6B] block mt-1">
+                Setiap order masuk akan otomatis dikirimkan ke Telegram ID ini.
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Save Button */}
+        <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+          <button
+            type="submit"
+            disabled={isSaving()}
+            class="btn-primary w-full sm:w-auto flex items-center justify-center gap-2 h-10 px-6 cursor-pointer"
+          >
+            <Show when={isSaving()} fallback={<Save size={16} />}>
+              <Loader2 size={16} class="animate-spin" />
+            </Show>
+            <span>{isSaving() ? "Menyimpan Pengaturan..." : "Simpan Perubahan CMS"}</span>
+          </button>
+
+          <Show when={successMsg()}>
+            <span class="text-xs font-medium text-[#10B981] flex items-center justify-center sm:justify-start gap-1">
+              <CheckCircle2 size={15} />
+              <span>Pengaturan berhasil disimpan!</span>
+            </span>
+          </Show>
+        </div>
+      </form>
+    </AdminLayout>
+  );
+}
