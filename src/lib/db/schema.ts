@@ -220,7 +220,7 @@ export const adminSessions = mysqlTable("admin_sessions", {
   tokenHash: varchar("token_hash", { length: 128 }).notNull().unique(),
   adminUserId: int("admin_user_id").notNull(),
   expiresAt: datetime("expires_at").notNull(),
-  ip: varchar("ip", { length: 45 }),
+  ip: varchar("ip", { length: 255 }),
   userAgent: varchar("user_agent", { length: 255 }),
   createdAt: datetime("created_at").default(new Date()).notNull(),
 });

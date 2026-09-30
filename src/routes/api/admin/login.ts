@@ -68,8 +68,14 @@ export async function POST(event: APIEvent) {
       });
     }
 
-    const ip = event.request.headers.get("x-forwarded-for") || undefined;
-    const userAgent = event.request.headers.get("user-agent") || undefined;
+    // Ambil client IP murni (dukungan Cloudflare cf-connecting-ip, Nginx x-real-ip, & multi-hop x-forwarded-for)
+    const rawIp =
+      event.request.headers.get("cf-connecting-ip") ||
+      event.request.headers.get("x-real-ip") ||
+      event.request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      undefined;
+    const ip = rawIp ? rawIp.slice(0, 100) : undefined;
+    const userAgent = (event.request.headers.get("user-agent") || "").slice(0, 255) || undefined;
 
     // Buat sesi dan daftarkan langsung ke in-memory cache server untuk akses instan
     const { token } = await createAdminSession(user.id, ip, userAgent, {

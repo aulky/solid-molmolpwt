@@ -12,7 +12,7 @@ const TABLES_DDL: Array<{ name: string; ddl: string }> = [
       \`token_hash\` varchar(128) NOT NULL,
       \`admin_user_id\` int NOT NULL,
       \`expires_at\` datetime NOT NULL,
-      \`ip\` varchar(45) DEFAULT NULL,
+      \`ip\` varchar(255) DEFAULT NULL,
       \`user_agent\` varchar(255) DEFAULT NULL,
       \`created_at\` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
       PRIMARY KEY (\`id\`),
@@ -277,6 +277,11 @@ export async function initDatabase(): Promise<void> {
       await conn.query(item.ddl);
       console.log(`  ✓ Tabel \`${item.name}\` siap`);
     }
+
+    // Pastikan kolom ip di admin_sessions cukup panjang untuk multi-proxy IP (Cloudflare + Nginx)
+    try {
+      await conn.query("ALTER TABLE `admin_sessions` MODIFY COLUMN `ip` varchar(255) DEFAULT NULL;");
+    } catch {}
 
     await conn.query("SET FOREIGN_KEY_CHECKS = 1;");
     console.log("[OK] Seluruh 13 tabel database berhasil diinisialisasi!\n");
