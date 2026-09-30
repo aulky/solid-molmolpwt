@@ -5,18 +5,39 @@
     "dev": "vite dev",
     "build": "vite build",
     "start": "node .output/server/index.mjs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push",
+    "db:seed": "tsx src/lib/db/seed.ts",
+    "db:set-password": "tsx scripts/set-admin-password.ts",
+    "db:clear": "tsx scripts/clear-db.ts",
+    "db:clear:orders": "tsx scripts/clear-db.ts --orders-only",
+    "db:reset": "tsx scripts/clear-db.ts && tsx src/lib/db/seed.ts",
+    "db:reset:admin-only": "tsx scripts/reset-admin-only.ts"
   },
   "dependencies": {
     "@solidjs/router": "^1.0.0",
-    "@solidjs/start": "^2.0.0",
-    "solid-js": "^1.9.14",
-    "vite": "^8.0.0",
-    "nitro": "^3.0.260610-beta"
+    "@solidjs/start": "^2.0.5",
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^18.0.4",
+    "drizzle-orm": "^0.45.3",
+    "lucide-solid": "^1.48.0",
+    "mysql2": "^3.24.4",
+    "nitro": "^3.0.260903-beta",
+    "solid-js": "^1.9.15",
+    "vite": "^8.3.1",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.0.7",
-    "tailwindcss": "^4.0.7"
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/bcryptjs": "^3.0.0",
+    "@types/node": "^26.6.3",
+    "drizzle-kit": "^0.31.11",
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.15",
+    "vitest": "^5.0.2"
   },
   "engines": {
     "node": ">=24"

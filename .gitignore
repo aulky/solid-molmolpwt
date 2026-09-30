@@ -19,9 +19,14 @@ app.config.timestamp_*.js
 .classpath
 *.launch
 .settings/
+.claude/
 
 # Temp
 gitignore
+
+# Uploads (User generated / testing files)
+public/uploads/*
+!public/uploads/**/.gitkeep
 
 # System Files
 .DS_Store
