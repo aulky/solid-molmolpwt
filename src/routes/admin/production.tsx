@@ -121,7 +121,9 @@ export default function AdminProductionPage() {
             </div>
 
             <div class="sm:text-right">
-              <span class="text-[11px] sm:text-xs font-mono text-[#9C9C9C] block">TOTAL PORSI WAJIB DIMASAK</span>
+              <span class="text-[11px] sm:text-xs text-[#9C9C9C] block uppercase tracking-wider font-semibold">
+                TOTAL PORSI WAJIB DIMASAK
+              </span>
               <span class="font-heading font-bold text-2xl sm:text-3xl text-[#6366F1]">
                 {totalPortions()} porsi
               </span>
@@ -131,12 +133,12 @@ export default function AdminProductionPage() {
           {/* Table */}
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs sm:text-sm min-w-[500px]">
-              <thead class="bg-[#FAFAFA] text-[#6B6B6B] border-b border-[#E8E8EC] font-mono uppercase">
+              <thead class="bg-[#FAFAFA] text-[#6B6B6B] border-b border-[#E8E8EC] uppercase text-[11px] font-semibold">
                 <tr>
                   <th class="p-3 w-12 text-center">No</th>
-                  <th class="p-3">Nama Varian Menu</th>
-                  <th class="p-3 text-center">Jumlah Pemesan</th>
-                  <th class="p-3 text-right">Total Kuantitas Porsi</th>
+                  <th class="p-3">Nama Varian & Daftar Pemesan</th>
+                  <th class="p-3 text-center w-36">Jumlah Pemesan</th>
+                  <th class="p-3 text-right w-40">Total Kuantitas</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-[#E8E8EC]">
@@ -151,18 +153,47 @@ export default function AdminProductionPage() {
                   }
                 >
                   {(item, idx) => (
-                    <tr class="hover:bg-[#FAFAFA]">
-                      <td class="p-3 text-center font-mono text-[#6B6B6B]">
+                    <tr class="hover:bg-[#FAFAFA]/70 align-top">
+                      <td class="p-3 text-center text-[#6B6B6B] font-medium pt-3.5">
                         {idx() + 1}
                       </td>
-                      <td class="p-3 font-semibold text-[#0A0A0A]">
-                        {item.name}
+                      <td class="p-3 space-y-2">
+                        <span class="font-heading font-bold text-sm sm:text-base text-[#0A0A0A] block">
+                          {item.name}
+                        </span>
+
+                        {/* Rincian Pemesan & Kuantitas per Orang (Requirement 5) */}
+                        <Show when={item.customers && item.customers.length > 0}>
+                          <div class="space-y-1.5 pt-1">
+                            <span class="text-[11px] font-semibold text-[#6366F1] block uppercase tracking-wider">
+                              Spil Nama Pemesan ({item.customers.length} orang):
+                            </span>
+                            <div class="flex flex-wrap gap-1.5">
+                              <For each={item.customers}>
+                                {(c: any) => (
+                                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#FAFAFA] border border-[#E8E8EC] text-xs text-[#0A0A0A] shadow-2xs">
+                                    <span class="font-semibold text-[#0A0A0A]">{c.customerName}</span>
+                                    <span class="text-[#6B6B6B] font-mono text-[10px]">({c.shortCode})</span>:
+                                    <span class="font-bold text-[#6366F1] bg-[#6366F1]/10 px-1.5 py-0.2 rounded text-[11px]">
+                                      {c.qty} porsi
+                                    </span>
+                                    <Show when={c.notes}>
+                                      <span class="text-[10px] text-amber-700 italic max-w-xs truncate">
+                                        "{c.notes}"
+                                      </span>
+                                    </Show>
+                                  </span>
+                                )}
+                              </For>
+                            </div>
+                          </div>
+                        </Show>
                       </td>
-                      <td class="p-3 text-center font-mono text-[#6B6B6B]">
-                        {item.totalOrders} pesanan
+                      <td class="p-3 text-center text-[#6B6B6B] pt-3.5 font-medium">
+                        {item.totalOrders} orang
                       </td>
-                      <td class="p-3 text-right font-mono font-bold text-lg text-[#0A0A0A]">
-                        {item.totalQty} porsi
+                      <td class="p-3 text-right font-bold text-lg text-[#0A0A0A] pt-3.5">
+                        <span class="text-[#6366F1]">{item.totalQty}</span> porsi
                       </td>
                     </tr>
                   )}
@@ -173,7 +204,7 @@ export default function AdminProductionPage() {
 
           <div class="pt-6 border-t border-[#E8E8EC] text-xs text-[#9C9C9C] flex justify-between">
             <span>Mol-Mol Purwokerto • Produksi Bersih & Higienis</span>
-            <span class="font-mono">Dicetak: {new Date().toLocaleString("id-ID")}</span>
+            <span>Dicetak: {new Date().toLocaleString("id-ID")}</span>
           </div>
         </div>
       </div>
