@@ -1,5 +1,6 @@
 import type { APIEvent } from "@solidjs/start/server";
-import { saveUploadedImage, ALLOWED_IMAGE_MIMES } from "~/lib/storage";
+import { saveUploadedImage, ALLOWED_IMAGE_MIMES, MAX_FILE_SIZE_BYTES } from "~/lib/storage";
+import { formatSafeErrorMessage } from "~/lib/debug";
 
 export async function POST(event: APIEvent) {
   try {
@@ -12,6 +13,13 @@ export async function POST(event: APIEvent) {
         status: 400,
         headers: { "Content-Type": "application/json" },
       });
+    }
+
+    if (file.size > MAX_FILE_SIZE_BYTES) {
+      return new Response(
+        JSON.stringify({ error: "Ukuran file melebihi batas maksimal 4 MB." }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
     }
 
     if (!ALLOWED_IMAGE_MIMES.includes(file.type)) {
@@ -42,7 +50,7 @@ export async function POST(event: APIEvent) {
   } catch (err: any) {
     console.error("Upload error:", err);
     return new Response(
-      JSON.stringify({ error: err?.message || "Terjadi kesalahan saat memproses upload." }),
+      JSON.stringify({ error: formatSafeErrorMessage(err, "Gagal memproses file upload.") }),
       {
         status: 500,
         headers: { "Content-Type": "application/json" },
