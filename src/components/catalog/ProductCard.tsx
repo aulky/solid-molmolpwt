@@ -39,9 +39,9 @@ export function ProductCard(props: ProductCardProps) {
 
   // Multi-image list for carousel
   const imageList = () => {
-    if (p().images && p().images!.length > 0) return p().images!;
+    if (Array.isArray(p().images) && p().images!.length > 0) return p().images!;
     if (p().imagePath) {
-      return [p().imagePath!, p().imagePath!];
+      return [p().imagePath!];
     }
     return [];
   };
@@ -103,6 +103,7 @@ export function ProductCard(props: ProductCardProps) {
               src={imageList()[currentSlide()]}
               alt={`${p().name} - Foto ${currentSlide() + 1}`}
               loading="lazy"
+              decoding="async"
               class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-102 cursor-pointer"
               onClick={() => setIsLightboxOpen(true)}
             />

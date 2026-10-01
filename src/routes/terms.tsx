@@ -17,10 +17,6 @@ export default function TermsPage() {
         {/* Main Document Card */}
         <div class="card-surface p-4 sm:p-10 bg-white border border-[#E8E8EC] space-y-6 sm:space-y-8">
           <div class="border-b border-[#E8E8EC] pb-6 space-y-2">
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#6366F1]/10 text-[#6366F1] font-mono text-xs font-semibold">
-              <FileText size={14} />
-              <span>DOKUMEN KEBIJAKAN RESMI</span>
-            </div>
             <h1 class="font-heading font-bold text-xl sm:text-3xl text-[#0A0A0A]">
               Syarat, Ketentuan & Kebijakan Pre-Order
             </h1>

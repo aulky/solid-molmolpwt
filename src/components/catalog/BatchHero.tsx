@@ -48,7 +48,7 @@ export function BatchHero(props: { batch: BatchInfo | null; announcement?: strin
       <div class="card-surface p-6 sm:p-8 bg-white border border-[#E8E8EC] relative overflow-hidden">
         {/* Subtle Decorative Editorial Tag */}
         <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#6366F1]/10 text-[#6366F1] font-mono text-xs font-semibold">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#6366F1]/10 text-[#6366F1] text-xs font-semibold">
             PRE-ORDER AKTIF: {b()?.code || "PO PURWOKERTO"}
           </div>
 
@@ -77,7 +77,7 @@ export function BatchHero(props: { batch: BatchInfo | null; announcement?: strin
               <Clock size={18} />
             </div>
             <div>
-              <span class="text-[11px] uppercase font-mono text-[#9C9C9C] block tracking-wider">
+              <span class="text-[11px] uppercase font-semibold text-[#9C9C9C] block tracking-wider">
                 Batas Tutup PO
               </span>
               <span class="text-xs sm:text-sm font-semibold text-[#0A0A0A] block mt-0.5">
@@ -92,7 +92,7 @@ export function BatchHero(props: { batch: BatchInfo | null; announcement?: strin
               <Calendar size={18} />
             </div>
             <div>
-              <span class="text-[11px] uppercase font-mono text-[#9C9C9C] block tracking-wider">
+              <span class="text-[11px] uppercase font-semibold text-[#9C9C9C] block tracking-wider">
                 Tanggal Pengiriman
               </span>
               <span class="text-xs sm:text-sm font-semibold text-[#0A0A0A] block mt-0.5">
@@ -107,7 +107,7 @@ export function BatchHero(props: { batch: BatchInfo | null; announcement?: strin
               <Truck size={18} />
             </div>
             <div>
-              <span class="text-[11px] uppercase font-mono text-[#9C9C9C] block tracking-wider">
+              <span class="text-[11px] uppercase font-semibold text-[#9C9C9C] block tracking-wider">
                 Metode Tersedia
               </span>
               <span class="text-xs sm:text-sm font-semibold text-[#0A0A0A] block mt-0.5">

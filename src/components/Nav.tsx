@@ -1,6 +1,6 @@
 import { createSignal, Show } from "solid-js";
 import { A, useLocation } from "@solidjs/router";
-import { Package, Search, ShieldCheck, FileText, Menu, X } from "lucide-solid";
+import { Package, Search, ShieldCheck, FileText, Menu, X, UtensilsCrossed } from "lucide-solid";
 
 export default function Nav() {
   const location = useLocation();
@@ -47,6 +47,18 @@ export default function Nav() {
           >
             <Package size={15} />
             <span>Pre-Order</span>
+          </A>
+
+          <A
+            href="/products"
+            class={`px-3 py-1.5 rounded-[6px] text-xs sm:text-sm font-medium transition flex items-center gap-1.5 ${
+              isActive("/products")
+                ? "bg-[#6366F1]/10 text-[#6366F1]"
+                : "text-[#6B6B6B] hover:text-[#0A0A0A] hover:bg-black/5"
+            }`}
+          >
+            <UtensilsCrossed size={15} />
+            <span>Katalog Produk</span>
           </A>
 
           <A
@@ -115,6 +127,19 @@ export default function Nav() {
           >
             <Package size={18} class="text-[#6366F1]" />
             <span>Katalog Pre-Order</span>
+          </A>
+
+          <A
+            href="/products"
+            onClick={closeMenu}
+            class={`flex items-center gap-3 px-3 py-2.5 rounded-[6px] text-sm font-medium min-h-[44px] ${
+              isActive("/products")
+                ? "bg-[#6366F1]/10 text-[#6366F1] font-semibold"
+                : "text-[#0A0A0A] hover:bg-[#FAFAFA]"
+            }`}
+          >
+            <UtensilsCrossed size={18} class="text-[#6366F1]" />
+            <span>Katalog Produk</span>
           </A>
 
           <A

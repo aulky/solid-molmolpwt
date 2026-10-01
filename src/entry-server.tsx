@@ -39,7 +39,7 @@ export default createHandler(() => (
             content="Mol-Mol Purwokerto (@molmol.purwokerto) — Dessert & Cemilan Purwokerto manis gurih khas Purwokerto sistem pre-order berkala."
           />
 
-          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" href="/favicon.png" />
 
           {/* JSON-LD Schema LocalBusiness / Bakery */}
           <script
