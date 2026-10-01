@@ -6,6 +6,7 @@ import {
   softDeleteMenuItem,
 } from "~/lib/services/menu";
 import { getAdminFromSession, SESSION_COOKIE_NAME } from "~/lib/auth";
+import { formatSafeErrorMessage } from "~/lib/debug";
 
 export async function GET(event: APIEvent) {
   try {
@@ -15,7 +16,10 @@ export async function GET(event: APIEvent) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (err: any) {
-    return new Response(JSON.stringify({ error: err?.message }), { status: 500 });
+    return new Response(
+      JSON.stringify({ error: formatSafeErrorMessage(err, "Gagal mengambil daftar menu.") }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
   }
 }
 
@@ -45,7 +49,10 @@ export async function POST(event: APIEvent) {
 
     return new Response(JSON.stringify({ success: true, id }), { status: 200 });
   } catch (err: any) {
-    return new Response(JSON.stringify({ error: err?.message }), { status: 500 });
+    return new Response(
+      JSON.stringify({ error: formatSafeErrorMessage(err, "Gagal menyimpan menu baru.") }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
   }
 }
 
@@ -59,11 +66,16 @@ export async function PUT(event: APIEvent) {
 
     const body = await event.request.json();
     const id = Number(body.id);
+    if (!id || isNaN(id)) return new Response(JSON.stringify({ error: "ID menu tidak valid" }), { status: 400 });
+
     await updateMenuItem(id, body);
 
     return new Response(JSON.stringify({ success: true }), { status: 200 });
   } catch (err: any) {
-    return new Response(JSON.stringify({ error: err?.message }), { status: 500 });
+    return new Response(
+      JSON.stringify({ error: formatSafeErrorMessage(err, "Gagal memperbarui menu.") }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
   }
 }
 
@@ -77,11 +89,14 @@ export async function DELETE(event: APIEvent) {
 
     const url = new URL(event.request.url);
     const id = Number(url.searchParams.get("id"));
-    if (!id) return new Response(JSON.stringify({ error: "ID missing" }), { status: 400 });
+    if (!id || isNaN(id)) return new Response(JSON.stringify({ error: "ID menu tidak valid" }), { status: 400 });
 
     await softDeleteMenuItem(id);
     return new Response(JSON.stringify({ success: true }), { status: 200 });
   } catch (err: any) {
-    return new Response(JSON.stringify({ error: err?.message }), { status: 500 });
+    return new Response(
+      JSON.stringify({ error: formatSafeErrorMessage(err, "Gagal menghapus menu.") }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
   }
 }

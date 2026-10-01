@@ -43,6 +43,7 @@ export default function AdminSettingsPage() {
   const [isLoading, setIsLoading] = createSignal(false);
   const [isSaving, setIsSaving] = createSignal(false);
   const [successMsg, setSuccessMsg] = createSignal(false);
+  const [errorMessage, setErrorMessage] = createSignal<string | null>(null);
 
   const fetchSettings = async () => {
     setIsLoading(true);
@@ -106,7 +107,7 @@ export default function AdminSettingsPage() {
 
   const removeBankAccount = (index: number) => {
     if (bankAccounts().length <= 1) {
-      alert("Minimal harus ada 1 rekening bank toko.");
+      setErrorMessage("Minimal harus ada 1 rekening bank toko.");
       return;
     }
     setBankAccounts(bankAccounts().filter((_, i) => i !== index));
@@ -122,9 +123,17 @@ export default function AdminSettingsPage() {
     const input = e.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) return;
 
+    const file = input.files[0];
+    if (file.size > 4 * 1024 * 1024) {
+      setErrorMessage("Ukuran barcode QRIS maksimal 4 MB.");
+      input.value = "";
+      return;
+    }
+
+    setErrorMessage(null);
     try {
       const formData = new FormData();
-      formData.append("file", input.files[0]);
+      formData.append("file", file);
       formData.append("category", "settings");
 
       const res = await fetch("/api/upload", {
@@ -135,44 +144,50 @@ export default function AdminSettingsPage() {
       const data = await res.json();
       if (res.ok && data.success) {
         setQrisImagePath(data.path);
+      } else {
+        setErrorMessage(data.error || "Gagal mengunggah foto QRIS.");
       }
-    } catch (err) {
+    } catch (err: any) {
+      setErrorMessage(err?.message || "Terjadi kesalahan saat mengunggah foto QRIS.");
       console.error("QRIS upload error:", err);
     }
   };
 
   const handleGetAdminGps = () => {
     if (typeof window === "undefined" || !navigator.geolocation) {
-      alert("Browser tidak mendukung geolokasi GPS.");
+      setErrorMessage("Browser tidak mendukung geolokasi GPS.");
       return;
     }
 
     setIsDetectingGps(true);
+    setErrorMessage(null);
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
-        setIsDetectingGps(false);
         const lat = Number(pos.coords.latitude.toFixed(7));
         const lng = Number(pos.coords.longitude.toFixed(7));
         setPickupLatitude(lat);
         setPickupLongitude(lng);
         setPickupMapsUrl(`https://maps.google.com/?q=${lat},${lng}`);
 
-        // Otomatis reverse-geocode jika alamat pengambilan masih kosong
-        if (!pickupAddress() || pickupAddress().trim() === "") {
-          try {
-            const res = await fetch(`/api/geocode?lat=${lat}&lng=${lng}`);
-            if (res.ok) {
-              const data = await res.json();
-              if (data.formattedAddress) {
-                setPickupAddress(data.formattedAddress);
-              }
+        // Otomatis reverse-geocode dan perbarui alamat pickup yang sesuai
+        try {
+          const res = await fetch(`/api/geocode?lat=${lat}&lng=${lng}`);
+          if (res.ok) {
+            const data = await res.json();
+            const addr = data.formattedAddress || data.displayName;
+            if (addr) {
+              setPickupAddress(addr);
             }
-          } catch {}
+          }
+        } catch (err) {
+          console.warn("Reverse geocode error:", err);
+        } finally {
+          setIsDetectingGps(false);
         }
       },
       (err) => {
         setIsDetectingGps(false);
-        alert(`Gagal mengambil titik GPS: ${err.message}`);
+        setErrorMessage(`Gagal mengambil titik GPS: ${err.message}`);
       },
       { enableHighAccuracy: true, timeout: 10000 }
     );
@@ -231,10 +246,11 @@ export default function AdminSettingsPage() {
         throw new Error(data.error || "Gagal menyimpan pengaturan");
       }
 
+      setErrorMessage(null);
       setSuccessMsg(true);
       setTimeout(() => setSuccessMsg(false), 3000);
     } catch (err: any) {
-      alert(err?.message || "Terjadi kesalahan");
+      setErrorMessage(err?.message || "Terjadi kesalahan saat menyimpan pengaturan");
     } finally {
       setIsSaving(false);
     }
@@ -242,7 +258,21 @@ export default function AdminSettingsPage() {
 
   return (
     <AdminLayout title="Pengaturan Toko CMS">
-      <form onSubmit={handleSave} class="space-y-6 max-w-3xl">
+      <div class="space-y-6 max-w-3xl">
+        <Show when={errorMessage()}>
+          <div class="p-3.5 rounded-xl bg-[#EF4444]/10 border border-[#EF4444]/20 flex items-center justify-between text-xs text-[#EF4444]">
+            <span>{errorMessage()}</span>
+            <button
+              type="button"
+              onClick={() => setErrorMessage(null)}
+              class="font-semibold underline cursor-pointer text-[11px]"
+            >
+              Tutup
+            </button>
+          </div>
+        </Show>
+
+        <form onSubmit={handleSave} class="space-y-6">
         {/* Identitas Toko */}
         <div class="card-surface p-6 bg-white border border-[#E8E8EC] space-y-4">
           <h3 class="font-heading font-bold text-base text-[#0A0A0A] pb-2 border-b border-[#E8E8EC]">
@@ -627,6 +657,7 @@ export default function AdminSettingsPage() {
           </Show>
         </div>
       </form>
+      </div>
     </AdminLayout>
   );
 }

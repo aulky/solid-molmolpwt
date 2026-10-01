@@ -1,6 +1,13 @@
 import type { APIEvent } from "@solidjs/start/server";
-import { getAllBatches, createBatch, updateBatch, deleteBatch } from "~/lib/services/batch";
+import {
+  getAllBatches,
+  createBatch,
+  updateBatch,
+  deleteBatch,
+  setBatchStatus,
+} from "~/lib/services/batch";
 import { getAdminFromSession, SESSION_COOKIE_NAME } from "~/lib/auth";
+import { formatSafeErrorMessage } from "~/lib/debug";
 
 export async function GET(event: APIEvent) {
   try {
@@ -10,7 +17,10 @@ export async function GET(event: APIEvent) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (err: any) {
-    return new Response(JSON.stringify({ error: err?.message }), { status: 500 });
+    return new Response(
+      JSON.stringify({ error: formatSafeErrorMessage(err, "Gagal mengambil daftar batch.") }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
   }
 }
 
@@ -46,12 +56,15 @@ export async function POST(event: APIEvent) {
       allowDelivery: body.allowDelivery !== undefined ? Boolean(body.allowDelivery) : true,
       allowCod: body.allowCod !== undefined ? Boolean(body.allowCod) : false,
       status: body.status || "draft",
-      itemIds: body.itemIds || [],
+      itemIds: Array.isArray(body.itemIds) ? body.itemIds.map(Number) : undefined,
     });
 
     return new Response(JSON.stringify({ success: true, id }), { status: 200 });
   } catch (err: any) {
-    return new Response(JSON.stringify({ error: err?.message }), { status: 500 });
+    return new Response(
+      JSON.stringify({ error: formatSafeErrorMessage(err, "Gagal membuat batch baru.") }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
   }
 }
 
@@ -68,8 +81,14 @@ export async function PUT(event: APIEvent) {
 
     const body = await event.request.json();
     const batchId = Number(body.id);
-    if (!batchId) {
-      return new Response(JSON.stringify({ error: "Batch ID wajib diisi" }), { status: 400 });
+    if (!batchId || isNaN(batchId)) {
+      return new Response(JSON.stringify({ error: "Batch ID tidak valid" }), { status: 400 });
+    }
+
+    // Jika hanya ingin mengubah status secara cepat
+    if (body.action === "toggle_status" && body.status) {
+      await setBatchStatus(batchId, body.status);
+      return new Response(JSON.stringify({ success: true }), { status: 200 });
     }
 
     await updateBatch(batchId, {
@@ -92,11 +111,15 @@ export async function PUT(event: APIEvent) {
       allowDelivery: body.allowDelivery !== undefined ? Boolean(body.allowDelivery) : undefined,
       allowCod: body.allowCod !== undefined ? Boolean(body.allowCod) : undefined,
       status: body.status,
+      itemIds: Array.isArray(body.itemIds) ? body.itemIds.map(Number) : undefined,
     });
 
     return new Response(JSON.stringify({ success: true }), { status: 200 });
   } catch (err: any) {
-    return new Response(JSON.stringify({ error: err?.message }), { status: 500 });
+    return new Response(
+      JSON.stringify({ error: formatSafeErrorMessage(err, "Gagal memperbarui batch.") }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
   }
 }
 
@@ -113,16 +136,16 @@ export async function DELETE(event: APIEvent) {
 
     const url = new URL(event.request.url);
     const id = Number(url.searchParams.get("id"));
-    if (!id) {
-      return new Response(JSON.stringify({ error: "ID batch wajib dicantumkan" }), { status: 400 });
+    if (!id || isNaN(id)) {
+      return new Response(JSON.stringify({ error: "ID batch tidak valid" }), { status: 400 });
     }
 
     await deleteBatch(id);
     return new Response(JSON.stringify({ success: true }), { status: 200 });
   } catch (err: any) {
-    return new Response(JSON.stringify({ error: err?.message || "Gagal menghapus batch" }), {
-      status: 400,
-      headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({ error: formatSafeErrorMessage(err, "Gagal menghapus batch.") }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
   }
 }

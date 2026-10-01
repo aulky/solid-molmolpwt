@@ -323,15 +323,9 @@ export function AdminLayout(props: AdminLayoutProps) {
             </div>
 
             <div class="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={handleLogout}
-                class="btn-secondary btn-sm text-xs h-8 px-3 flex items-center gap-1.5 cursor-pointer text-[#EF4444] hover:bg-[#EF4444]/10 hover:border-[#EF4444]/30"
-                title="Keluar dari Panel Admin"
-              >
-                <LogOut size={13} />
-                <span>Keluar</span>
-              </button>
+              <span class="text-xs font-mono text-[#9C9C9C]">
+                {currentUser()?.displayName || "Admin Toko"}
+              </span>
             </div>
           </header>
 

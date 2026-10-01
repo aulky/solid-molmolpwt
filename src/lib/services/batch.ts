@@ -4,7 +4,6 @@ import { batches, batchItems, menuItems, orders } from "../db/schema";
 
 export async function getActiveBatch() {
   try {
-    const now = new Date();
     const rows = await db
       .select()
       .from(batches)
@@ -16,7 +15,7 @@ export async function getActiveBatch() {
     const batch = rows[0];
 
     // Ambil item menu yang aktif untuk batch ini
-    const items = await db
+    let items = await db
       .select({
         batchItemId: batchItems.id,
         menuItemId: menuItems.id,
@@ -43,6 +42,38 @@ export async function getActiveBatch() {
           eq(menuItems.isActive, true)
         )
       );
+
+    // Jika batch belum memiliki item terhubung di batch_items, tautkan otomatis semua menu aktif
+    if (items.length === 0) {
+      await syncBatchItems(batch.id);
+      items = await db
+        .select({
+          batchItemId: batchItems.id,
+          menuItemId: menuItems.id,
+          sku: menuItems.sku,
+          name: menuItems.name,
+          description: menuItems.description,
+          basePrice: menuItems.basePrice,
+          priceOverride: batchItems.priceOverride,
+          stockTotal: batchItems.stockTotal,
+          stockUsed: batchItems.stockUsed,
+          isAvailable: batchItems.isAvailable,
+          imagePath: menuItems.imagePath,
+          images: menuItems.images,
+          weightGrams: menuItems.weightGrams,
+          maxPerOrder: menuItems.maxPerOrder,
+        })
+        .from(batchItems)
+        .innerJoin(menuItems, eq(batchItems.menuItemId, menuItems.id))
+        .where(
+          and(
+            eq(batchItems.batchId, batch.id),
+            eq(batchItems.isAvailable, true),
+            isNull(menuItems.deletedAt),
+            eq(menuItems.isActive, true)
+          )
+        );
+    }
 
     // Hitung sisa stok dan harga efektif
     const itemsWithStock = items.map((item) => {
@@ -87,7 +118,7 @@ export async function getAllActiveBatches() {
 
     const result = [];
     for (const batch of rows) {
-      const items = await db
+      let items = await db
         .select({
           batchItemId: batchItems.id,
           menuItemId: menuItems.id,
@@ -114,6 +145,37 @@ export async function getAllActiveBatches() {
             eq(menuItems.isActive, true)
           )
         );
+
+      if (items.length === 0) {
+        await syncBatchItems(batch.id);
+        items = await db
+          .select({
+            batchItemId: batchItems.id,
+            menuItemId: menuItems.id,
+            sku: menuItems.sku,
+            name: menuItems.name,
+            description: menuItems.description,
+            basePrice: menuItems.basePrice,
+            priceOverride: batchItems.priceOverride,
+            stockTotal: batchItems.stockTotal,
+            stockUsed: batchItems.stockUsed,
+            isAvailable: batchItems.isAvailable,
+            imagePath: menuItems.imagePath,
+            images: menuItems.images,
+            weightGrams: menuItems.weightGrams,
+            maxPerOrder: menuItems.maxPerOrder,
+          })
+          .from(batchItems)
+          .innerJoin(menuItems, eq(batchItems.menuItemId, menuItems.id))
+          .where(
+            and(
+              eq(batchItems.batchId, batch.id),
+              eq(batchItems.isAvailable, true),
+              isNull(menuItems.deletedAt),
+              eq(menuItems.isActive, true)
+            )
+          );
+      }
 
       const itemsWithStock = items.map((item) => {
         const effectivePrice = item.priceOverride ?? item.basePrice;
@@ -147,9 +209,86 @@ export async function getAllActiveBatches() {
   }
 }
 
+/**
+ * Sinkronisasi daftar menu item yang dibuka untuk batch tertentu
+ * Jika itemIds diberikan, hanya itemIds tersebut yang diatur isAvailable=true.
+ * Jika itemIds tidak diberikan (undefined), otomatis aktifkan seluruh menu aktif.
+ */
+export async function syncBatchItems(batchId: number, itemIds?: number[]) {
+  const allActiveMenus = await db
+    .select({ id: menuItems.id })
+    .from(menuItems)
+    .where(and(isNull(menuItems.deletedAt), eq(menuItems.isActive, true)));
+
+  const existingBatchItems = await db
+    .select({ id: batchItems.id, menuItemId: batchItems.menuItemId })
+    .from(batchItems)
+    .where(eq(batchItems.batchId, batchId));
+
+  const existingMap = new Map<number, number>();
+  for (const bi of existingBatchItems) {
+    existingMap.set(bi.menuItemId, bi.id);
+  }
+
+  // Jika itemIds tidak ditentukan (undefined), aktifkan semua menu yang aktif
+  const targetItemIds = itemIds !== undefined ? itemIds : allActiveMenus.map((m) => m.id);
+  const targetSet = new Set(targetItemIds);
+
+  for (const m of allActiveMenus) {
+    const shouldBeAvailable = targetSet.has(m.id);
+    const existingId = existingMap.get(m.id);
+
+    if (existingId) {
+      await db
+        .update(batchItems)
+        .set({ isAvailable: shouldBeAvailable })
+        .where(eq(batchItems.id, existingId));
+    } else if (shouldBeAvailable) {
+      await db.insert(batchItems).values({
+        batchId,
+        menuItemId: m.id,
+        isAvailable: true,
+      });
+    }
+  }
+
+  // Nonaktifkan item yang sudah tidak lagi berada di menuItems aktif
+  for (const bi of existingBatchItems) {
+    const isStillActive = allActiveMenus.some((m) => m.id === bi.menuItemId);
+    if (!isStillActive) {
+      await db
+        .update(batchItems)
+        .set({ isAvailable: false })
+        .where(eq(batchItems.id, bi.id));
+    }
+  }
+}
+
 export async function getAllBatches() {
   try {
-    return await db.select().from(batches).orderBy(desc(batches.createdAt));
+    const rows = await db.select().from(batches).orderBy(desc(batches.createdAt));
+    const result = [];
+    for (const b of rows) {
+      const bItems = await db
+        .select({
+          id: batchItems.id,
+          menuItemId: batchItems.menuItemId,
+          isAvailable: batchItems.isAvailable,
+        })
+        .from(batchItems)
+        .where(eq(batchItems.batchId, b.id));
+
+      const selectedItemIds = bItems
+        .filter((bi) => bi.isAvailable)
+        .map((bi) => bi.menuItemId);
+
+      result.push({
+        ...b,
+        selectedItemIds,
+        activeItemCount: selectedItemIds.length,
+      });
+    }
+    return result;
   } catch (err) {
     console.error("Gagal mengambil semua batch:", err);
     return [];
@@ -174,7 +313,7 @@ export async function getBatchDetail(batchId: number) {
     })
     .from(batchItems)
     .innerJoin(menuItems, eq(batchItems.menuItemId, menuItems.id))
-    .where(eq(batchItems.batchId, batchId));
+    .where(and(eq(batchItems.batchId, batchId), isNull(menuItems.deletedAt)));
 
   return {
     ...batch,
@@ -237,16 +376,8 @@ export async function createBatch(data: {
 
   const newBatchId = res.insertId;
 
-  // Jika menyertakan itemIds, kaitkan ke batchItems
-  if (data.itemIds && data.itemIds.length > 0) {
-    for (const mId of data.itemIds) {
-      await db.insert(batchItems).values({
-        batchId: newBatchId,
-        menuItemId: mId,
-        isAvailable: true,
-      });
-    }
-  }
+  // Sinkronisasi itemIds yang dipilih ke batchItems
+  await syncBatchItems(newBatchId, data.itemIds);
 
   return newBatchId;
 }
@@ -273,14 +404,33 @@ export async function updateBatch(
     allowDelivery: boolean;
     allowCod: boolean;
     status: "draft" | "open" | "closed" | "production" | "delivered" | "cancelled";
+    itemIds?: number[];
   }>
+) {
+  const { itemIds, ...batchFields } = data;
+
+  if (Object.keys(batchFields).length > 0) {
+    await db
+      .update(batches)
+      .set({
+        ...batchFields,
+        updatedAt: new Date(),
+      } as any)
+      .where(eq(batches.id, batchId));
+  }
+
+  if (itemIds !== undefined) {
+    await syncBatchItems(batchId, itemIds);
+  }
+}
+
+export async function setBatchStatus(
+  batchId: number,
+  status: "draft" | "open" | "closed" | "production" | "delivered" | "cancelled"
 ) {
   await db
     .update(batches)
-    .set({
-      ...data,
-      updatedAt: new Date(),
-    } as any)
+    .set({ status, updatedAt: new Date() })
     .where(eq(batches.id, batchId));
 }
 
