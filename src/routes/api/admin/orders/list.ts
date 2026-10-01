@@ -1,6 +1,7 @@
 import type { APIEvent } from "@solidjs/start/server";
 import { getAdminOrders } from "~/lib/services/order";
 import { getAdminFromSession, SESSION_COOKIE_NAME } from "~/lib/auth";
+import { formatSafeErrorMessage } from "~/lib/debug";
 
 export async function GET(event: APIEvent) {
   try {
@@ -18,9 +19,16 @@ export async function GET(event: APIEvent) {
 
     const url = new URL(event.request.url);
     const status = url.searchParams.get("status") || "all";
-    const search = url.searchParams.get("search") || undefined;
+    const rawSearch = url.searchParams.get("search") || undefined;
+    const search = rawSearch ? rawSearch.slice(0, 100).trim() : undefined;
     const batchIdParam = url.searchParams.get("batchId");
-    const batchId = batchIdParam ? parseInt(batchIdParam, 10) : undefined;
+    let batchId: number | undefined;
+    if (batchIdParam) {
+      const parsed = parseInt(batchIdParam, 10);
+      if (!isNaN(parsed) && parsed > 0) {
+        batchId = parsed;
+      }
+    }
 
     const list = await getAdminOrders({
       status,
@@ -34,6 +42,9 @@ export async function GET(event: APIEvent) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (err: any) {
-    return new Response(JSON.stringify({ error: err?.message }), { status: 500 });
+    return new Response(
+      JSON.stringify({ error: formatSafeErrorMessage(err, "Gagal mengambil daftar pesanan.") }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
   }
 }

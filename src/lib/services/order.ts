@@ -457,7 +457,7 @@ export async function getAdminOrders(filters: {
 
     const whereClause = conditions.length > 0 ? and(...conditions) : undefined;
 
-    return await db
+    const orderRows = await db
       .select({
         id: orders.id,
         shortCode: orders.shortCode,
@@ -466,16 +466,54 @@ export async function getAdminOrders(filters: {
         customerPhone: orders.customerPhone,
         fulfillment: orders.fulfillment,
         addressText: orders.addressText,
+        addressNote: orders.addressNote,
+        latitude: orders.latitude,
+        longitude: orders.longitude,
+        gpsAccuracyM: orders.gpsAccuracyM,
+        locationSource: orders.locationSource,
+        subtotal: orders.subtotal,
+        deliveryFee: orders.deliveryFee,
         total: orders.total,
+        paymentMethod: orders.paymentMethod,
         paymentStatus: orders.paymentStatus,
         paymentProofPath: orders.paymentProofPath,
         status: orders.status,
+        adminNote: orders.adminNote,
         createdAt: orders.createdAt,
       })
       .from(orders)
       .where(whereClause)
       .orderBy(desc(orders.createdAt))
       .limit(filters.limit || 50);
+
+    if (orderRows.length === 0) return [];
+
+    // Ambil order_items untuk rincian produk pesanan
+    const orderIds = orderRows.map((o) => o.id);
+    const itemsRows = await db
+      .select({
+        orderId: orderItems.orderId,
+        name: orderItems.nameSnapshot,
+        qty: orderItems.qty,
+        price: orderItems.unitPrice,
+        subtotal: orderItems.lineTotal,
+        notes: orderItems.note,
+      })
+      .from(orderItems)
+      .where(inArray(orderItems.orderId, orderIds));
+
+    const itemsMap = new Map<string, any[]>();
+    for (const item of itemsRows) {
+      if (!itemsMap.has(item.orderId)) {
+        itemsMap.set(item.orderId, []);
+      }
+      itemsMap.get(item.orderId)!.push(item);
+    }
+
+    return orderRows.map((o) => ({
+      ...o,
+      items: itemsMap.get(o.id) || [],
+    }));
   } catch (err) {
     console.error("Gagal mengambil data pesanan admin:", err);
     return [];
@@ -484,6 +522,7 @@ export async function getAdminOrders(filters: {
 
 /**
  * Rekap jumlah porsi menu per batch (Halaman Daftar Rekap Produksi)
+ * Termasuk rincian nama pemesan dan kuantitas per orang
  */
 export async function getProductionSummary(batchId: number) {
   try {
@@ -506,7 +545,44 @@ export async function getProductionSummary(batchId: number) {
       .groupBy(orderItems.nameSnapshot)
       .orderBy(desc(sql`SUM(${orderItems.qty})`));
 
-    return summary;
+    // Ambil rincian nama pemesan untuk tiap varian menu
+    const customerBreakdowns = await db
+      .select({
+        menuName: orderItems.nameSnapshot,
+        customerName: orders.customerName,
+        customerPhone: orders.customerPhone,
+        shortCode: orders.shortCode,
+        qty: orderItems.qty,
+        notes: orderItems.note,
+      })
+      .from(orderItems)
+      .innerJoin(orders, eq(orderItems.orderId, orders.id))
+      .where(
+        and(
+          eq(orders.batchId, batchId),
+          inArray(orders.status, validStatuses as any)
+        )
+      )
+      .orderBy(orders.createdAt);
+
+    const customersMap = new Map<string, any[]>();
+    for (const row of customerBreakdowns) {
+      if (!customersMap.has(row.menuName)) {
+        customersMap.set(row.menuName, []);
+      }
+      customersMap.get(row.menuName)!.push({
+        customerName: row.customerName,
+        customerPhone: row.customerPhone,
+        shortCode: row.shortCode,
+        qty: row.qty,
+        notes: row.notes,
+      });
+    }
+
+    return summary.map((item) => ({
+      ...item,
+      customers: customersMap.get(item.name) || [],
+    }));
   } catch (err) {
     console.error("Gagal membuat rekap produksi:", err);
     return [];

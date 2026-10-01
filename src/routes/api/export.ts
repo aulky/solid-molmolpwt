@@ -1,5 +1,6 @@
 import type { APIEvent } from "@solidjs/start/server";
 import { exportOrdersCSV } from "~/lib/services/order";
+import { formatSafeErrorMessage } from "~/lib/debug";
 
 export async function GET(event: APIEvent) {
   try {
@@ -10,6 +11,10 @@ export async function GET(event: APIEvent) {
     }
 
     const batchId = parseInt(batchIdParam, 10);
+    if (isNaN(batchId) || batchId <= 0) {
+      return new Response("Parameter batchId tidak valid", { status: 400 });
+    }
+
     const csvContent = await exportOrdersCSV(batchId);
 
     return new Response(csvContent, {
@@ -20,6 +25,6 @@ export async function GET(event: APIEvent) {
       },
     });
   } catch (err: any) {
-    return new Response(err?.message || "Gagal mengekspor data", { status: 500 });
+    return new Response(formatSafeErrorMessage(err, "Gagal mengekspor data"), { status: 500 });
   }
 }

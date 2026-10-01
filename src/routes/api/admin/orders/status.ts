@@ -1,6 +1,7 @@
 import type { APIEvent } from "@solidjs/start/server";
 import { updateOrderStatus } from "~/lib/services/order";
 import { getAdminFromSession, SESSION_COOKIE_NAME } from "~/lib/auth";
+import { formatSafeErrorMessage } from "~/lib/debug";
 
 export async function POST(event: APIEvent) {
   try {
@@ -39,9 +40,12 @@ export async function POST(event: APIEvent) {
     });
   } catch (err: any) {
     console.error("Update status error:", err);
-    return new Response(JSON.stringify({ error: err?.message || "Gagal mengubah status" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({ error: formatSafeErrorMessage(err, "Gagal mengubah status pesanan.") }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   }
 }

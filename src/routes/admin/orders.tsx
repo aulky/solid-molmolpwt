@@ -30,6 +30,8 @@ export default function AdminOrdersPage() {
   const [adminNote, setAdminNote] = createSignal("");
   const [isUpdating, setIsUpdating] = createSignal(false);
   const [isProofZoomed, setIsProofZoomed] = createSignal(false);
+  const [orderError, setOrderError] = createSignal<string | null>(null);
+  const [quickUpdatingId, setQuickUpdatingId] = createSignal<string | null>(null);
 
   const fetchOrders = async () => {
     setIsLoading(true);
@@ -52,9 +54,36 @@ export default function AdminOrdersPage() {
     fetchOrders();
   });
 
+  const handleQuickUpdate = async (orderId: string, statusToSet: string) => {
+    setQuickUpdatingId(orderId);
+    setOrderError(null);
+    try {
+      const res = await fetch("/api/admin/orders/status", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          orderId,
+          newStatus: statusToSet,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        setOrderError(data.error || "Gagal mengubah status pesanan");
+      } else {
+        await fetchOrders();
+      }
+    } catch (err: any) {
+      setOrderError(err?.message || "Terjadi kesalahan saat memproses status pesanan");
+    } finally {
+      setQuickUpdatingId(null);
+    }
+  };
+
   const handleUpdateStatus = async (statusToSet: string) => {
     if (!activeOrder()) return;
     setIsUpdating(true);
+    setOrderError(null);
 
     try {
       const res = await fetch("/api/admin/orders/status", {
@@ -70,14 +99,14 @@ export default function AdminOrdersPage() {
 
       const data = await res.json();
       if (!res.ok || !data.success) {
-        alert(data.error || "Gagal mengubah status");
+        setOrderError(data.error || "Gagal mengubah status pesanan");
         return;
       }
 
       setActiveOrder(null);
       await fetchOrders();
     } catch (err: any) {
-      alert(err?.message || "Terjadi kesalahan");
+      setOrderError(err?.message || "Terjadi kesalahan");
     } finally {
       setIsUpdating(false);
     }
@@ -86,6 +115,18 @@ export default function AdminOrdersPage() {
   return (
     <AdminLayout title="Manajemen Pesanan Pre-Order">
       <div class="space-y-6">
+        <Show when={orderError()}>
+          <div class="p-3.5 rounded-xl bg-[#EF4444]/10 border border-[#EF4444]/20 flex items-center justify-between text-xs text-[#EF4444]">
+            <span>{orderError()}</span>
+            <button
+              type="button"
+              onClick={() => setOrderError(null)}
+              class="font-semibold underline cursor-pointer text-[11px]"
+            >
+              Tutup
+            </button>
+          </div>
+        </Show>
         {/* Filter and Search Bar */}
         <div class="card-surface p-4 bg-white border border-[#E8E8EC] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
           <div class="flex items-center gap-2 flex-1 w-full">
@@ -175,32 +216,93 @@ export default function AdminOrdersPage() {
                           <span class="font-semibold text-[#0A0A0A] block">
                             {o.customerName}
                           </span>
-                          <span class="text-[#6B6B6B] font-mono">{o.customerPhone}</span>
+                          <span class="text-[#6B6B6B] text-[11px] block">{o.customerPhone}</span>
                         </td>
-                        <td class="p-3 uppercase font-medium">
-                          {o.fulfillment}
+                        <td class="p-3">
+                          <span class="uppercase font-semibold text-[11px] block text-[#0A0A0A]">
+                            {o.fulfillment}
+                          </span>
+                          <Show when={o.latitude && o.longitude}>
+                            <a
+                              href={`https://maps.google.com/?q=${o.latitude},${o.longitude}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              class="inline-flex items-center gap-1 text-[11px] text-[#6366F1] hover:underline font-medium mt-0.5"
+                              title="Buka titik koordinat di Google Maps"
+                            >
+                              <MapPin size={11} class="text-[#6366F1]" />
+                              <span>Peta GPS</span>
+                              <ExternalLink size={10} />
+                            </a>
+                          </Show>
                         </td>
-                        <td class="p-3 font-mono font-bold text-[#0A0A0A]">
+                        <td class="p-3 font-semibold text-[#0A0A0A]">
                           {formatRupiah(o.total)}
                         </td>
                         <td class="p-3">
                           <OrderStatusBadge status={o.status} />
                         </td>
-                        <td class="p-3 font-mono text-[#9C9C9C]">
+                        <td class="p-3 text-[#6B6B6B] text-[11px]">
                           {formatTanggalWIB(o.createdAt)}
                         </td>
                         <td class="p-3 text-right">
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setActiveOrder(o);
-                              setNewStatus(o.status);
-                              setAdminNote("");
-                            }}
-                            class="btn-primary btn-sm"
-                          >
-                            Kelola
-                          </button>
+                          <div class="inline-flex items-center gap-1.5 justify-end">
+                            {/* Tombol Cepat Konfirmasi / Tahapan Order (Requirement 2) */}
+                            <Show when={o.status === "menunggu_verifikasi"}>
+                              <button
+                                type="button"
+                                disabled={quickUpdatingId() === o.id}
+                                onClick={() => handleQuickUpdate(o.id, "dikonfirmasi")}
+                                class="px-2.5 py-1 rounded bg-[#10B981] hover:bg-[#059669] text-white text-[11px] font-semibold flex items-center gap-1 shadow-2xs transition cursor-pointer disabled:opacity-50"
+                                title="1-Klik Konfirmasi Pembayaran Sah"
+                              >
+                                <Show when={quickUpdatingId() === o.id} fallback={<CheckCircle size={12} />}>
+                                  <Loader2 size={12} class="animate-spin" />
+                                </Show>
+                                <span>ACC Order</span>
+                              </button>
+                            </Show>
+                            <Show when={o.status === "dikonfirmasi"}>
+                              <button
+                                type="button"
+                                disabled={quickUpdatingId() === o.id}
+                                onClick={() => handleQuickUpdate(o.id, "diproduksi")}
+                                class="px-2.5 py-1 rounded bg-[#6366F1] hover:bg-[#4F46E5] text-white text-[11px] font-semibold flex items-center gap-1 shadow-2xs transition cursor-pointer disabled:opacity-50"
+                                title="1-Klik Mulai Masak / Produksi"
+                              >
+                                <Show when={quickUpdatingId() === o.id} fallback={<ChefHat size={12} />}>
+                                  <Loader2 size={12} class="animate-spin" />
+                                </Show>
+                                <span>Mulai Masak</span>
+                              </button>
+                            </Show>
+                            <Show when={o.status === "diproduksi"}>
+                              <button
+                                type="button"
+                                disabled={quickUpdatingId() === o.id}
+                                onClick={() => handleQuickUpdate(o.id, o.fulfillment === "pickup" ? "siap_diambil" : "dikirim")}
+                                class="px-2.5 py-1 rounded bg-amber-600 hover:bg-amber-700 text-white text-[11px] font-semibold flex items-center gap-1 shadow-2xs transition cursor-pointer disabled:opacity-50"
+                                title="1-Klik Tandai Siap Diambil / Kirim"
+                              >
+                                <Show when={quickUpdatingId() === o.id} fallback={<PackageCheck size={12} />}>
+                                  <Loader2 size={12} class="animate-spin" />
+                                </Show>
+                                <span>Siap {o.fulfillment === "pickup" ? "Ambil" : "Kirim"}</span>
+                              </button>
+                            </Show>
+
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setActiveOrder(o);
+                                setNewStatus(o.status);
+                                setAdminNote(o.adminNote || "");
+                              }}
+                              class="btn-secondary btn-sm text-[11px] h-7 px-2.5 cursor-pointer"
+                            >
+                              Detail
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     )}
@@ -216,7 +318,7 @@ export default function AdminOrdersPage() {
           <Modal
             isOpen={!!activeOrder()}
             onClose={() => setActiveOrder(null)}
-            title={`Kelola Pesanan: ${activeOrder().shortCode}`}
+            title={`Kelola Pesanan: ${activeOrder()?.shortCode}`}
             maxWidth="max-w-xl"
           >
             <div class="space-y-4 text-xs">
@@ -225,40 +327,121 @@ export default function AdminOrdersPage() {
                 <div class="flex justify-between">
                   <span class="text-[#6B6B6B]">Pemesan:</span>
                   <span class="font-semibold text-[#0A0A0A]">
-                    {activeOrder().customerName} ({activeOrder().customerPhone})
+                    {activeOrder()?.customerName} ({activeOrder()?.customerPhone})
                   </span>
                 </div>
                 <div class="flex justify-between">
                   <span class="text-[#6B6B6B]">Pengiriman:</span>
                   <span class="font-semibold uppercase text-[#0A0A0A]">
-                    {activeOrder().fulfillment}
+                    {activeOrder()?.fulfillment}
                   </span>
                 </div>
-                <Show when={activeOrder().addressText}>
+                <Show when={activeOrder()?.addressText}>
                   <div class="flex justify-between">
                     <span class="text-[#6B6B6B]">Alamat:</span>
                     <span class="text-[#0A0A0A] text-right font-medium max-w-xs">
-                      {activeOrder().addressText}
+                      {activeOrder()?.addressText}
                     </span>
                   </div>
                 </Show>
                 <div class="flex justify-between font-bold pt-1 border-t border-[#E8E8EC]">
                   <span>Total Tagihan:</span>
-                  <span class="font-mono text-[#6366F1] text-sm">
-                    {formatRupiah(activeOrder().total)}
+                  <span class="font-bold text-[#6366F1] text-sm">
+                    {formatRupiah(activeOrder()?.total || 0)}
                   </span>
                 </div>
               </div>
 
+              {/* Rincian Titik Koordinat GPS Lengkap (Requirement 1) */}
+              <Show when={activeOrder()?.latitude && activeOrder()?.longitude}>
+                <div class="p-3.5 rounded-xl bg-[#6366F1]/5 border border-[#6366F1]/20 space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="font-semibold text-xs text-[#0A0A0A] flex items-center gap-1.5">
+                      <MapPin size={15} class="text-[#6366F1]" />
+                      <span>Informasi Titik Koordinat GPS Pemesan</span>
+                    </span>
+                    <span class="text-[10px] bg-[#6366F1]/10 text-[#6366F1] font-semibold px-2 py-0.5 rounded-full">
+                      {activeOrder()?.locationSource === "gps_device"
+                        ? "Deteksi GPS Otomatis"
+                        : activeOrder()?.locationSource === "maps_pin"
+                        ? "Pin Google Maps"
+                        : "Koordinat Presisi"}
+                    </span>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#4B5563]">
+                    <div>
+                      <span class="text-[#6B6B6B] block text-[11px]">Latitude, Longitude:</span>
+                      <span class="font-bold text-[#0A0A0A] select-all">
+                        {activeOrder()?.latitude}, {activeOrder()?.longitude}
+                      </span>
+                    </div>
+                    <Show when={activeOrder()?.gpsAccuracyM}>
+                      <div>
+                        <span class="text-[#6B6B6B] block text-[11px]">Estimasi Akurasi:</span>
+                        <span class="font-medium text-[#0A0A0A]">
+                          ±{activeOrder()?.gpsAccuracyM} meter dari perangkat
+                        </span>
+                      </div>
+                    </Show>
+                  </div>
+
+                  <Show when={activeOrder()?.addressNote}>
+                    <div class="text-xs pt-1 border-t border-[#6366F1]/10">
+                      <span class="text-[#6B6B6B]">Patokan / Catatan Alamat:</span>
+                      <span class="font-medium text-[#0A0A0A] block">{activeOrder()?.addressNote}</span>
+                    </div>
+                  </Show>
+
+                  <div class="pt-1.5">
+                    <a
+                      href={`https://maps.google.com/?q=${activeOrder()?.latitude},${activeOrder()?.longitude}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="btn-primary btn-sm w-full flex items-center justify-center gap-2 text-xs py-2 shadow-xs cursor-pointer"
+                    >
+                      <MapPin size={14} />
+                      <span>Buka Rute Pengantaran di Google Maps</span>
+                      <ExternalLink size={12} />
+                    </a>
+                  </div>
+                </div>
+              </Show>
+
+              {/* Rincian Menu Pesanan Pelanggan */}
+              <Show when={activeOrder()?.items && activeOrder()?.items.length > 0}>
+                <div class="p-3.5 rounded-xl bg-white border border-[#E8E8EC] space-y-2">
+                  <span class="font-semibold text-xs text-[#0A0A0A] block">
+                    Menu yang Dipesan ({activeOrder()?.items.length} item):
+                  </span>
+                  <div class="divide-y divide-[#F4F4F6]">
+                    <For each={activeOrder()?.items}>
+                      {(item: any) => (
+                        <div class="py-1.5 flex items-center justify-between text-xs">
+                          <div>
+                            <span class="font-medium text-[#0A0A0A] block">{item.name}</span>
+                            <span class="text-[11px] text-[#6B6B6B]">
+                              {item.qty} porsi × {formatRupiah(item.price)}
+                              {item.notes ? ` • Catatan: ${item.notes}` : ""}
+                            </span>
+                          </div>
+                          <span class="font-semibold text-[#0A0A0A]">{formatRupiah(item.subtotal)}</span>
+                        </div>
+                      )}
+                    </For>
+                  </div>
+                </div>
+              </Show>
+
               {/* Bukti Bayar Thumbnail */}
-              <Show when={activeOrder().paymentProofPath}>
+              <Show when={activeOrder()?.paymentProofPath}>
                 <div class="p-3 rounded-lg bg-white border border-[#E8E8EC] space-y-2">
                   <span class="font-semibold text-[#0A0A0A] block">
                     Foto Bukti Pembayaran:
                   </span>
                   <div class="flex items-center gap-3">
                     <img
-                      src={activeOrder().paymentProofPath}
+                      src={activeOrder()?.paymentProofPath}
                       alt="Bukti Transfer"
                       class="w-24 h-24 object-cover rounded-lg border border-[#E8E8EC] cursor-pointer hover:opacity-90"
                       onClick={() => setIsProofZoomed(true)}
@@ -267,7 +450,7 @@ export default function AdminOrdersPage() {
                       <button
                         type="button"
                         onClick={() => setIsProofZoomed(true)}
-                        class="text-[#6366F1] hover:underline flex items-center gap-1 font-medium"
+                        class="text-[#6366F1] hover:underline flex items-center gap-1 font-medium cursor-pointer"
                       >
                         <Eye size={13} />
                         <span>Perbesar Foto Bukti</span>
@@ -280,90 +463,90 @@ export default function AdminOrdersPage() {
                 </div>
               </Show>
 
-              {/* Input Catatan Admin */}
-              <div>
-                <label class="block font-semibold text-[#0A0A0A] mb-1">
-                  Catatan Admin (Akan tampil pada timeline tracking pelanggan):
-                </label>
-                <input
-                  type="text"
-                  value={adminNote()}
-                  onInput={(e) => setAdminNote(e.currentTarget.value)}
-                  placeholder="Contoh: Bukti sah, pesanan dijadwalkan diproduksi / Alamat kurang detail..."
-                  class="input-base text-xs"
-                />
-              </div>
+                {/* Input Catatan Admin */}
+                <div>
+                  <label class="block font-semibold text-[#0A0A0A] mb-1">
+                    Catatan Admin (Akan tampil pada timeline tracking pelanggan):
+                  </label>
+                  <input
+                    type="text"
+                    value={adminNote()}
+                    onInput={(e) => setAdminNote(e.currentTarget.value)}
+                    placeholder="Contoh: Bukti sah, pesanan dijadwalkan diproduksi / Alamat kurang detail..."
+                    class="input-base text-xs"
+                  />
+                </div>
 
-              {/* Tombol Perubahan Cepat */}
-              <div class="pt-2 border-t border-[#E8E8EC] space-y-2">
-                <span class="font-semibold text-[#0A0A0A] block">
-                  Ubah Status Tahapan Pesanan:
-                </span>
+                {/* Tombol Perubahan Cepat */}
+                <div class="pt-2 border-t border-[#E8E8EC] space-y-2">
+                  <span class="font-semibold text-[#0A0A0A] block">
+                    Ubah Status Tahapan Pesanan:
+                  </span>
 
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  <button
-                    type="button"
-                    disabled={isUpdating()}
-                    onClick={() => handleUpdateStatus("dikonfirmasi")}
-                    class="btn-primary btn-sm flex items-center justify-center gap-1 cursor-pointer"
-                  >
-                    <CheckCircle size={13} />
-                    <span>Konfirmasi Sah</span>
-                  </button>
+                  <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    <button
+                      type="button"
+                      disabled={isUpdating()}
+                      onClick={() => handleUpdateStatus("dikonfirmasi")}
+                      class="btn-primary btn-sm flex items-center justify-center gap-1 cursor-pointer"
+                    >
+                      <CheckCircle size={13} />
+                      <span>Konfirmasi Sah</span>
+                    </button>
 
-                  <button
-                    type="button"
-                    disabled={isUpdating()}
-                    onClick={() => handleUpdateStatus("diproduksi")}
-                    class="btn-secondary btn-sm flex items-center justify-center gap-1 cursor-pointer"
-                  >
-                    <ChefHat size={13} />
-                    <span>Mulai Masak</span>
-                  </button>
+                    <button
+                      type="button"
+                      disabled={isUpdating()}
+                      onClick={() => handleUpdateStatus("diproduksi")}
+                      class="btn-secondary btn-sm flex items-center justify-center gap-1 cursor-pointer"
+                    >
+                      <ChefHat size={13} />
+                      <span>Mulai Masak</span>
+                    </button>
 
-                  <button
-                    type="button"
-                    disabled={isUpdating()}
-                    onClick={() => handleUpdateStatus("siap_diambil")}
-                    class="btn-secondary btn-sm flex items-center justify-center gap-1 cursor-pointer"
-                  >
-                    <PackageCheck size={13} />
-                    <span>Siap Diambil</span>
-                  </button>
+                    <button
+                      type="button"
+                      disabled={isUpdating()}
+                      onClick={() => handleUpdateStatus("siap_diambil")}
+                      class="btn-secondary btn-sm flex items-center justify-center gap-1 cursor-pointer"
+                    >
+                      <PackageCheck size={13} />
+                      <span>Siap Diambil</span>
+                    </button>
 
-                  <button
-                    type="button"
-                    disabled={isUpdating()}
-                    onClick={() => handleUpdateStatus("dikirim")}
-                    class="btn-secondary btn-sm flex items-center justify-center gap-1 cursor-pointer"
-                  >
-                    <Truck size={13} />
-                    <span>Kirim Kurir</span>
-                  </button>
+                    <button
+                      type="button"
+                      disabled={isUpdating()}
+                      onClick={() => handleUpdateStatus("dikirim")}
+                      class="btn-secondary btn-sm flex items-center justify-center gap-1 cursor-pointer"
+                    >
+                      <Truck size={13} />
+                      <span>Kirim Kurir</span>
+                    </button>
 
-                  <button
-                    type="button"
-                    disabled={isUpdating()}
-                    onClick={() => handleUpdateStatus("selesai")}
-                    class="btn-secondary btn-sm flex items-center justify-center gap-1 cursor-pointer text-[#10B981]"
-                  >
-                    <CheckCircle size={13} />
-                    <span>Pesanan Selesai</span>
-                  </button>
+                    <button
+                      type="button"
+                      disabled={isUpdating()}
+                      onClick={() => handleUpdateStatus("selesai")}
+                      class="btn-secondary btn-sm flex items-center justify-center gap-1 cursor-pointer text-[#10B981]"
+                    >
+                      <CheckCircle size={13} />
+                      <span>Pesanan Selesai</span>
+                    </button>
 
-                  <button
-                    type="button"
-                    disabled={isUpdating()}
-                    onClick={() => handleUpdateStatus("ditolak")}
-                    class="btn-destructive btn-sm flex items-center justify-center gap-1 cursor-pointer"
-                  >
-                    <XCircle size={13} />
-                    <span>Tolak Bukti</span>
-                  </button>
+                    <button
+                      type="button"
+                      disabled={isUpdating()}
+                      onClick={() => handleUpdateStatus("ditolak")}
+                      class="btn-destructive btn-sm flex items-center justify-center gap-1 cursor-pointer"
+                    >
+                      <XCircle size={13} />
+                      <span>Tolak Bukti</span>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Modal>
+            </Modal>
         </Show>
 
         {/* Modal Zoom Bukti Bayar */}
