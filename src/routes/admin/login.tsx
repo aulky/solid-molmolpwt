@@ -133,7 +133,7 @@ export default function AdminLoginPage() {
                 onInput={(e) => setPassword(e.currentTarget.value)}
                 onChange={(e) => setPassword(e.currentTarget.value)}
                 placeholder="Masukkan password"
-                class="input-base text-xs font-mono"
+                class="input-base text-xs"
                 style={{ "padding-left": "2.5rem", "padding-right": "2.5rem" }}
               />
               <Lock size={15} class="absolute left-3 top-1/2 -translate-y-1/2 text-[#9C9C9C] pointer-events-none" />

@@ -53,7 +53,7 @@ export async function POST(event: APIEvent) {
 
     if (!isWhitelisted) {
       await sendTelegramNotification(
-        `🔒 <b>[AKSES TERBATAS]</b>\n\nMohon maaf, Bot <b>@molmolpwt_bot</b> saat ini dikonfigurasi dalam mode akses khusus (whitelist).\n\n🆔 <b>User ID Telegram Anda:</b> <code>${escapeHtml(fromId)}</code>\n${username ? `👤 <b>Username:</b> @${escapeHtml(username)}\n` : ""}⚠️ <i>User ID Anda belum terdaftar dalam daftar izin. Silakan hubungi admin toko untuk menambahkan ID Anda ke daftar whitelist.</i>`,
+        `<b>[AKSES TERBATAS]</b>\n\nMohon maaf, Bot <b>@molmolpwt_bot</b> saat ini dikonfigurasi dalam mode akses khusus (whitelist).\n\n<b>User ID Telegram Anda:</b> <code>${escapeHtml(fromId)}</code>\n${username ? `<b>Username:</b> @${escapeHtml(username)}\n` : ""}<i>User ID Anda belum terdaftar. Silakan hubungi admin toko untuk menambahkan ID Anda ke daftar whitelist.</i>`,
         chatId
       );
       return new Response(JSON.stringify({ ok: true, error: "User not whitelisted" }), {
@@ -61,19 +61,19 @@ export async function POST(event: APIEvent) {
       });
     }
 
-    // Keyboard Telegram Menu Interaktif dengan Ikon Relevan
+    // Keyboard Telegram Menu Interaktif Bersih Tanpa Emotikon (Requirement 7)
     const botKeyboard = {
       keyboard: [
-        [{ text: "📦 /stok" }, { text: "🍪 /menu" }],
-        [{ text: "📝 /order" }, { text: "💳 /pembelian" }],
-        [{ text: "🔍 /status" }, { text: "📍 /lokasi" }],
-        [{ text: "📞 /kontak" }, { text: "ℹ️ /help" }],
+        [{ text: "/stok" }, { text: "/menu" }],
+        [{ text: "/order" }, { text: "/pembelian" }],
+        [{ text: "/status" }, { text: "/lokasi" }],
+        [{ text: "/kontak" }, { text: "/help" }],
       ],
       resize_keyboard: true,
       persistent: true,
     };
 
-    // Parsing Command & Argumen (Menangani '/cmd', '📦 /cmd', '/cmd@molmolpwt_bot', dsb.)
+    // Parsing Command & Argumen (Menangani '/cmd', '/cmd@molmolpwt_bot', dsb.)
     const tokens = rawText.split(/\s+/);
     let cmd = "";
     let arg = "";
@@ -140,7 +140,7 @@ export async function POST(event: APIEvent) {
     if (cmd === "start") {
       if (!arg) {
         await sendTelegramNotification(
-          `🍪 <b>SELAMAT DATANG DI BOT MOL-MOL PURWOKERTO</b>\n\nHalo <b>${escapeHtml(username || "Pelanggan Setia")}</b>! 👋\nLayanan bot resmi <b>Mol-Mol Purwokerto</b> siap membantu Anda mengecek stok pre-order, melihat menu, dan memantau pesanan secara otomatis.\n\n🔍 <b>Pantau Pesanan Anda:</b>\nKetik: <code>/lacak KODE_PESANAN</code>\nContoh: <code>/lacak MM-7K2P4Q</code>\n\n👇 <b>Menu Pintas Cepat:</b>\nGunakan tombol keyboard di bawah atau ketik perintah:\n• 📦 <code>/stok</code> — Cek sisa kuota batch & slot PO\n• 🍪 <code>/menu</code> — Lihat varian rasa & harga\n• 📝 <code>/order</code> — Panduan & link cara pesan\n• 💳 <code>/pembelian</code> — Info rekening bank & QRIS\n• 🔍 <code>/status</code> — Daftar pesanan yang Anda pantau\n• 📍 <code>/lokasi</code> — Alamat & titik pickup dapur\n• 📞 <code>/kontak</code> — Hubungi WhatsApp admin\n• ℹ️ <code>/help</code> — Bantuan lengkap perintah bot`,
+          `<b>[LAYANAN BOT PRE-ORDER MOL-MOL PURWOKERTO]</b>\n\nHalo <b>${escapeHtml(username || "Pelanggan")}</b>,\nLayanan bot resmi Mol-Mol Purwokerto siap membantu Anda mengecek stok pre-order, melihat menu, dan memantau status pesanan.\n\n<b>Pantau Pesanan Anda:</b>\nKetik: <code>/lacak KODE_PESANAN</code> (contoh: <code>/lacak MM-7K2P4Q</code>)\n\n<b>Menu Perintah:</b>\n• <code>/stok</code> — Cek sisa kuota batch & slot PO\n• <code>/menu</code> — Lihat varian rasa & harga\n• <code>/order</code> — Panduan & tautan pemesanan\n• <code>/pembelian</code> — Info rekening bank & QRIS\n• <code>/status</code> — Daftar pesanan yang Anda pantau\n• <code>/lokasi</code> — Alamat dapur & titik pengambilan\n• <code>/kontak</code> — Hubungi WhatsApp admin\n• <code>/help</code> — Bantuan lengkap perintah bot`,
           chatId,
           botKeyboard
         );
@@ -157,7 +157,7 @@ export async function POST(event: APIEvent) {
 
       if (foundOrders.length === 0) {
         await sendTelegramNotification(
-          `❌ <b>[PESANAN TIDAK DITEMUKAN]</b>\n\nKode pesanan <code>${escapeHtml(arg)}</code> tidak terdaftar di sistem Mol-Mol Purwokerto. Mohon periksa kembali kode Anda.`,
+          `<b>[PESANAN TIDAK DITEMUKAN]</b>\n\nKode pesanan <code>${escapeHtml(arg)}</code> tidak terdaftar di sistem Mol-Mol Purwokerto. Mohon periksa kembali kode Anda.`,
           chatId,
           botKeyboard
         );
@@ -170,7 +170,7 @@ export async function POST(event: APIEvent) {
       const statusLabel = order.status.replace(/_/g, " ").toUpperCase();
 
       await sendTelegramNotification(
-        `✅ <b>BERHASIL BERLANGGANAN NOTIFIKASI</b>\n\nPesanan Anda berhasil terhubung dengan akun Telegram ini:\n📦 <b>Kode Pesanan:</b> <code>${escapeHtml(order.shortCode)}</code>\n👤 <b>Nama Pemesan:</b> ${escapeHtml(order.customerName)}\n📊 <b>Status Terkini:</b> <b>${escapeHtml(statusLabel)}</b>\n\n🔔 <i>Sistem akan otomatis mengirimkan pesan ke chat ini setiap kali status pesanan Anda diperbarui oleh tim dapur Mol-Mol Purwokerto.</i>`,
+        `<b>[BERLANGGANAN NOTIFIKASI AKTIF]</b>\n\nPesanan berhasil terhubung dengan akun Telegram ini:\n<b>Kode Pesanan:</b> <code>${escapeHtml(order.shortCode)}</code>\n<b>Nama Pemesan:</b> ${escapeHtml(order.customerName)}\n<b>Status Terkini:</b> <b>${escapeHtml(statusLabel)}</b>\n\n<i>Sistem otomatis mengirimkan pesan ke chat ini setiap kali status pesanan diperbarui oleh tim Mol-Mol Purwokerto.</i>`,
         chatId,
         botKeyboard
       );
@@ -183,7 +183,7 @@ export async function POST(event: APIEvent) {
 
       if (!activeBatch) {
         await sendTelegramNotification(
-          `📦 <b>[INFORMASI STOK & KUOTA]</b>\n\n⚠️ Saat ini belum ada gelombang Pre-Order yang sedang dibuka.\nDapur Mol-Mol Purwokerto membuka pesanan secara berkala untuk menjaga kualitas dan kesegaran produk.\n\n🔔 <i>Pantau pengumuman pembukaan batch berikutnya atau ketik <code>/kontak</code> untuk tanya jadwal PO ke admin.</i>`,
+          `<b>[INFORMASI STOK & KUOTA]</b>\n\nSaat ini belum ada gelombang Pre-Order yang sedang dibuka.\nDapur Mol-Mol Purwokerto membuka pesanan secara berkala untuk menjaga kualitas dan kesegaran produk.\n\n<i>Pantau pengumuman batch berikutnya atau ketik <code>/kontak</code> untuk informasi lebih lanjut.</i>`,
           chatId,
           botKeyboard
         );
@@ -198,23 +198,23 @@ export async function POST(event: APIEvent) {
                 const stockInfo =
                   it.remainingStock !== null
                     ? `${it.remainingStock} porsi tersisa`
-                    : "Tersedia (Sesuai kuota batch)";
-                return `• 🍪 <b>${escapeHtml(it.name)}</b>: ${stockInfo} (${formatRupiah(it.effectivePrice)})`;
+                    : "Tersedia";
+                return `• <b>${escapeHtml(it.name)}</b>: ${stockInfo} (${formatRupiah(it.effectivePrice)})`;
               })
               .join("\n")
           : "<i>Belum ada item menu yang terhubung.</i>";
 
       const message = [
-        `📦 <b>STATUS KUOTA & JADWAL PRE-ORDER</b>`,
+        `<b>[STATUS KUOTA & JADWAL PRE-ORDER]</b>`,
         ``,
-        `✨ <b>Gelombang PO:</b> ${escapeHtml(activeBatch.code)} (${escapeHtml(activeBatch.title)})`,
-        `📊 <b>Kuota Batch:</b> ${activeBatch.quotaUsed} dari ${activeBatch.quotaTotal} slot terisi (Sisa <b>${remainingQuota} slot</b>)`,
-        `⏱️ <b>Batas Tutup PO:</b> ${formatTanggalWIB(activeBatch.orderCloseAt)}`,
-        `🚚 <b>Tanggal Pengiriman/Pickup:</b> ${formatTanggalWIB(activeBatch.deliveryDate, { includeTime: false })}`,
+        `<b>Gelombang PO:</b> ${escapeHtml(activeBatch.code)} (${escapeHtml(activeBatch.title)})`,
+        `<b>Kuota Batch:</b> ${activeBatch.quotaUsed} / ${activeBatch.quotaTotal} slot terisi (Sisa <b>${remainingQuota} slot</b>)`,
+        `<b>Batas Tutup PO:</b> ${formatTanggalWIB(activeBatch.orderCloseAt)}`,
+        `<b>Tanggal Pengiriman/Pickup:</b> ${formatTanggalWIB(activeBatch.deliveryDate, { includeTime: false })}`,
         ``,
-        `🍪 <b>Daftar Menu:</b>\n${itemsList}`,
+        `<b>Daftar Menu:</b>\n${itemsList}`,
         ``,
-        `👉 Ketik <code>/order</code> untuk panduan pemesanan melalui website resmi.`,
+        `Ketik <code>/order</code> untuk panduan pemesanan melalui website resmi.`,
       ].join("\n");
 
       await sendTelegramNotification(message, chatId, botKeyboard);
@@ -227,7 +227,7 @@ export async function POST(event: APIEvent) {
 
       if (!activeBatch || activeBatch.items.length === 0) {
         await sendTelegramNotification(
-          `🍪 <b>[KATALOG MENU PRE-ORDER]</b>\n\n⚠️ Saat ini belum ada menu aktif karena Pre-Order sedang ditutup atau menu sedang disiapkan. Silakan cek berkala atau ketik <code>/stok</code>.`,
+          `<b>[KATALOG MENU PRE-ORDER]</b>\n\nSaat ini belum ada menu aktif karena Pre-Order sedang ditutup atau menu sedang disiapkan. Silakan cek berkala atau ketik <code>/stok</code>.`,
           chatId,
           botKeyboard
         );
@@ -237,18 +237,18 @@ export async function POST(event: APIEvent) {
       const menuLines = activeBatch.items
         .map((it: any, index: number) => {
           const desc = it.description ? `\n  <i>${escapeHtml(it.description)}</i>` : "";
-          return `${index + 1}. 🍪 <b>${escapeHtml(it.name)}</b> — <b>${formatRupiah(it.effectivePrice)}</b>${desc}`;
+          return `${index + 1}. <b>${escapeHtml(it.name)}</b> — <b>${formatRupiah(it.effectivePrice)}</b>${desc}`;
         })
         .join("\n\n");
 
       const message = [
-        `🍪 <b>KATALOG MENU MOL-MOL PURWOKERTO</b>`,
+        `<b>[KATALOG MENU MOL-MOL PURWOKERTO]</b>`,
         ``,
         `Varian rasa spesial untuk gelombang <b>${escapeHtml(activeBatch.title)}</b>:`,
         ``,
         menuLines,
         ``,
-        `📝 <i>Pemesanan dilakukan langsung via website. Ketik <code>/order</code> untuk cara memesan.</i>`,
+        `<i>Pemesanan dilakukan langsung via website. Ketik <code>/order</code> untuk cara memesan.</i>`,
       ].join("\n");
 
       await sendTelegramNotification(message, chatId, botKeyboard);
@@ -260,25 +260,25 @@ export async function POST(event: APIEvent) {
       const baseUrl = process.env.BASE_URL || "http://localhost:3001";
       const activeBatch = await getActiveBatch();
       const batchInfo = activeBatch
-        ? `✨ Gelombang aktif saat ini: <b>${escapeHtml(activeBatch.title)}</b> (${escapeHtml(activeBatch.code)}).`
-        : `⚠️ Saat ini belum ada gelombang PO terbuka.`;
+        ? `Gelombang aktif: <b>${escapeHtml(activeBatch.title)}</b> (${escapeHtml(activeBatch.code)}).`
+        : `Saat ini belum ada gelombang PO terbuka.`;
 
       const message = [
-        `📝 <b>PANDUAN PEMESANAN PRE-ORDER</b>`,
+        `<b>[PANDUAN PEMESANAN PRE-ORDER]</b>`,
         ``,
         `${batchInfo}`,
         ``,
-        `🛒 <b>Langkah Mudah Memesan:</b>`,
-        `1️⃣ Kunjungi website resmi: <a href="${baseUrl}">${baseUrl}</a>`,
-        `2️⃣ Pilih varian menu Mol-Mol favorit dan atur jumlah pesanan`,
-        `3️⃣ Buka keranjang lalu klik tombol <b>Checkout Pesanan</b>`,
-        `4️⃣ <b>Step 1:</b> Masukkan Nama, Nomor WhatsApp, dan Username Telegram`,
-        `5️⃣ <b>Step 2:</b> Pilih Metode Antar (Pickup/Delivery/COD) & Bayar (QRIS/Transfer)`,
-        `6️⃣ Unggah foto bukti transfer dan kirim formulir pemesanan`,
-        `7️⃣ Simpan <b>Kode Pesanan (MM-XXXXXX)</b> Anda untuk melacak status`,
+        `<b>Langkah Memesan:</b>`,
+        `1. Kunjungi website resmi: <a href="${baseUrl}">${baseUrl}</a>`,
+        `2. Pilih varian menu Mol-Mol favorit dan atur kuantitas pesanan`,
+        `3. Buka keranjang lalu klik tombol <b>Checkout Pesanan</b>`,
+        `4. Masukkan Nama, Nomor WhatsApp, dan Username Telegram`,
+        `5. Pilih Metode Antar (Pickup/Delivery/COD) & Bayar (QRIS/Transfer)`,
+        `6. Unggah foto bukti transfer dan kirim formulir pemesanan`,
+        `7. Simpan <b>Kode Pesanan (MM-XXXXXX)</b> Anda untuk melacak status`,
         ``,
-        `🔍 <i>Ketik <code>/lacak KODE</code> untuk memantau status pesanan kapan saja.</i>`,
-        `💳 <i>Ketik <code>/pembelian</code> untuk rincian nomor rekening & QRIS toko.</i>`,
+        `<i>Ketik <code>/lacak KODE</code> untuk memantau status pesanan kapan saja.</i>`,
+        `<i>Ketik <code>/pembelian</code> untuk rincian nomor rekening & QRIS toko.</i>`,
       ].join("\n");
 
       await sendTelegramNotification(message, chatId, botKeyboard);
@@ -292,23 +292,23 @@ export async function POST(event: APIEvent) {
       const accountName = store?.bankAccountName || "Mol-Mol Purwokerto";
 
       const message = [
-        `💳 <b>METODE PEMBAYARAN & PEMBELIAN</b>`,
+        `<b>[METODE PEMBAYARAN & REKENING]</b>`,
         ``,
-        `Mol-Mol Purwokerto mendukung metode pembayaran aman berikut:`,
+        `Mol-Mol Purwokerto mendukung metode pembayaran berikut:`,
         ``,
-        `📱 <b>1. QRIS (Semua Bank & Dompet Digital)</b>`,
-        `• Scan barcode QRIS langsung di layar checkout web`,
+        `<b>1. QRIS (Semua Bank & Dompet Digital)</b>`,
+        `• Scan barcode QRIS langsung di layar checkout website`,
         `• Mendukung BCA, Mandiri, BRI, BNI, Dana, GoPay, OVO, ShopeePay, LinkAja`,
         ``,
-        `🏦 <b>2. Transfer Bank</b>`,
-        `• <b>Bank:</b> ${escapeHtml(bankName)}`,
-        `• <b>Nomor Rekening:</b> <code>${escapeHtml(accountNo)}</code>`,
-        `• <b>Atas Nama:</b> ${escapeHtml(accountName)}`,
+        `<b>2. Transfer Bank</b>`,
+        `• Bank: ${escapeHtml(bankName)}`,
+        `• Nomor Rekening: <code>${escapeHtml(accountNo)}</code>`,
+        `• Atas Nama: ${escapeHtml(accountName)}`,
         ``,
-        `🛵 <b>3. COD (Bayar di Tempat)</b>`,
-        `• Khusus opsi pengantaran kurir lokal area Purwokerto yang mengaktifkan fitur COD`,
+        `<b>3. COD (Bayar di Tempat)</b>`,
+        `• Khusus opsi pengantaran kurir area Purwokerto yang mengaktifkan fitur COD`,
         ``,
-        `⚠️ <i>Setelah transfer/QRIS, pastikan mengunggah foto struk/screenshot bukti transfer di formulir pemesanan web.</i>`,
+        `<i>Setelah transfer/QRIS, pastikan mengunggah foto struk bukti transfer di formulir pemesanan web.</i>`,
       ].join("\n");
 
       await sendTelegramNotification(message, chatId, botKeyboard);
@@ -317,7 +317,6 @@ export async function POST(event: APIEvent) {
 
     // 6. Perintah: /status atau /lacak atau /cek [kode]
     if (cmd === "status" || cmd === "lacak" || cmd === "cek" || cmd === "track") {
-      // Jika menyertakan kode pesanan (contoh: /status MM-7K2P4Q atau /lacak MM-7K2P4Q)
       if (arg) {
         const cleanArg = arg.toUpperCase();
         const found = await db
@@ -328,7 +327,7 @@ export async function POST(event: APIEvent) {
 
         if (found.length === 0) {
           await sendTelegramNotification(
-            `❌ <b>[PESANAN TIDAK DITEMUKAN]</b>\n\nPesanan dengan kode <code>${escapeHtml(arg)}</code> tidak ditemukan di sistem Mol-Mol Purwokerto. Mohon periksa kembali kode Anda.`,
+            `<b>[PESANAN TIDAK DITEMUKAN]</b>\n\nPesanan dengan kode <code>${escapeHtml(arg)}</code> tidak ditemukan di sistem Mol-Mol Purwokerto. Mohon periksa kembali kode Anda.`,
             chatId,
             botKeyboard
           );
@@ -342,17 +341,17 @@ export async function POST(event: APIEvent) {
         const paymentLabel = o.paymentStatus.replace(/_/g, " ").toUpperCase();
 
         const message = [
-          `🔍 <b>DETAIL STATUS PESANAN</b>`,
+          `<b>[DETAIL STATUS PESANAN]</b>`,
           ``,
-          `📦 <b>Kode Pesanan:</b> <code>${escapeHtml(o.shortCode)}</code>`,
-          `👤 <b>Nama Pemesan:</b> ${escapeHtml(o.customerName)}`,
-          `📊 <b>Status Pesanan:</b> <b>${escapeHtml(statusLabel)}</b>`,
-          `💳 <b>Status Bayar:</b> ${escapeHtml(paymentLabel)} (${escapeHtml(o.paymentMethod.toUpperCase())})`,
-          `🚚 <b>Metode Antar:</b> ${escapeHtml(o.fulfillment.toUpperCase())}`,
-          `💰 <b>Total Tagihan:</b> ${formatRupiah(o.total)}`,
-          o.adminNote ? `📝 <b>Catatan Toko:</b> ${escapeHtml(o.adminNote)}` : null,
+          `<b>Kode Pesanan:</b> <code>${escapeHtml(o.shortCode)}</code>`,
+          `<b>Nama Pemesan:</b> ${escapeHtml(o.customerName)}`,
+          `<b>Status Pesanan:</b> <b>${escapeHtml(statusLabel)}</b>`,
+          `<b>Status Bayar:</b> ${escapeHtml(paymentLabel)} (${escapeHtml(o.paymentMethod.toUpperCase())})`,
+          `<b>Metode Antar:</b> ${escapeHtml(o.fulfillment.toUpperCase())}`,
+          `<b>Total Tagihan:</b> ${formatRupiah(o.total)}`,
+          o.adminNote ? `<b>Catatan Toko:</b> ${escapeHtml(o.adminNote)}` : null,
           ``,
-          `🔔 <i>Anda otomatis didaftarkan untuk menerima pemberitahuan setiap ada pembaruan status pesanan ini.</i>`,
+          `<i>Anda otomatis didaftarkan menerima pemberitahuan setiap ada pembaruan status pesanan ini.</i>`,
         ]
           .filter(Boolean)
           .join("\n");
@@ -380,7 +379,7 @@ export async function POST(event: APIEvent) {
 
       if (subs.length === 0) {
         await sendTelegramNotification(
-          `📋 <b>[DAFTAR PESANAN ANDA]</b>\n\n🔍 Anda belum memantau pesanan manapun saat ini.\n\n👉 Ketik:\n<code>/lacak KODE_PESANAN</code> (contoh: <code>/lacak MM-7K2P4Q</code>)\nuntuk mengecek dan memantau status pesanan Anda secara otomatis.`,
+          `<b>[DAFTAR PESANAN ANDA]</b>\n\nAnda belum memantau pesanan manapun saat ini.\n\nKetik:\n<code>/lacak KODE_PESANAN</code> (contoh: <code>/lacak MM-7K2P4Q</code>)\nuntuk mengecek dan memantau status pesanan Anda secara otomatis.`,
           chatId,
           botKeyboard
         );
@@ -388,12 +387,12 @@ export async function POST(event: APIEvent) {
         const listText = subs
           .map(
             (s) =>
-              `• 📦 <b>${escapeHtml(s.shortCode)}</b> (${escapeHtml(s.customerName)}): <i>${escapeHtml(s.status.replace(/_/g, " ").toUpperCase())}</i>`
+              `• <b>${escapeHtml(s.shortCode)}</b> (${escapeHtml(s.customerName)}): <i>${escapeHtml(s.status.replace(/_/g, " ").toUpperCase())}</i>`
           )
           .join("\n");
 
         await sendTelegramNotification(
-          `📋 <b>[DAFTAR PESANAN YANG DIPANTAU]</b>\n\n${listText}\n\n💡 <i>Ketik <code>/lacak KODE_PESANAN</code> untuk memeriksa detail lengkap pesanan tertentu.</i>`,
+          `<b>[DAFTAR PESANAN YANG DIPANTAU]</b>\n\n${listText}\n\n<i>Ketik <code>/lacak KODE_PESANAN</code> untuk memeriksa rincian pesanan tertentu.</i>`,
           chatId,
           botKeyboard
         );
@@ -412,14 +411,14 @@ export async function POST(event: APIEvent) {
         : "08:00 - 20:00 WIB (Setiap Hari)";
 
       const message = [
-        `📍 <b>LOKASI & TITIK PENGAMBILAN TOKO</b>`,
+        `<b>[LOKASI & TITIK PENGAMBILAN TOKO]</b>`,
         ``,
-        `🍪 <b>Mol-Mol Purwokerto</b>`,
-        `🏠 <b>Alamat Dapur:</b> ${escapeHtml(address)}`,
-        `🗺️ <b>Peta Google Maps:</b> <a href="${mapsUrl}">Buka Petunjuk Arah</a>`,
-        `⏰ <b>Jam Operasional:</b> ${escapeHtml(hoursText)}`,
+        `<b>Mol-Mol Purwokerto</b>`,
+        `<b>Alamat Dapur:</b> ${escapeHtml(address)}`,
+        `<b>Peta Google Maps:</b> <a href="${mapsUrl}">Buka Petunjuk Arah</a>`,
+        `<b>Jam Operasional:</b> ${escapeHtml(hoursText)}`,
         ``,
-        `📦 <i>Pengambilan pesanan mandiri (pickup) dilakukan sesuai jadwal tanggal batch PO yang berlaku.</i>`,
+        `<i>Pengambilan pesanan mandiri (pickup) dilakukan sesuai jadwal tanggal batch PO yang berlaku.</i>`,
       ].join("\n");
 
       await sendTelegramNotification(message, chatId, botKeyboard);
@@ -432,13 +431,13 @@ export async function POST(event: APIEvent) {
       const cleanPhone = phone.replace(/[^0-9]/g, "");
 
       const message = [
-        `📞 <b>LAYANAN PELANGGAN & KONTAK ADMIN</b>`,
+        `<b>[LAYANAN PELANGGAN & KONTAK ADMIN]</b>`,
         ``,
         `Ada pertanyaan seputar menu, kuota batch, atau kendala pemesanan?`,
         ``,
-        `💬 <b>WhatsApp Admin:</b> <a href="https://wa.me/${cleanPhone}">+${cleanPhone}</a>`,
-        `🌐 <b>Website Resmi:</b> <a href="${process.env.BASE_URL || "http://localhost:3001"}">Mol-Mol Purwokerto</a>`,
-        `⏰ <b>Jam Fast Response:</b> 08:00 - 20:00 WIB`,
+        `<b>WhatsApp Admin:</b> <a href="https://wa.me/${cleanPhone}">+${cleanPhone}</a>`,
+        `<b>Website Resmi:</b> <a href="${process.env.BASE_URL || "http://localhost:3001"}">Mol-Mol Purwokerto</a>`,
+        `<b>Jam Operasional:</b> 08:00 - 20:00 WIB`,
         ``,
         `<i>Tim admin kami siap melayani pada jam operasional dapur.</i>`,
       ].join("\n");
@@ -451,7 +450,7 @@ export async function POST(event: APIEvent) {
     if (cmd === "pesanan" || cmd === "rekap") {
       if (!isAdmin) {
         await sendTelegramNotification(
-          `🔒 <b>[AKSES TERBATAS]</b>\n\nPerintah ini hanya dapat diakses oleh Administrator Toko Mol-Mol Purwokerto.`,
+          `<b>[AKSES TERBATAS]</b>\n\nPerintah ini hanya dapat diakses oleh Administrator Toko Mol-Mol Purwokerto.`,
           chatId,
           botKeyboard
         );
@@ -473,7 +472,7 @@ export async function POST(event: APIEvent) {
 
       if (pendingOrders.length === 0) {
         await sendTelegramNotification(
-          `🔔 <b>[REKAP PESANAN ADMIN]</b>\n\n✅ Saat ini tidak ada pesanan yang menunggu verifikasi bukti bayar. Seluruh pesanan telah diproses.`,
+          `<b>[REKAP PESANAN ADMIN]</b>\n\nSaat ini tidak ada pesanan yang menunggu verifikasi bukti bayar. Seluruh pesanan telah diproses.`,
           chatId,
           botKeyboard
         );
@@ -481,12 +480,12 @@ export async function POST(event: APIEvent) {
         const orderLines = pendingOrders
           .map(
             (o) =>
-              `• 📦 <b>${escapeHtml(o.shortCode)}</b>: ${escapeHtml(o.customerName)} — ${formatRupiah(o.total)} (${escapeHtml(o.paymentMethod.toUpperCase())})`
+              `• <b>${escapeHtml(o.shortCode)}</b>: ${escapeHtml(o.customerName)} — ${formatRupiah(o.total)} (${escapeHtml(o.paymentMethod.toUpperCase())})`
           )
           .join("\n");
 
         await sendTelegramNotification(
-          `🔔 <b>[PESANAN PERLU VERIFIKASI: ${pendingOrders.length} ORDER]</b>\n\n${orderLines}\n\n👉 <i>Silakan periksa detail bukti bayar di Dashboard Admin.</i>`,
+          `<b>[PESANAN PERLU VERIFIKASI: ${pendingOrders.length} ORDER]</b>\n\n${orderLines}\n\n<i>Silakan periksa detail bukti bayar di Dashboard Admin.</i>`,
           chatId,
           botKeyboard
         );
@@ -497,11 +496,11 @@ export async function POST(event: APIEvent) {
 
     // 10. Perintah: /help atau fallback untuk semua input lainnya
     const adminGuide = isAdmin
-      ? `\n\n🔐 <b>Perintah Khusus Admin:</b>\n• 🔔 <code>/pesanan</code> — Cek daftar pesanan yang menunggu verifikasi`
+      ? `\n\n<b>Perintah Khusus Admin:</b>\n• <code>/pesanan</code> — Cek daftar pesanan yang menunggu verifikasi`
       : "";
 
     await sendTelegramNotification(
-      `ℹ️ <b>PANDUAN BOT MOL-MOL PURWOKERTO</b>\n\nBerikut daftar perintah yang dapat Anda gunakan:\n\n• 📦 <code>/stok</code> — Cek sisa kuota batch & slot PO\n• 🍪 <code>/menu</code> — Lihat varian menu & harga\n• 📝 <code>/order</code> — Panduan & link pemesanan online\n• 💳 <code>/pembelian</code> — Info rekening bank & QRIS\n• 🔍 <code>/lacak KODE</code> — Cek status pesanan Anda\n• 📋 <code>/status</code> — Daftar pesanan yang Anda pantau\n• 📍 <code>/lokasi</code> — Alamat dapur & titik pengambilan\n• 📞 <code>/kontak</code> — Kontak WhatsApp admin toko\n• ℹ️ <code>/help</code> — Menampilkan panduan ini${adminGuide}\n\n💡 <i>Tips: Anda juga bisa langsung mengetik kode pesanan seperti <code>MM-7K2P4Q</code> untuk melacak status pesanan secara instan!</i>`,
+      `<b>[PANDUAN BOT MOL-MOL PURWOKERTO]</b>\n\nBerikut daftar perintah yang dapat Anda gunakan:\n\n• <code>/stok</code> — Cek sisa kuota batch & slot PO\n• <code>/menu</code> — Lihat varian menu & harga\n• <code>/order</code> — Panduan & link pemesanan online\n• <code>/pembelian</code> — Info rekening bank & QRIS\n• <code>/lacak KODE</code> — Cek status pesanan Anda\n• <code>/status</code> — Daftar pesanan yang Anda pantau\n• <code>/lokasi</code> — Alamat dapur & titik pengambilan\n• <code>/kontak</code> — Kontak WhatsApp admin toko\n• <code>/help</code> — Menampilkan panduan ini${adminGuide}\n\n<i>Tips: Anda juga bisa langsung mengetik kode pesanan seperti <code>MM-7K2P4Q</code> untuk melacak status pesanan secara instan.</i>`,
       chatId,
       botKeyboard
     );
