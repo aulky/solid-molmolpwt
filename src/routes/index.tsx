@@ -63,12 +63,7 @@ function NoActiveBatchView(props: {
         <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-3xl bg-[#6366F1]/10 border border-[#6366F1]/20 flex items-center justify-center text-[#6366F1]">
           <CalendarX size={36} strokeWidth={1.75} />
         </div>
-
         <div class="space-y-2">
-          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-700 text-xs font-semibold">
-            <span>Pre-Order Sedang Ditutup</span>
-          </div>
-
           <h1 class="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0A0A0A] tracking-tight">
             Belum Ada Gelombang Pre-Order yang Dibuka
           </h1>

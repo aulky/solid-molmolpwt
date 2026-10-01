@@ -22,7 +22,6 @@ test.describe("Alur Landing Page & Katalog Pre-Order Mol-Mol Purwokerto", () => 
       await expect(productCards.first()).toBeVisible();
     } else {
       // Jika tidak ada batch aktif, verifikasi tombol WhatsApp & informasi toko
-      await expect(page.locator("text=Pre-Order Sedang Ditutup")).toBeVisible();
       await expect(page.locator("text=Tanya Jadwal PO via WhatsApp")).toBeVisible();
       await expect(page.locator("text=Lacak Pesanan Sebelumnya")).toBeVisible();
     }

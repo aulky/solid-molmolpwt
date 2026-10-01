@@ -1,5 +1,6 @@
 import type { APIEvent } from "@solidjs/start/server";
 import { createOrder } from "~/lib/services/order";
+import { formatSafeErrorMessage } from "~/lib/debug";
 
 export async function POST(event: APIEvent) {
   try {
@@ -15,7 +16,7 @@ export async function POST(event: APIEvent) {
     return new Response(
       JSON.stringify({
         success: false,
-        error: err?.message || "Terjadi kesalahan saat memproses pesanan Anda.",
+        error: formatSafeErrorMessage(err, "Terjadi kesalahan saat memproses pesanan Anda."),
       }),
       {
         status: 400,

@@ -38,6 +38,7 @@ export function PaymentProofUpload(props: PaymentProofUploadProps) {
   const [isUploading, setIsUploading] = createSignal(false);
   const [errorMsg, setErrorMsg] = createSignal<string | null>(null);
   const [copiedId, setCopiedId] = createSignal<string | null>(null);
+  const [localPreview, setLocalPreview] = createSignal<string | null>(null);
 
   // Daftar opsi pembayaran transfer & e-wallet
   const channels = (): PaymentChannel[] => {
@@ -82,10 +83,16 @@ export function PaymentProofUpload(props: PaymentProofUploadProps) {
     if (!input.files || input.files.length === 0) return;
 
     const file = input.files[0];
-    if (file.size > 8 * 1024 * 1024) {
-      setErrorMsg("Ukuran file maksimal 8 MB.");
+    if (file.size > 4 * 1024 * 1024) {
+      setErrorMsg("Ukuran file maksimal 4 MB.");
       return;
     }
+
+    // Tampilkan pratinjau lokal instan
+    try {
+      const objUrl = URL.createObjectURL(file);
+      setLocalPreview(objUrl);
+    } catch {}
 
     setIsUploading(true);
     setErrorMsg(null);
@@ -251,7 +258,7 @@ export function PaymentProofUpload(props: PaymentProofUploadProps) {
           />
 
           <Show
-            when={!props.uploadedPath}
+            when={!localPreview() && !props.uploadedPath}
             fallback={
               <div class="flex flex-col items-center py-2">
                 <CheckCircle2 size={30} class="text-[#10B981] mb-1.5" />
@@ -262,9 +269,9 @@ export function PaymentProofUpload(props: PaymentProofUploadProps) {
                   Klik untuk mengganti foto lain jika salah
                 </span>
                 <img
-                  src={props.uploadedPath!}
+                  src={localPreview() || props.uploadedPath!}
                   alt="Preview Bukti"
-                  class="mt-3 max-h-32 rounded-[6px] border border-[#E8E8EC] object-cover"
+                  class="mt-3 max-h-36 rounded-[6px] border border-[#E8E8EC] object-contain shadow-xs bg-white"
                 />
               </div>
             }
@@ -279,7 +286,7 @@ export function PaymentProofUpload(props: PaymentProofUploadProps) {
                       Pilih atau Seret Foto Bukti Pembayaran
                     </span>
                     <span class="text-[11px] text-[#6B6B6B] mt-0.5">
-                      Format JPG, PNG, atau WebP (Maksimal 8 MB)
+                      Format JPG, PNG, atau WebP (Maksimal 4 MB)
                     </span>
                   </>
                 }
