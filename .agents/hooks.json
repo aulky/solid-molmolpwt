@@ -1,0 +1,7 @@
+{
+  "frontier-track":   { "PostToolUse": [{ "matcher": "*", "hooks": [{ "type": "command", "command": "node hooks/track-tools.mjs", "timeout": 15 }] }] },
+  "frontier-context": { "PreInvocation": [{ "type": "command", "command": "node hooks/inject-context.mjs", "timeout": 10 }] },
+  "frontier-gate":    { "Stop": [{ "type": "command", "command": "node hooks/quality-gate.mjs", "timeout": 20 }] },
+  "frontier-guard":   { "enabled": false, "PreToolUse": [{ "matcher": "run_command", "hooks": [{ "type": "command", "command": "node hooks/command-guard.mjs", "timeout": 5 }] }] },
+  "frontier-orchestrator-guard": { "enabled": true, "PreToolUse": [{ "matcher": "write_to_file|replace_file_content|multi_replace_file_content|invoke_subagent", "hooks": [{ "type": "command", "command": "node hooks/orchestrator-guard.mjs", "timeout": 5 }] }] }
+}

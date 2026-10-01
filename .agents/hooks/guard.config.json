@@ -1,0 +1,16 @@
+{
+  "$comment": "Config for the PreToolUse hooks. command-guard.mjs (run_command) ships DISABLED: enable it in .agents/hooks.json by setting \"frontier-guard\".enabled to true; its built-in rules always apply (catastrophic commands -> deny, risky commands -> force_ask). orchestrator-guard.mjs (edit tools + invoke_subagent) ships ENABLED: it denies workspace edits and malformed invoke_subagent waves in the ORCHESTRATOR conversation only, and returns \"orchestratorGuardPassthrough\" for every other call. \"allow\" (default) auto-approves those calls, bypassing Antigravity's permission prompt: this matches users who run with always-proceed / proceed-in-sandbox. \"ask\" makes Antigravity prompt instead (cached 'Always allow' grants still apply). Test changes with: node --test .agents/hooks/test/hooks.test.mjs",
+  "defaultDecision": "ask",
+  "defaultDecisionOptions": {
+    "ask": "Recommended. Commands that match no rule go through Antigravity's normal permission prompt, which still honours the user's cached 'Always allow' grants.",
+    "allow": "Auto-approves every command that matches no rule and BYPASSES the user's permission policy. Fewer prompts in a trusted sandbox, but any destructive command the rules do not cover runs without asking. Use only in disposable environments."
+  },
+  "extraDeny": [],
+  "extraForceAsk": [],
+  "extraRulesFormat": "Each entry is { \"pattern\": \"<JavaScript regex, case-insensitive>\", \"reason\": \"<short label>\" }. Invalid regexes are ignored. Example: { \"pattern\": \"\\\\bprisma\\\\s+migrate\\\\s+reset\\\\b\", \"reason\": \"prisma migrate reset\" }",
+  "orchestratorGuardPassthrough": "allow",
+  "orchestratorGuardPassthroughOptions": {
+    "allow": "Default. Edits by workers and valid invoke_subagent waves are auto-approved (Antigravity always-proceed / proceed-in-sandbox behaviour).",
+    "ask": "Those calls go through Antigravity's normal permission prompt instead. Use this if you review edits by hand."
+  }
+}
