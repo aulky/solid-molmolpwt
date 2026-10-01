@@ -1,10 +1,12 @@
 import { JSX, createSignal, onMount, Show } from "solid-js";
-import { A, useLocation } from "@solidjs/router";
+import { A, useLocation, useNavigate } from "@solidjs/router";
 import { Modal } from "../ui/Modal";
 import {
   initAdminAuth,
   setAdminAuth,
   clearAdminAuth,
+  shouldReverifyAuth,
+  markAuthVerified,
   type AdminUser,
 } from "~/lib/adminAuthStore";
 import {
@@ -33,8 +35,9 @@ interface AdminLayoutProps {
 
 export function AdminLayout(props: AdminLayoutProps) {
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const [currentUser, setCurrentUser] = createSignal<AdminUser | null>(initAdminAuth());
+  const [currentUser, setCurrentUser] = createSignal<AdminUser | null>(null);
   const [isAuthenticated, setIsAuthenticated] = createSignal(false);
   const [authChecking, setAuthChecking] = createSignal(true);
   const [mobileSidebarOpen, setMobileSidebarOpen] = createSignal(false);
@@ -48,7 +51,12 @@ export function AdminLayout(props: AdminLayoutProps) {
   const [passwordSuccess, setPasswordSuccess] = createSignal<string | null>(null);
   const [passwordError, setPasswordError] = createSignal<string | null>(null);
 
-  const checkAuth = async () => {
+  const checkAuth = async (isBackground = false) => {
+    // Lewatkan fetch jika sesi sudah aktif dan diverifikasi dalam 60 detik terakhir
+    if (isBackground && !shouldReverifyAuth()) {
+      return;
+    }
+
     try {
       const res = await fetch("/api/admin/me", { credentials: "include" });
       const data = await res.json();
@@ -61,17 +69,31 @@ export function AdminLayout(props: AdminLayoutProps) {
       setCurrentUser(data.user);
       setAdminAuth(data.user);
       setIsAuthenticated(true);
+      markAuthVerified();
     } catch (e) {
-      clearAdminAuth();
-      setIsAuthenticated(false);
-      window.location.replace("/admin/login");
+      if (!isBackground) {
+        clearAdminAuth();
+        setIsAuthenticated(false);
+        window.location.replace("/admin/login");
+      }
     } finally {
       setAuthChecking(false);
     }
   };
 
   onMount(() => {
-    checkAuth();
+    // onMount hanya dieksekusi di browser setelah SSR selesai, mencegah hydration mismatch
+    const user = initAdminAuth();
+    if (user) {
+      setCurrentUser(user);
+      setIsAuthenticated(true);
+      setAuthChecking(false);
+      // Lakukan silent background re-verifikasi secara berkala
+      checkAuth(true);
+    } else {
+      // Jika belum ada user lokal, lakukan blocking check ke server
+      checkAuth(false);
+    }
   });
 
   const navItems = [
@@ -95,7 +117,7 @@ export function AdminLayout(props: AdminLayoutProps) {
     } catch (e) {
       // Abaikan
     }
-    window.location.href = "/admin/login";
+    navigate("/admin/login", { replace: true });
   };
 
   const handleChangePassword = async (e: Event) => {
@@ -293,11 +315,23 @@ export function AdminLayout(props: AdminLayoutProps) {
         {/* Content Wrapper (Offset by sidebar on desktop) */}
         <div class="flex-1 md:pl-64 flex flex-col min-w-0">
           {/* Top Bar for Desktop */}
-          <header class="hidden md:flex h-16 bg-white border-b border-[#E8E8EC] px-6 sm:px-8 items-center sticky top-0 z-20">
+          <header class="hidden md:flex h-16 bg-white border-b border-[#E8E8EC] px-6 sm:px-8 items-center justify-between sticky top-0 z-20">
             <div class="flex items-center gap-2 text-xs font-medium text-[#6B6B6B]">
               <span>Admin</span>
               <span>/</span>
               <span class="text-[#0A0A0A] font-semibold">{props.title}</span>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={handleLogout}
+                class="btn-secondary btn-sm text-xs h-8 px-3 flex items-center gap-1.5 cursor-pointer text-[#EF4444] hover:bg-[#EF4444]/10 hover:border-[#EF4444]/30"
+                title="Keluar dari Panel Admin"
+              >
+                <LogOut size={13} />
+                <span>Keluar</span>
+              </button>
             </div>
           </header>
 

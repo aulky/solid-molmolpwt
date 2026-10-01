@@ -1,6 +1,6 @@
-import { eq, desc, and } from "drizzle-orm";
+import { eq, desc, and, isNull } from "drizzle-orm";
 import { db } from "../db";
-import { batches, batchItems, menuItems } from "../db/schema";
+import { batches, batchItems, menuItems, orders } from "../db/schema";
 
 export async function getActiveBatch() {
   try {
@@ -35,7 +35,14 @@ export async function getActiveBatch() {
       })
       .from(batchItems)
       .innerJoin(menuItems, eq(batchItems.menuItemId, menuItems.id))
-      .where(and(eq(batchItems.batchId, batch.id), eq(batchItems.isAvailable, true)));
+      .where(
+        and(
+          eq(batchItems.batchId, batch.id),
+          eq(batchItems.isAvailable, true),
+          isNull(menuItems.deletedAt),
+          eq(menuItems.isActive, true)
+        )
+      );
 
     // Hitung sisa stok dan harga efektif
     const itemsWithStock = items.map((item) => {
@@ -99,7 +106,14 @@ export async function getAllActiveBatches() {
         })
         .from(batchItems)
         .innerJoin(menuItems, eq(batchItems.menuItemId, menuItems.id))
-        .where(and(eq(batchItems.batchId, batch.id), eq(batchItems.isAvailable, true)));
+        .where(
+          and(
+            eq(batchItems.batchId, batch.id),
+            eq(batchItems.isAvailable, true),
+            isNull(menuItems.deletedAt),
+            eq(menuItems.isActive, true)
+          )
+        );
 
       const itemsWithStock = items.map((item) => {
         const effectivePrice = item.priceOverride ?? item.basePrice;
@@ -282,4 +296,26 @@ export async function updateBatchItemStock(
       isAvailable,
     })
     .where(eq(batchItems.id, batchItemId));
+}
+
+export async function deleteBatch(batchId: number) {
+  // Periksa apakah batch ini memiliki relasi pesanan
+  const relatedOrders = await db
+    .select({ id: orders.id })
+    .from(orders)
+    .where(eq(orders.batchId, batchId))
+    .limit(1);
+
+  if (relatedOrders.length > 0) {
+    throw new Error(
+      "Batch tidak dapat dihapus permanen karena sudah memiliki riwayat pesanan. Anda dapat mengubah statusnya menjadi 'closed' atau 'cancelled'."
+    );
+  }
+
+  // Hapus item-item dalam batch terlebih dahulu
+  await db.delete(batchItems).where(eq(batchItems.batchId, batchId));
+
+  // Hapus batch dari database
+  await db.delete(batches).where(eq(batches.id, batchId));
+  return true;
 }

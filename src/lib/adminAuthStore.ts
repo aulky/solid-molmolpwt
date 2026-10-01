@@ -12,6 +12,19 @@ const STORAGE_KEY = "molmol_admin_user";
 // Shared reactive signal antar komponen admin
 export const [currentAdmin, setCurrentAdmin] = createSignal<AdminUser | null>(null);
 
+// Timestamp terakhir verifikasi sukses ke endpoint /api/admin/me
+let lastVerifiedTimestamp = 0;
+const REVERIFY_INTERVAL_MS = 60 * 1000; // 60 detik throttle agar tidak fetch berulang setiap klik menu
+
+export function shouldReverifyAuth(): boolean {
+  if (!currentAdmin()) return true;
+  return Date.now() - lastVerifiedTimestamp > REVERIFY_INTERVAL_MS;
+}
+
+export function markAuthVerified() {
+  lastVerifiedTimestamp = Date.now();
+}
+
 /**
  * Membaca data admin secara sinkron dari in-memory signal atau client storage.
  * Menghilangkan delay loading dan kedipan layar saat navigasi antar menu admin.
@@ -45,6 +58,7 @@ export function initAdminAuth(): AdminUser | null {
  */
 export function setAdminAuth(user: AdminUser) {
   setCurrentAdmin(user);
+  markAuthVerified();
   if (typeof window !== "undefined") {
     try {
       const serialized = JSON.stringify(user);
@@ -61,6 +75,7 @@ export function setAdminAuth(user: AdminUser) {
  */
 export function clearAdminAuth() {
   setCurrentAdmin(null);
+  lastVerifiedTimestamp = 0;
   if (typeof window !== "undefined") {
     try {
       sessionStorage.removeItem(STORAGE_KEY);

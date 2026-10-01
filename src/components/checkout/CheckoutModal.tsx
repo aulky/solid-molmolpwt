@@ -21,7 +21,7 @@ import {
 interface CheckoutModalProps {
   isOpen: boolean;
   onClose: () => void;
-  batch: BatchInfo;
+  batch: BatchInfo | null;
   cartItems: Array<{ product: CatalogProduct; qty: number }>;
   storeSettings: StoreSettingsData;
   onSuccess: () => void;
@@ -69,8 +69,8 @@ export function CheckoutModal(props: CheckoutModalProps) {
     return calculateOrderPricing({
       items,
       fulfillment: fulfillment(),
-      flatDeliveryFee: props.batch.deliveryFeeFlat || props.storeSettings.flatDeliveryFee,
-      freeDeliveryMin: props.batch.freeDeliveryMin ?? props.storeSettings.freeDeliveryMin,
+      flatDeliveryFee: props.batch?.deliveryFeeFlat ?? props.storeSettings.flatDeliveryFee,
+      freeDeliveryMin: props.batch?.freeDeliveryMin ?? props.storeSettings.freeDeliveryMin,
     });
   });
 
@@ -122,8 +122,9 @@ export function CheckoutModal(props: CheckoutModalProps) {
     setIsSubmitting(true);
 
     try {
+      const bId = props.batch ? props.batch.id : 0;
       const payload = {
-        batchId: props.batch.id,
+        batchId: bId,
         customerName: customerName().trim(),
         customerPhone: customerPhone().trim(),
         customerTelegram: customerTelegram().trim() || undefined,
@@ -136,7 +137,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
         locationSource: gpsData().locationSource,
         paymentMethod: paymentMethod(),
         paymentProofPath: paymentProofPath(),
-        idempotencyKey: `ord-${props.batch.id}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        idempotencyKey: `ord-${bId}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
         items: props.cartItems.map((ci) => ({
           batchItemId: ci.product.batchItemId,
           menuItemId: ci.product.menuItemId,
@@ -433,11 +434,11 @@ export function CheckoutModal(props: CheckoutModalProps) {
                     />
                     <span>Ambil di Tempat</span>
                     <span class="text-[11px] font-normal text-[#6B6B6B] mt-1">
-                      Gratis • Jam {props.batch.pickupStart || "13:00"} - {props.batch.pickupEnd || "17:00"} WIB
+                      Gratis • Jam {props.batch?.pickupStart || "13:00"} - {props.batch?.pickupEnd || "17:00"} WIB
                     </span>
                   </label>
 
-                  <Show when={props.batch.allowDelivery}>
+                  <Show when={props.batch?.allowDelivery ?? true}>
                     <label
                       class={`p-3 rounded-lg border text-xs cursor-pointer flex flex-col justify-between transition ${
                         fulfillment() === "delivery"
@@ -460,7 +461,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
                     </label>
                   </Show>
 
-                  <Show when={props.batch.allowCod}>
+                  <Show when={props.batch?.allowCod ?? false}>
                     <label
                       class={`p-3 rounded-lg border text-xs cursor-pointer flex flex-col justify-between transition ${
                         fulfillment() === "cod"

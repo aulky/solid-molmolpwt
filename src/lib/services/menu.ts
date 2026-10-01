@@ -1,6 +1,6 @@
 import { eq, isNull, and, desc } from "drizzle-orm";
 import { db } from "../db";
-import { menuItems, categories } from "../db/schema";
+import { menuItems, categories, batchItems } from "../db/schema";
 
 export async function getAllMenuItems(includeInactive = false) {
   try {
@@ -134,6 +134,11 @@ export async function softDeleteMenuItem(id: number) {
     .update(menuItems)
     .set({ deletedAt: new Date(), isActive: false })
     .where(eq(menuItems.id, id));
+
+  await db
+    .update(batchItems)
+    .set({ isAvailable: false })
+    .where(eq(batchItems.menuItemId, id));
 }
 
 export async function getAllCategories() {

@@ -31,3 +31,9 @@ public/uploads/*
 # System Files
 .DS_Store
 Thumbs.db
+
+# Test outputs & Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/

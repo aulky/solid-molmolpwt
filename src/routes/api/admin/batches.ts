@@ -1,5 +1,5 @@
 import type { APIEvent } from "@solidjs/start/server";
-import { getAllBatches, createBatch, updateBatch } from "~/lib/services/batch";
+import { getAllBatches, createBatch, updateBatch, deleteBatch } from "~/lib/services/batch";
 import { getAdminFromSession, SESSION_COOKIE_NAME } from "~/lib/auth";
 
 export async function GET(event: APIEvent) {
@@ -97,5 +97,32 @@ export async function PUT(event: APIEvent) {
     return new Response(JSON.stringify({ success: true }), { status: 200 });
   } catch (err: any) {
     return new Response(JSON.stringify({ error: err?.message }), { status: 500 });
+  }
+}
+
+export async function DELETE(event: APIEvent) {
+  try {
+    const cookie = event.request.headers.get("cookie") || "";
+    const match = cookie.match(new RegExp(`(?:^|; )${SESSION_COOKIE_NAME}=([^;]*)`));
+    const token = match ? decodeURIComponent(match[1]) : null;
+    const admin = await getAdminFromSession(token);
+
+    if (!admin) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+    }
+
+    const url = new URL(event.request.url);
+    const id = Number(url.searchParams.get("id"));
+    if (!id) {
+      return new Response(JSON.stringify({ error: "ID batch wajib dicantumkan" }), { status: 400 });
+    }
+
+    await deleteBatch(id);
+    return new Response(JSON.stringify({ success: true }), { status: 200 });
+  } catch (err: any) {
+    return new Response(JSON.stringify({ error: err?.message || "Gagal menghapus batch" }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }

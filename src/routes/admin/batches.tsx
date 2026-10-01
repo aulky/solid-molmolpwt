@@ -14,6 +14,7 @@ import {
   MapPin,
   Navigation,
   ExternalLink,
+  Trash2,
 } from "lucide-solid";
 
 export default function AdminBatchesPage() {
@@ -244,6 +245,30 @@ export default function AdminBatchesPage() {
     }
   };
 
+  const handleDeleteBatch = async (id: number, batchCode: string) => {
+    if (
+      !confirm(
+        `Yakin ingin menghapus batch "${batchCode}"? Jika belum ada pesanan, batch akan dihapus permanen.`
+      )
+    ) {
+      return;
+    }
+    try {
+      const res = await fetch(`/api/admin/batches?id=${id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        alert(data.error || "Gagal menghapus batch");
+        return;
+      }
+      await fetchBatches();
+    } catch (e: any) {
+      alert(e?.message || "Gagal menghapus batch");
+    }
+  };
+
   return (
     <AdminLayout title="Manajemen Gelombang Pre-Order (Batch PO)">
       <div class="space-y-6">
@@ -332,15 +357,26 @@ export default function AdminBatchesPage() {
                     <span>Ongkir: {formatRupiah(b.deliveryFeeFlat)}</span>
                     <span>• Min Gratis: {formatRupiah(b.freeDeliveryMin || 0)}</span>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => openEditModal(b)}
-                    class="btn-secondary btn-sm text-[11px] h-7 px-2.5 flex items-center gap-1 cursor-pointer hover:text-[#6366F1] shrink-0"
-                    title="Edit Batch PO"
-                  >
-                    <Edit3 size={12} />
-                    <span>Edit Batch</span>
-                  </button>
+                  <div class="flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => openEditModal(b)}
+                      class="btn-secondary btn-sm text-[11px] h-7 px-2.5 flex items-center gap-1 cursor-pointer hover:text-[#6366F1] shrink-0"
+                      title="Edit Batch PO"
+                    >
+                      <Edit3 size={12} />
+                      <span>Edit</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteBatch(b.id, b.code)}
+                      class="btn-secondary btn-sm text-[11px] h-7 px-2.5 flex items-center gap-1 cursor-pointer text-[#EF4444] hover:bg-[#EF4444]/10 hover:border-[#EF4444]/30 shrink-0"
+                      title="Hapus Batch PO"
+                    >
+                      <Trash2 size={12} />
+                      <span>Hapus</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             )}

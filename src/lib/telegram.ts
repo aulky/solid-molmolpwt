@@ -1,6 +1,19 @@
 import { formatRupiah } from "./pricing";
 
 /**
+ * Escape string untuk aman digunakan dalam format HTML Telegram Bot API
+ */
+export function escapeHtml(str: string | null | undefined): string {
+  if (!str) return "";
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+/**
  * Mengirim pesan teks notifikasi ke Telegram via Telegram Bot API
  */
 export async function sendTelegramNotification(
@@ -13,6 +26,7 @@ export async function sendTelegramNotification(
 
   if (!token || !chatId) {
     // Mode offline / belum dikonfigurasi
+    console.warn("Telegram bot token atau targetChatId belum dikonfigurasi.");
     return false;
   }
 
@@ -36,11 +50,70 @@ export async function sendTelegramNotification(
     });
 
     const data = await response.json();
+    if (!data.ok) {
+      console.error("Telegram API Error:", data.description || data);
+
+      // Fallback: Jika gagal karena entity HTML parsing error, kirim ulang sebagai plain text
+      if (typeof data.description === "string" && data.description.includes("can't parse entities")) {
+        const plainText = textHtml.replace(/<[^>]*>/g, "");
+        const retryRes = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...bodyPayload,
+            text: plainText,
+            parse_mode: undefined,
+          }),
+        });
+        const retryData = await retryRes.json();
+        return !!retryData.ok;
+      }
+    }
     return !!data.ok;
   } catch (err) {
     console.error("Gagal mengirim notifikasi Telegram:", err);
     return false;
   }
+}
+
+/**
+ * Ambil daftar user ID dan username yang masuk whitelist Telegram
+ */
+export function getWhitelistedTelegramUsers(): string[] {
+  const envWhitelist = process.env.TELEGRAM_WHITELIST_USERS || "";
+  const adminId = process.env.TELEGRAM_ADMIN_CHAT_ID || "";
+
+  const all = `${envWhitelist},${adminId}`
+    .split(/[,;\s]+/)
+    .map((item) => item.trim().replace(/^@/, "").toLowerCase())
+    .filter(Boolean);
+
+  return Array.from(new Set(all));
+}
+
+/**
+ * Periksa apakah user pengirim masuk dalam daftar whitelist Telegram
+ */
+export function isTelegramUserWhitelisted(
+  userId: string | number | undefined | null,
+  username?: string | null,
+  extraWhitelist?: string[]
+): boolean {
+  const list = [
+    ...getWhitelistedTelegramUsers(),
+    ...(extraWhitelist || []).map((s) => s.trim().replace(/^@/, "").toLowerCase()),
+  ].filter(Boolean);
+
+  // Jika whitelist tidak dikonfigurasi, semua diizinkan
+  if (list.length === 0) return true;
+
+  const idStr = String(userId || "").trim().toLowerCase();
+  const unameStr = (username || "").trim().replace(/^@/, "").toLowerCase();
+
+  return (
+    (idStr !== "" && list.includes(idStr)) ||
+    (unameStr !== "" && list.includes(unameStr))
+  );
 }
 
 /**
@@ -84,16 +157,16 @@ export async function notifyAdminNewOrder(order: {
   const message = [
     `<b>[PESANAN PRE-ORDER BARU]</b>`,
     ``,
-    `<b>Kode Pesanan:</b> <code>${order.shortCode}</code>`,
-    `<b>ID:</b> <code>${order.id}</code>`,
-    `<b>Pemesan:</b> ${order.customerName} (WA: <a href="https://wa.me/${order.customerPhone}">${order.customerPhone}</a>)`,
+    `<b>Kode Pesanan:</b> <code>${escapeHtml(order.shortCode)}</code>`,
+    `<b>ID:</b> <code>${escapeHtml(order.id)}</code>`,
+    `<b>Pemesan:</b> ${escapeHtml(order.customerName)} (WA: <a href="https://wa.me/${order.customerPhone}">${escapeHtml(order.customerPhone)}</a>)`,
     `<b>Metode Antar:</b> ${fulfillmentLabel}`,
-    order.addressText ? `<b>Alamat:</b> ${order.addressText}` : null,
+    order.addressText ? `<b>Alamat:</b> ${escapeHtml(order.addressText)}` : null,
     mapsLink ? `<b>Lokasi GPS:</b> <a href="${mapsLink}">Buka di Google Maps</a>` : null,
     ``,
-    `<b>Rincian Menu:</b>\n${order.itemsSummary}`,
+    `<b>Rincian Menu:</b>\n${escapeHtml(order.itemsSummary)}`,
     ``,
-    `<b>Metode Bayar:</b> ${order.paymentMethod.toUpperCase()}`,
+    `<b>Metode Bayar:</b> ${escapeHtml(order.paymentMethod.toUpperCase())}`,
     `<b>Total Tagihan:</b> ${formatRupiah(order.total)}`,
     order.paymentProofUrl
       ? `<b>Bukti Bayar:</b> <a href="${order.paymentProofUrl}">Lihat Foto Bukti</a>`

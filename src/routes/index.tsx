@@ -6,7 +6,18 @@ import { BatchHero, BatchInfo } from "~/components/catalog/BatchHero";
 import { ProductCard, CatalogProduct } from "~/components/catalog/ProductCard";
 import { CheckoutModal } from "~/components/checkout/CheckoutModal";
 import { formatRupiah, formatTanggalWIB } from "~/lib/pricing";
-import { ShoppingBag, ArrowRight, MapPin, Phone, ShieldCheck } from "lucide-solid";
+import {
+  ShoppingBag,
+  ArrowRight,
+  MapPin,
+  Phone,
+  ShieldCheck,
+  CalendarX,
+  Sparkles,
+  MessageCircle,
+  Search,
+  Clock,
+} from "lucide-solid";
 
 // Data loader server function
 const getHomePageData = query(async () => {
@@ -26,6 +37,93 @@ const getHomePageData = query(async () => {
     return { batches: [], batch: null, settings: null };
   }
 }, "homePageData");
+
+function NoActiveBatchView(props: {
+  settings: StoreSettingsData;
+  announcement?: string | null;
+}) {
+  const waUrl = () => {
+    const phone = props.settings.adminPhone || "6281234567890";
+    const cleanPhone = phone.replace(/[^0-9]/g, "");
+    return `https://wa.me/${cleanPhone}?text=Halo%20Admin%20Mol-Mol%20Purwokerto,%20saya%20ingin%20tanya%20kapan%20jadwal%20Pre-Order%20berikutnya%20dibuka?`;
+  };
+
+  return (
+    <div class="space-y-6 max-w-3xl mx-auto py-6 sm:py-10">
+      {/* Pengumuman Toko jika aktif */}
+      <Show when={props.announcement}>
+        <div class="bg-gradient-to-r from-[#6366F1]/10 via-[#20970B]/10 to-[#6366F1]/10 border border-[#6366F1]/20 rounded-xl p-3 px-4 flex items-center gap-2.5 text-xs sm:text-sm text-[#0A0A0A]">
+          <Sparkles size={16} class="text-[#6366F1] shrink-0" />
+          <span class="font-medium">{props.announcement}</span>
+        </div>
+      </Show>
+
+      {/* Main Empty State Card */}
+      <div class="card-surface p-8 sm:p-12 bg-white border border-[#E8E8EC] rounded-2xl text-center space-y-6 shadow-xs">
+        <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-3xl bg-[#6366F1]/10 border border-[#6366F1]/20 flex items-center justify-center text-[#6366F1]">
+          <CalendarX size={36} strokeWidth={1.75} />
+        </div>
+
+        <div class="space-y-2">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-700 text-xs font-semibold">
+            <span>Pre-Order Sedang Ditutup</span>
+          </div>
+
+          <h1 class="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0A0A0A] tracking-tight">
+            Belum Ada Gelombang Pre-Order yang Dibuka
+          </h1>
+
+          <p class="text-sm text-[#6B6B6B] leading-relaxed max-w-lg mx-auto font-body">
+            Saat ini dapur <strong>Mol-Mol Purwokerto</strong> belum membuka gelombang pemesanan baru. Kami membuka pre-order secara berkala demi menjaga kesegaran dan kerenyahan camilan khas kami.
+          </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+          <a
+            href={waUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#20970B] hover:bg-[#197B08] text-white text-sm font-semibold shadow-xs transition active:scale-[0.98]"
+          >
+            <MessageCircle size={17} />
+            <span>Tanya Jadwal PO via WhatsApp</span>
+          </a>
+
+          <a
+            href="/track"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#F4F4F5] hover:bg-[#E4E4E7] text-[#0A0A0A] text-sm font-medium transition active:scale-[0.98]"
+          >
+            <Search size={16} />
+            <span>Lacak Pesanan Sebelumnya</span>
+          </a>
+        </div>
+
+        {/* Info Tambahan */}
+        <div class="pt-6 border-t border-[#E8E8EC] grid grid-cols-1 sm:grid-cols-2 gap-3 text-left text-xs text-[#6B6B6B]">
+          <div class="p-3 rounded-lg bg-[#FAFAFA] border border-[#E8E8EC]/80 flex items-start gap-2.5">
+            <Clock size={16} class="text-[#6366F1] shrink-0 mt-0.5" />
+            <div>
+              <span class="font-semibold text-[#0A0A0A] block">Jam Dapur & Admin</span>
+              <span>
+                {props.settings.operationalHours?.open || "08:00"} -{" "}
+                {props.settings.operationalHours?.close || "20:00"} WIB (
+                {props.settings.operationalHours?.days || "Setiap Hari"})
+              </span>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-lg bg-[#FAFAFA] border border-[#E8E8EC]/80 flex items-start gap-2.5">
+            <MapPin size={16} class="text-[#6366F1] shrink-0 mt-0.5" />
+            <div>
+              <span class="font-semibold text-[#0A0A0A] block">Wilayah Pengantaran</span>
+              <span>Purwokerto, Banyumas & sekitarnya</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   const data = createAsync(() => getHomePageData());
@@ -84,8 +182,8 @@ export default function Home() {
     return [];
   });
 
-  // Fallback data jika database belum terisi atau koneksi MySQL belum aktif
-  const currentBatch = createMemo((): BatchInfo => {
+  // Ambil batch aktif dari database secara dinamis (null jika tidak ada batch terbuka)
+  const currentBatch = createMemo((): BatchInfo | null => {
     const list = activeBatches();
     if (list.length > 0) {
       const selId = selectedBatchId();
@@ -95,89 +193,16 @@ export default function Home() {
       }
       return list[0] as BatchInfo;
     }
-
-    // Fallback batch demonstrasi
-    const now = new Date();
-    return {
-      id: 1,
-      code: "PO-PURWOKERTO-SAMPLE",
-      title: "Pre-Order Spesial Camilan Mol-Mol Purwokerto",
-      description: "Batch pre-order segar diolah higienis untuk pengantaran & pengambilan area Purwokerto sekitarnya.",
-      orderCloseAt: new Date(now.getTime() + 5 * 24 * 60 * 60 * 1000),
-      deliveryDate: new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000),
-      pickupStart: "13:00",
-      pickupEnd: "17:00",
-      quotaTotal: 50,
-      quotaUsed: 18,
-      deliveryFeeFlat: 10000,
-      freeDeliveryMin: 75000,
-      allowPickup: true,
-      allowDelivery: true,
-      allowCod: true,
-    };
+    return null;
   });
 
+  // Ambil daftar produk aktif yang terhubung dengan batch (kosong jika tidak ada)
   const productList = createMemo((): CatalogProduct[] => {
     const b = currentBatch() as any;
-    if (b && b.items && b.items.length > 0) {
+    if (b && b.items && Array.isArray(b.items)) {
       return b.items as CatalogProduct[];
     }
-
-    // Fallback demo menu
-    return [
-      {
-        batchItemId: 1,
-        menuItemId: 1,
-        sku: "MM-ORIGINAL",
-        name: "Mol-Mol Original Wijen",
-        description: "Camilan mol-mol klasik khas Purwokerto dengan taburan wijen renyah di luar, lembut dan kenyal gurih di dalam.",
-        effectivePrice: 20000,
-        remainingStock: 25,
-        isOutOfStock: false,
-        imagePath: "/images/molmol-original.svg",
-        weightGrams: 250,
-        maxPerOrder: 20,
-      },
-      {
-        batchItemId: 2,
-        menuItemId: 2,
-        sku: "MM-COKLAT",
-        name: "Mol-Mol Coklat Lumer",
-        description: "Mol-mol lembut dengan isian coklat lumer premium yang meleleh di mulut saat dinikmati hangat bersama teh atau kopi.",
-        effectivePrice: 25000,
-        remainingStock: 12,
-        isOutOfStock: false,
-        imagePath: "/images/molmol-coklat.svg",
-        weightGrams: 250,
-        maxPerOrder: 20,
-      },
-      {
-        batchItemId: 3,
-        menuItemId: 3,
-        sku: "MM-KEJU",
-        name: "Mol-Mol Keju Gurih",
-        description: "Perpaduan rasa gurih keju cheddar parut melimpah di dalam adonan kenyal harum khas resep Mol-Mol Purwokerto.",
-        effectivePrice: 26000,
-        remainingStock: 5,
-        isOutOfStock: false,
-        imagePath: "/images/molmol-keju.svg",
-        weightGrams: 250,
-        maxPerOrder: 20,
-      },
-      {
-        batchItemId: 4,
-        menuItemId: 4,
-        sku: "MM-MIX",
-        name: "Mol-Mol Mix Aneka Rasa",
-        description: "Paket komplit isi 10 pcs aneka rasa favorit (Original, Coklat, Keju) sangat cocok untuk dinikmati bersama keluarga.",
-        effectivePrice: 28000,
-        remainingStock: 18,
-        isOutOfStock: false,
-        imagePath: "/images/molmol-mix.svg",
-        weightGrams: 300,
-        maxPerOrder: 20,
-      },
-    ];
+    return [];
   });
 
   const storeSettings = createMemo((): StoreSettingsData => {
@@ -230,109 +255,138 @@ export default function Home() {
     <div class="min-h-screen bg-[#FAFAFA] flex flex-col justify-between">
       {/* Container Konten Utama */}
       <div class="max-w-6xl mx-auto px-4 py-6 sm:py-8 w-full space-y-8 pb-28">
-        {/* Multi-Batch Switcher if multiple active batches exist */}
-        <Show when={activeBatches().length > 1}>
-          <div class="card-surface p-4 bg-white border border-[#E8E8EC] rounded-xl space-y-3">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-              <div class="flex items-center gap-2">
-                <span class="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">
-                  Tersedia {activeBatches().length} Gelombang Pre-Order
+        <Show
+          when={currentBatch()}
+          fallback={
+            <NoActiveBatchView
+              settings={storeSettings()}
+              announcement={
+                storeSettings().announcementActive ? storeSettings().announcementText : null
+              }
+            />
+          }
+        >
+          {/* Multi-Batch Switcher if multiple active batches exist */}
+          <Show when={activeBatches().length > 1}>
+            <div class="card-surface p-4 bg-white border border-[#E8E8EC] rounded-xl space-y-3">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">
+                    Tersedia {activeBatches().length} Gelombang Pre-Order
+                  </span>
+                </div>
+                <span class="text-[11px] text-[#6B6B6B]">
+                  Klik gelombang PO di bawah untuk melihat jadwal, kuota & menu:
                 </span>
               </div>
-              <span class="text-[11px] text-[#6B6B6B]">
-                Klik gelombang PO di bawah untuk melihat jadwal, kuota & menu:
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                <For each={activeBatches()}>
+                  {(b: any) => {
+                    const isSelected = () => currentBatch()?.id === b.id;
+                    const remaining = Math.max(0, b.quotaTotal - b.quotaUsed);
+                    return (
+                      <button
+                        type="button"
+                        onClick={() => setSelectedBatchId(b.id)}
+                        class={`p-3 rounded-lg border text-left transition-all cursor-pointer flex flex-col justify-between gap-2 ${
+                          isSelected()
+                            ? "bg-[#6366F1]/5 border-[#6366F1] shadow-xs ring-1 ring-[#6366F1]/30"
+                            : "bg-[#FAFAFA] border-[#E8E8EC] hover:border-[#6366F1]/40 hover:bg-white"
+                        }`}
+                      >
+                        <div class="flex items-center justify-between gap-2">
+                          <span
+                            class={`font-mono text-xs font-bold ${
+                              isSelected() ? "text-[#6366F1]" : "text-[#0A0A0A]"
+                            }`}
+                          >
+                            {b.code}
+                          </span>
+                          <Show
+                            when={isSelected()}
+                            fallback={
+                              <span class="text-[10px] text-[#6B6B6B] bg-[#E8E8EC]/60 px-1.5 py-0.5 rounded font-mono">
+                                Lihat PO
+                              </span>
+                            }
+                          >
+                            <span class="text-[10px] bg-[#6366F1] text-white px-2 py-0.5 rounded font-semibold">
+                              Dipilih
+                            </span>
+                          </Show>
+                        </div>
+
+                        <h4 class="font-heading font-semibold text-xs text-[#0A0A0A] line-clamp-1">
+                          {b.title}
+                        </h4>
+
+                        <div class="flex items-center justify-between text-[11px] text-[#6B6B6B] pt-1.5 border-t border-[#E8E8EC]/80">
+                          <span>Kirim: {formatTanggalWIB(b.deliveryDate, { includeTime: false })}</span>
+                          <span class="font-mono font-medium text-[#6366F1]">Sisa {remaining} slot</span>
+                        </div>
+                      </button>
+                    );
+                  }}
+                </For>
+              </div>
+            </div>
+          </Show>
+
+          {/* Banner Hero Batch PO */}
+          <BatchHero
+            batch={currentBatch()}
+            announcement={
+              storeSettings().announcementActive ? storeSettings().announcementText : null
+            }
+          />
+
+          {/* Section Heading Katalog */}
+          <div class="flex flex-wrap items-baseline justify-between gap-2 pt-4">
+            <div>
+              <span class="text-xs font-mono uppercase text-[#6B6B6B] tracking-wider block">
+                Menu Pilihan • {currentBatch()?.code}
               </span>
+              <h2 class="font-heading text-xl sm:text-2xl font-bold text-[#0A0A0A]">
+                Katalog Pre-Order
+              </h2>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
-              <For each={activeBatches()}>
-                {(b: any) => {
-                  const isSelected = () => currentBatch().id === b.id;
-                  const remaining = Math.max(0, b.quotaTotal - b.quotaUsed);
-                  return (
-                    <button
-                      type="button"
-                      onClick={() => setSelectedBatchId(b.id)}
-                      class={`p-3 rounded-lg border text-left transition-all cursor-pointer flex flex-col justify-between gap-2 ${
-                        isSelected()
-                          ? "bg-[#6366F1]/5 border-[#6366F1] shadow-xs ring-1 ring-[#6366F1]/30"
-                          : "bg-[#FAFAFA] border-[#E8E8EC] hover:border-[#6366F1]/40 hover:bg-white"
-                      }`}
-                    >
-                      <div class="flex items-center justify-between gap-2">
-                        <span
-                          class={`font-mono text-xs font-bold ${
-                            isSelected() ? "text-[#6366F1]" : "text-[#0A0A0A]"
-                          }`}
-                        >
-                          {b.code}
-                        </span>
-                        <Show
-                          when={isSelected()}
-                          fallback={
-                            <span class="text-[10px] text-[#6B6B6B] bg-[#E8E8EC]/60 px-1.5 py-0.5 rounded font-mono">
-                              Lihat PO
-                            </span>
-                          }
-                        >
-                          <span class="text-[10px] bg-[#6366F1] text-white px-2 py-0.5 rounded font-semibold">
-                            Dipilih
-                          </span>
-                        </Show>
-                      </div>
+            <div class="text-xs text-[#6B6B6B]">
+              Pilih varian rasa favorit Anda untuk {currentBatch()?.title}
+            </div>
+          </div>
 
-                      <h4 class="font-heading font-semibold text-xs text-[#0A0A0A] line-clamp-1">
-                        {b.title}
-                      </h4>
-
-                      <div class="flex items-center justify-between text-[11px] text-[#6B6B6B] pt-1.5 border-t border-[#E8E8EC]/80">
-                        <span>Kirim: {formatTanggalWIB(b.deliveryDate, { includeTime: false })}</span>
-                        <span class="font-mono font-medium text-[#6366F1]">Sisa {remaining} slot</span>
-                      </div>
-                    </button>
-                  );
-                }}
+          {/* Grid Kartu Produk atau Tampilan Menu Kosong */}
+          <Show
+            when={productList().length > 0}
+            fallback={
+              <div class="card-surface p-10 sm:p-14 bg-white border border-[#E8E8EC] rounded-2xl text-center space-y-3">
+                <div class="w-14 h-14 mx-auto rounded-2xl bg-[#6366F1]/10 flex items-center justify-center text-[#6366F1]">
+                  <ShoppingBag size={28} />
+                </div>
+                <h3 class="font-heading text-lg font-bold text-[#0A0A0A]">
+                  Menu Sedang Disiapkan
+                </h3>
+                <p class="text-xs sm:text-sm text-[#6B6B6B] max-w-md mx-auto">
+                  Belum ada menu yang diaktifkan untuk gelombang pre-order ini. Silakan pantau berkala atau hubungi admin.
+                </p>
+              </div>
+            }
+          >
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              <For each={productList()}>
+                {(product) => (
+                  <ProductCard
+                    product={product}
+                    cartQty={cartMap()[product.batchItemId] || 0}
+                    onUpdateQty={(q) => updateCartQty(product.batchItemId, q)}
+                  />
+                )}
               </For>
             </div>
-          </div>
+          </Show>
         </Show>
-
-        {/* Banner Hero Batch PO */}
-        <BatchHero
-          batch={currentBatch()}
-          announcement={
-            storeSettings().announcementActive ? storeSettings().announcementText : null
-          }
-        />
-
-        {/* Section Heading Katalog */}
-        <div class="flex flex-wrap items-baseline justify-between gap-2 pt-4">
-          <div>
-            <span class="text-xs font-mono uppercase text-[#6B6B6B] tracking-wider block">
-              Menu Pilihan • {currentBatch().code}
-            </span>
-            <h2 class="font-heading text-xl sm:text-2xl font-bold text-[#0A0A0A]">
-              Katalog Pre-Order
-            </h2>
-          </div>
-
-          <div class="text-xs text-[#6B6B6B]">
-            Pilih varian rasa favorit Anda untuk {currentBatch().title}
-          </div>
-        </div>
-
-        {/* Grid Kartu Produk (4 Kolom pada desktop, 2 pada tablet, 1 pada HP) */}
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          <For each={productList()}>
-            {(product) => (
-              <ProductCard
-                product={product}
-                cartQty={cartMap()[product.batchItemId] || 0}
-                onUpdateQty={(q) => updateCartQty(product.batchItemId, q)}
-              />
-            )}
-          </For>
-        </div>
       </div>
 
       {/* Floating / Sticky Mobile Cart Bar (Section 8.2 PLAN.md) */}
@@ -367,14 +421,18 @@ export default function Home() {
       </Show>
 
       {/* Modal Dialog Checkout */}
-      <CheckoutModal
-        isOpen={isCheckoutOpen()}
-        onClose={() => setIsCheckoutOpen(false)}
-        batch={currentBatch()}
-        cartItems={cartSummary().itemsList}
-        storeSettings={storeSettings()}
-        onSuccess={() => clearCart()}
-      />
+      <Show when={currentBatch()}>
+        {(batch) => (
+          <CheckoutModal
+            isOpen={isCheckoutOpen()}
+            onClose={() => setIsCheckoutOpen(false)}
+            batch={batch()}
+            cartItems={cartSummary().itemsList}
+            storeSettings={storeSettings()}
+            onSuccess={() => clearCart()}
+          />
+        )}
+      </Show>
 
       {/* Footer Toko UMKM */}
       <footer class="bg-white border-t border-[#E8E8EC] py-10 mt-12 text-[#6B6B6B] text-xs">
