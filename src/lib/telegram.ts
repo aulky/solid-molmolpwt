@@ -154,11 +154,18 @@ export async function notifyAdminNewOrder(order: {
       ? "[DELIVERY] Diantar Kurir"
       : "[COD] Bayar di Tempat";
 
+  // Pastikan URL bukti bayar berupa tautan absolut (http/https) agar Telegram API valid memproses tag HTML <a>
+  const baseUrl = (process.env.BASE_URL || "http://localhost:3001").replace(/\/+$/, "");
+  let proofUrl = order.paymentProofUrl;
+  if (proofUrl && !proofUrl.startsWith("http://") && !proofUrl.startsWith("https://")) {
+    proofUrl = `${baseUrl}${proofUrl.startsWith("/") ? "" : "/"}${proofUrl}`;
+  }
+
   const message = [
     `<b>[PESANAN PRE-ORDER BARU]</b>`,
     ``,
     `<b>Kode Pesanan:</b> <code>${escapeHtml(order.shortCode)}</code>`,
-    `<b>ID:</b> <code>${escapeHtml(order.id)}</code>`,
+    `<b>Order ID:</b> <code>${escapeHtml(order.id)}</code>`,
     `<b>Pemesan:</b> ${escapeHtml(order.customerName)} (WA: <a href="https://wa.me/${order.customerPhone}">${escapeHtml(order.customerPhone)}</a>)`,
     `<b>Metode Antar:</b> ${fulfillmentLabel}`,
     order.addressText ? `<b>Alamat:</b> ${escapeHtml(order.addressText)}` : null,
@@ -168,8 +175,8 @@ export async function notifyAdminNewOrder(order: {
     ``,
     `<b>Metode Bayar:</b> ${escapeHtml(order.paymentMethod.toUpperCase())}`,
     `<b>Total Tagihan:</b> ${formatRupiah(order.total)}`,
-    order.paymentProofUrl
-      ? `<b>Bukti Bayar:</b> <a href="${order.paymentProofUrl}">Lihat Foto Bukti</a>`
+    proofUrl
+      ? `<b>Bukti Bayar:</b> <a href="${escapeHtml(proofUrl)}">Lihat Foto Bukti</a>`
       : null,
   ]
     .filter(Boolean)

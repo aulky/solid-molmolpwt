@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   notifySubscriberStatusChanged,
+  notifyAdminNewOrder,
   getTelegramBotDeepLink,
   escapeHtml,
   sendTelegramNotification,
@@ -152,6 +153,44 @@ describe("Telegram Bot Notification & Formatting", () => {
     expect(resStranger.status).toBe(200);
     const bodyStranger = await resStranger.json();
     expect(bodyStranger.error).toBe("User not whitelisted");
+
+    fetchSpy.mockRestore();
+  });
+
+  it("formats notifyAdminNewOrder with absolute hyperlink for Bukti Bayar", async () => {
+    const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue({
+      ok: true,
+      json: async () => ({ ok: true }),
+    } as any);
+
+    process.env.TELEGRAM_BOT_TOKEN = "test_token";
+    process.env.TELEGRAM_ADMIN_CHAT_ID = "123456";
+    process.env.BASE_URL = "http://localhost:3001";
+
+    await notifyAdminNewOrder({
+      shortCode: "MM-4XZ98K",
+      id: "abc-123-uuid",
+      customerName: "Budi Santoso",
+      customerPhone: "081234567890",
+      fulfillment: "delivery",
+      addressText: "Jl. HR Bunyamin No. 10",
+      latitude: -7.4243,
+      longitude: 109.2486,
+      itemsSummary: "• Mol-Mol Coklat Keju x2",
+      total: 50000,
+      paymentMethod: "qris",
+      paymentProofUrl: "/uploads/proofs/1727827438-test.jpg",
+    });
+
+    expect(fetchSpy).toHaveBeenCalled();
+    const requestBody = JSON.parse(fetchSpy.mock.calls[0][1]?.body as string);
+    const messageText: string = requestBody.text;
+
+    expect(messageText).toContain("MM-4XZ98K");
+    expect(messageText).toContain("<b>Order ID:</b> <code>abc-123-uuid</code>");
+    expect(messageText).toContain(
+      '<b>Bukti Bayar:</b> <a href="http://localhost:3001/uploads/proofs/1727827438-test.jpg">Lihat Foto Bukti</a>'
+    );
 
     fetchSpy.mockRestore();
   });
