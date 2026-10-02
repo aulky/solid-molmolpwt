@@ -70,7 +70,7 @@ export const trackSearchSchema = z.object({
   query: z
     .string()
     .trim()
-    .min(5, "Masukkan Order ID UUID atau Kode Pesanan (MM-XXXXXX)")
+    .min(5, "Masukkan Order ID atau Kode Pesanan (MM-XXXXXX)")
     .max(50),
   phoneLast4: z.string().trim().length(4, "Harus 4 digit terakhir nomor HP").optional(),
 });

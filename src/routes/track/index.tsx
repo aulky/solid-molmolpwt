@@ -11,7 +11,7 @@ export default function TrackSearchPage() {
     e.preventDefault();
     const q = queryInput().trim();
     if (!q || q.length < 5) {
-      setErrorMsg("Masukkan Kode Pesanan (MM-XXXXXX) atau UUID pesanan Anda.");
+      setErrorMsg("Masukkan Kode Pesanan (MM-XXXXXX) atau Order ID pesanan Anda.");
       return;
     }
 
@@ -37,14 +37,14 @@ export default function TrackSearchPage() {
         <form onSubmit={handleSearch} class="space-y-4">
           <div>
             <label class="block text-xs font-semibold text-[#0A0A0A] mb-1">
-              Kode Pesanan atau Order ID UUID <span class="text-[#EF4444]">*</span>
+              Kode Pesanan atau Order ID <span class="text-[#EF4444]">*</span>
             </label>
             <input
               type="text"
               required
               value={queryInput()}
               onInput={(e) => setQueryInput(e.currentTarget.value)}
-              placeholder="Contoh: MM-7K2P4Q atau UUID"
+              placeholder="Contoh: MM-7K2P4Q atau Order ID"
               class="input-base font-mono uppercase"
             />
             <span class="text-[11px] text-[#6B6B6B] block mt-1">

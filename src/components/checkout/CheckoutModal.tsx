@@ -223,7 +223,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
               </div>
 
               <div class="text-[11px] font-mono text-[#9C9C9C] break-all pt-1 border-t border-[#E8E8EC]">
-                Order ID UUID: {successOrder()?.orderId}
+                Order ID: {successOrder()?.orderId}
               </div>
             </div>
 
