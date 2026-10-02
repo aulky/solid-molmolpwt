@@ -166,7 +166,7 @@ export default function AdminProductionPage() {
                         <Show when={item.customers && item.customers.length > 0}>
                           <div class="space-y-1.5 pt-1">
                             <span class="text-[11px] font-semibold text-[#6366F1] block uppercase tracking-wider">
-                              Spil Nama Pemesan ({item.customers.length} orang):
+                              Customers({item.customers.length} orang):
                             </span>
                             <div class="flex flex-wrap gap-1.5">
                               <For each={item.customers}>
