@@ -10,6 +10,7 @@ import {
   XCircle,
   Eye,
   ExternalLink,
+  Receipt,
   MapPin,
   Clock,
   Truck,
@@ -236,8 +237,32 @@ export default function AdminOrdersPage() {
                             </a>
                           </Show>
                         </td>
-                        <td class="p-3 font-semibold text-[#0A0A0A]">
-                          {formatRupiah(o.total)}
+                        <td class="p-3">
+                          <span class="font-semibold text-[#0A0A0A] block">
+                            {formatRupiah(o.total)}
+                          </span>
+                          <Show
+                            when={o.paymentProofPath}
+                            fallback={
+                              <Show when={o.fulfillment === "cod"}>
+                                <span class="text-[10px] text-[#9C9C9C] block mt-0.5">
+                                  Bayar COD
+                                </span>
+                              </Show>
+                            }
+                          >
+                            <a
+                              href={o.paymentProofPath}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              class="inline-flex items-center gap-1 text-[11px] text-[#6366F1] hover:underline font-medium mt-0.5"
+                              title="Buka foto bukti transaksi / pembayaran"
+                            >
+                              <Receipt size={11} class="text-[#6366F1]" />
+                              <span>Bukti Bayar</span>
+                              <ExternalLink size={10} />
+                            </a>
+                          </Show>
                         </td>
                         <td class="p-3">
                           <OrderStatusBadge status={o.status} />

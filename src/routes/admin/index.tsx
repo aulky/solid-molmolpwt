@@ -11,6 +11,7 @@ import {
   Layers,
   ArrowRight,
   ExternalLink,
+  Receipt,
   Loader2,
 } from "lucide-solid";
 
@@ -249,8 +250,23 @@ export default function AdminDashboardPage() {
                       <td class="p-3 uppercase font-medium">
                         {order.fulfillment}
                       </td>
-                      <td class="p-3 font-mono font-semibold text-[#0A0A0A]">
-                        {formatRupiah(order.total)}
+                      <td class="p-3">
+                        <span class="font-mono font-semibold text-[#0A0A0A] block">
+                          {formatRupiah(order.total)}
+                        </span>
+                        <Show when={order.paymentProofPath}>
+                          <a
+                            href={order.paymentProofPath}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center gap-1 text-[11px] text-[#6366F1] hover:underline font-medium mt-0.5"
+                            title="Buka bukti pembayaran"
+                          >
+                            <Receipt size={11} class="text-[#6366F1]" />
+                            <span>Bukti Bayar</span>
+                            <ExternalLink size={10} />
+                          </a>
+                        </Show>
                       </td>
                       <td class="p-3">
                         <OrderStatusBadge status={order.status} />
