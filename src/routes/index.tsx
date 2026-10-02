@@ -5,6 +5,7 @@ import { getStoreSettings, StoreSettingsData } from "~/lib/services/settings";
 import { BatchHero, BatchInfo } from "~/components/catalog/BatchHero";
 import { ProductCard, CatalogProduct } from "~/components/catalog/ProductCard";
 import { CheckoutModal } from "~/components/checkout/CheckoutModal";
+import { Footer } from "~/components/Footer";
 import { formatRupiah, formatTanggalWIB } from "~/lib/pricing";
 import {
   ShoppingBag,
@@ -263,19 +264,18 @@ export default function Home() {
         >
           {/* Multi-Batch Switcher if multiple active batches exist */}
           <Show when={activeBatches().length > 1}>
-            <div class="card-surface p-4 bg-white border border-[#E8E8EC] rounded-xl space-y-3">
+            <div class="p-3.5 sm:p-4 bg-white border border-[#E8E8EC] rounded-2xl space-y-2.5 shadow-2xs">
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                <div class="flex items-center gap-2">
-                  <span class="text-xs font-bold uppercase tracking-wider text-[#0A0A0A]">
-                    Tersedia {activeBatches().length} Gelombang Pre-Order
-                  </span>
-                </div>
-                <span class="text-[11px] text-[#6B6B6B]">
-                  Klik gelombang PO di bawah untuk melihat jadwal, kuota & menu:
+                <span class="text-xs font-bold uppercase tracking-wider text-[#0A0A0A] flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-[#6366F1]" />
+                  Tersedia {activeBatches().length} Gelombang Pre-Order
+                </span>
+                <span class="text-[11px] text-[#71717A]">
+                  Pilih gelombang PO untuk melihat menu & jadwal pengiriman:
                 </span>
               </div>
 
-              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                 <For each={activeBatches()}>
                   {(b: any) => {
                     const isSelected = () => currentBatch()?.id === b.id;
@@ -284,9 +284,9 @@ export default function Home() {
                       <button
                         type="button"
                         onClick={() => setSelectedBatchId(b.id)}
-                        class={`p-3 rounded-lg border text-left transition-all cursor-pointer flex flex-col justify-between gap-2 ${
+                        class={`p-3 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between gap-1.5 ${
                           isSelected()
-                            ? "bg-[#6366F1]/5 border-[#6366F1] shadow-xs ring-1 ring-[#6366F1]/30"
+                            ? "bg-[#6366F1]/5 border-[#6366F1] shadow-2xs ring-1 ring-[#6366F1]/30"
                             : "bg-[#FAFAFA] border-[#E8E8EC] hover:border-[#6366F1]/40 hover:bg-white"
                         }`}
                       >
@@ -301,13 +301,13 @@ export default function Home() {
                           <Show
                             when={isSelected()}
                             fallback={
-                              <span class="text-[10px] text-[#6B6B6B] bg-[#E8E8EC]/60 px-1.5 py-0.5 rounded font-mono">
-                                Lihat PO
+                              <span class="text-[10px] text-[#71717A] bg-[#E8E8EC]/60 px-1.5 py-0.5 rounded font-mono">
+                                Pilih
                               </span>
                             }
                           >
                             <span class="text-[10px] bg-[#6366F1] text-white px-2 py-0.5 rounded font-semibold">
-                              Dipilih
+                              Aktif
                             </span>
                           </Show>
                         </div>
@@ -316,7 +316,7 @@ export default function Home() {
                           {b.title}
                         </h4>
 
-                        <div class="flex items-center justify-between text-[11px] text-[#6B6B6B] pt-1.5 border-t border-[#E8E8EC]/80">
+                        <div class="flex items-center justify-between text-[11px] text-[#71717A] pt-1 border-t border-[#E8E8EC]/80">
                           <span>Kirim: {formatTanggalWIB(b.deliveryDate, { includeTime: false })}</span>
                           <span class="font-mono font-medium text-[#6366F1]">Sisa {remaining} slot</span>
                         </div>
@@ -336,20 +336,56 @@ export default function Home() {
             }
           />
 
+          {/* Alur Pemesanan Cepat (Value Props UMKM) */}
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 p-3.5 sm:p-4 bg-white border border-[#E8E8EC] rounded-2xl text-xs text-[#52525B] shadow-2xs">
+            <div class="flex items-center gap-3">
+              <div class="w-7 h-7 rounded-xl bg-[#6366F1]/10 text-[#6366F1] flex items-center justify-center font-bold text-xs shrink-0">
+                1
+              </div>
+              <div>
+                <span class="font-bold text-[#0A0A0A] block">Pilih Menu Favorit</span>
+                <span class="text-[11px] text-[#71717A]">Tentukan varian & porsi cemilan</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-7 h-7 rounded-xl bg-[#6366F1]/10 text-[#6366F1] flex items-center justify-center font-bold text-xs shrink-0">
+                2
+              </div>
+              <div>
+                <span class="font-bold text-[#0A0A0A] block">Alamat / Titik GPS</span>
+                <span class="text-[11px] text-[#71717A]">Pilih antar kurir atau pickup outlet</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-7 h-7 rounded-xl bg-[#10B981]/10 text-[#10B981] flex items-center justify-center font-bold text-xs shrink-0">
+                3
+              </div>
+              <div>
+                <span class="font-bold text-[#0A0A0A] block">Bayar & Lacak Order</span>
+                <span class="text-[11px] text-[#71717A]">Upload bukti QRIS/transfer & lacak live</span>
+              </div>
+            </div>
+          </div>
+
           {/* Section Heading Katalog */}
-          <div class="flex flex-wrap items-baseline justify-between gap-2 pt-4">
+          <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 pt-2 border-t border-[#E8E8EC]">
             <div>
-              <span class="text-xs font-mono uppercase text-[#6B6B6B] tracking-wider block">
-                Menu Pilihan • {currentBatch()?.code}
-              </span>
-              <h2 class="font-heading text-xl sm:text-2xl font-bold text-[#0A0A0A]">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-[11px] font-mono uppercase tracking-wider text-[#6366F1] font-semibold bg-[#6366F1]/10 px-2.5 py-0.5 rounded-full">
+                  Batch {currentBatch()?.code}
+                </span>
+                <span class="text-xs text-[#71717A]">
+                  • {productList().length} Menu Tersedia
+                </span>
+              </div>
+              <h2 class="font-heading text-xl sm:text-2xl font-extrabold text-[#0A0A0A]">
                 Katalog Pre-Order
               </h2>
             </div>
 
-            <div class="text-xs text-[#6B6B6B]">
-              Pilih varian rasa favorit Anda untuk {currentBatch()?.title}
-            </div>
+            <p class="text-xs text-[#71717A]">
+              Porsi diproduksi segar sesuai pesanan • Bebas bahan pengawet
+            </p>
           </div>
 
           {/* Grid Kartu Produk atau Tampilan Menu Kosong */}
@@ -430,98 +466,7 @@ export default function Home() {
       </Show>
 
       {/* Footer Toko UMKM */}
-      <footer class="bg-white border-t border-[#E8E8EC] py-10 mt-12 text-[#6B6B6B] text-xs">
-        <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div class="space-y-2">
-            <h5 class="font-heading font-bold text-sm text-[#0A0A0A]">
-              Mol-Mol Purwokerto
-            </h5>
-            <p class="leading-relaxed">
-              Dessert & Cemilan Purwokerto manis dan gurih dengan resep otentik, higienis, dan cita rasa premium.
-            </p>
-            {/* Social Media Links (Instagram, Threads, TikTok) */}
-            <div class="pt-1 flex items-center gap-2">
-              <a
-                href="https://www.instagram.com/molmol.purwokerto/"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="w-8 h-8 rounded-full bg-[#FAFAFA] border border-[#E8E8EC] flex items-center justify-center text-[#E1306C] hover:bg-[#E1306C] hover:text-white hover:border-[#E1306C] transition shadow-2xs cursor-pointer"
-                title="Instagram @molmol.purwokerto"
-                aria-label="Instagram @molmol.purwokerto"
-              >
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-                </svg>
-              </a>
-
-              <a
-                href="https://www.threads.com/@molmol.purwokerto"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="w-8 h-8 rounded-full bg-[#FAFAFA] border border-[#E8E8EC] flex items-center justify-center text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white hover:border-[#0A0A0A] transition shadow-2xs cursor-pointer"
-                title="Threads @molmol.purwokerto"
-                aria-label="Threads @molmol.purwokerto"
-              >
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                  <path d="M18.263 11.097c-.03-3.486-1.92-5.586-5.111-5.586-2.13 0-3.922.963-4.863 2.499l2.062 1.438c.535-.843 1.272-1.543 2.628-1.543 1.528 0 2.318.85 2.544 2.431a15 15 0 0 0-2.236-.173c-4.125 0-6.068 1.867-6.068 4.336s1.943 3.99 4.804 3.99c3.139 0 5.013-2.115 5.781-4.735.798.361 1.348 1.204 1.348 2.47 0 3.387-3.907 5.232-7.22 5.232-4.885 0-8.077-3.207-8.077-8.424 0-6.392 4.223-10.487 9.9-10.487 3.808 0 5.69 1.671 6.97 3.914l2.108-1.475C21.44 2.078 18.331 0 13.663 0 6.227 0 1.168 5.277 1.168 12.934c0 7 4.953 11.066 10.856 11.066 4.878 0 9.809-2.846 9.809-7.716 0-2.545-1.46-4.231-3.569-5.187m-6.33 4.855c-1.077 0-2.026-.512-2.026-1.453 0-1.483 1.822-1.934 3.606-1.934.678 0 1.34.045 1.927.173-.422 1.927-1.671 3.215-3.508 3.214Z" />
-                </svg>
-              </a>
-
-              <a
-                href="https://www.tiktok.com/@molmol.purwokerto"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="w-8 h-8 rounded-full bg-[#FAFAFA] border border-[#E8E8EC] flex items-center justify-center text-[#0A0A0A] hover:bg-[#000000] hover:text-[#00F2FE] hover:border-[#000000] transition shadow-2xs cursor-pointer"
-                title="TikTok @molmol.purwokerto"
-                aria-label="TikTok @molmol.purwokerto"
-              >
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                  <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
-                </svg>
-              </a>
-            </div>
-          </div>
-
-          <div class="space-y-2">
-            <h5 class="font-heading font-bold text-sm text-[#0A0A0A]">
-              Layanan & Operasional
-            </h5>
-            <div class="space-y-1">
-              <div class="flex items-center gap-1.5">
-                <MapPin size={13} class="text-[#6366F1]" />
-                <span>Purwokerto, Jawa Tengah</span>
-              </div>
-              <div class="flex items-center gap-1.5">
-                <Phone size={13} class="text-[#6366F1]" />
-                <span>WhatsApp: {storeSettings().adminPhone}</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="space-y-2">
-            <h5 class="font-heading font-bold text-sm text-[#0A0A0A]">
-              Ketentuan Pre-Order
-            </h5>
-            <p class="leading-relaxed">
-              Pesanan diproduksi segar sesuai kuota gelombang PO. Bukti pembayaran wajib diunggah untuk konfirmasi jadwal pengantaran.
-            </p>
-          </div>
-        </div>
-
-        <div class="max-w-6xl mx-auto px-4 mt-8 pt-4 border-t border-[#E8E8EC] flex flex-wrap items-center justify-between gap-2 text-[11px] text-[#9C9C9C]">
-          <div class="flex items-center gap-3">
-            <span>© 2026 Mol-Mol Purwokerto. Semua hak cipta dilindungi.</span>
-            <span>•</span>
-            <a href="/terms" class="hover:text-[#6366F1] underline">Syarat & Kebijakan PO</a>
-          </div>
-          <a href="/admin" class="hover:text-[#6366F1] flex items-center gap-1">
-            <ShieldCheck size={12} />
-            <span>Login</span>
-          </a>
-        </div>
-      </footer>
+      <Footer adminPhone={storeSettings().adminPhone} />
     </div>
   );
 }
