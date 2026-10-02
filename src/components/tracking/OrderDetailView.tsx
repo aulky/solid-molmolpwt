@@ -67,18 +67,29 @@ export function OrderDetailView(props: OrderDetailViewProps) {
   return (
     <div class="space-y-6">
       {/* Top Banner Card */}
-      <div class="card-surface p-6 bg-white border border-[#E8E8EC] space-y-4">
-        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-[#E8E8EC]">
-          <div>
-            <span class="text-xs font-mono uppercase text-[#6B6B6B] block">
-              Kode Pesanan
-            </span>
-            <h2 class="font-heading font-bold text-2xl sm:text-3xl text-[#0A0A0A]">
-              {o().shortCode}
-            </h2>
+      <div class="card-surface p-4 sm:p-6 bg-white border border-[#E8E8EC] space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-4 border-b border-[#E8E8EC]">
+          <div class="flex items-center justify-between sm:block gap-2">
+            <div>
+              <span class="text-[11px] font-mono uppercase text-[#6B6B6B] block tracking-wider">
+                Kode Pesanan
+              </span>
+              <h2 class="font-heading font-bold text-2xl sm:text-3xl text-[#0A0A0A] leading-tight">
+                {o().shortCode}
+              </h2>
+            </div>
+
+            {/* Tampilan Mobile: Badge status diletakkan sejajar di samping kanan Kode Pesanan agar tidak jatuh ke bawah */}
+            <div class="sm:hidden flex flex-col items-end gap-1">
+              <OrderStatusBadge status={o().status} />
+              <span class="text-[10px] font-mono text-[#9C9C9C]">
+                {formatTanggalWIB(o().createdAt, { includeTime: false })}
+              </span>
+            </div>
           </div>
 
-          <div class="flex flex-col items-end gap-1.5">
+          {/* Tampilan Desktop */}
+          <div class="hidden sm:flex flex-col items-end gap-1.5">
             <OrderStatusBadge status={o().status} />
             <span class="text-[11px] font-mono text-[#9C9C9C]">
               Dipesan: {formatTanggalWIB(o().createdAt)}

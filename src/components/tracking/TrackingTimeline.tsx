@@ -70,18 +70,18 @@ export function TrackingTimeline(props: TrackingTimelineProps) {
   };
 
   return (
-    <div class="relative pl-6 space-y-6 before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-[#E8E8EC]">
+    <div class="relative pl-11 space-y-6 before:absolute before:left-[15px] before:top-3 before:bottom-3 before:w-[2px] before:bg-[#E8E8EC]">
       <For each={props.history}>
         {(step, index) => {
           const isLatest = index() === 0;
 
           return (
             <div class="relative group">
-              {/* Stepper Node Icon */}
+              {/* Stepper Node Icon dengan Posisi Presisi & Jarak Bernapas */}
               <div
-                class={`absolute -left-6 top-0 w-6 h-6 rounded-full flex items-center justify-center bg-white border ${
+                class={`absolute left-[-44px] top-0 w-8 h-8 rounded-full flex items-center justify-center bg-white border ${
                   isLatest
-                    ? "border-[#6366F1] shadow-xs"
+                    ? "border-[#6366F1] shadow-2xs ring-2 ring-[#6366F1]/20"
                     : "border-[#E8E8EC]"
                 }`}
               >
@@ -90,21 +90,21 @@ export function TrackingTimeline(props: TrackingTimelineProps) {
 
               {/* Step Content */}
               <div class="space-y-1">
-                <div class="flex flex-wrap items-baseline gap-2">
+                <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
                   <span
-                    class={`text-xs sm:text-sm font-semibold ${
+                    class={`text-xs sm:text-sm font-semibold leading-snug ${
                       isLatest ? "text-[#0A0A0A]" : "text-[#6B6B6B]"
                     }`}
                   >
                     {getStatusLabel(step.toStatus)}
                   </span>
-                  <span class="text-[11px] font-mono text-[#9C9C9C]">
+                  <span class="text-[11px] font-mono text-[#9C9C9C] shrink-0">
                     {formatTanggalWIB(step.createdAt)}
                   </span>
                 </div>
 
                 <Show when={step.note}>
-                  <p class="text-xs text-[#6B6B6B] leading-relaxed">
+                  <p class="text-xs text-[#6B6B6B] leading-relaxed bg-[#FAFAFA] p-2.5 rounded-lg border border-[#E8E8EC]/80 mt-1">
                     {step.note}
                   </p>
                 </Show>
