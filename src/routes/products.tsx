@@ -4,6 +4,7 @@ import { getAllMenuItems } from "~/lib/services/menu";
 import { getStoreSettings, StoreSettingsData } from "~/lib/services/settings";
 import { formatRupiah } from "~/lib/pricing";
 import { Badge } from "~/components/ui/Badge";
+import { Footer } from "~/components/Footer";
 import {
   UtensilsCrossed,
   Package,
@@ -251,23 +252,8 @@ export default function ProductsPage() {
         </div>
       </div>
 
-      {/* Footer Toko */}
-      <footer class="bg-white border-t border-[#E8E8EC] py-8 text-[#6B6B6B] text-xs">
-        <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div class="flex items-center gap-2">
-            <span class="font-heading font-bold text-[#0A0A0A]">Mol-Mol Purwokerto</span>
-            <span>•</span>
-            <span>Authentic Homemade Treats</span>
-          </div>
-
-          <div class="flex items-center gap-4 text-[#6B6B6B]">
-            <A href="/" class="hover:text-[#0A0A0A]">Pre-Order</A>
-            <A href="/track" class="hover:text-[#0A0A0A]">Lacak Pesanan</A>
-            <A href="/terms" class="hover:text-[#0A0A0A]">Ketentuan</A>
-            <A href="/admin" class="hover:text-[#0A0A0A]">Admin</A>
-          </div>
-        </div>
-      </footer>
+      {/* Footer Toko UMKM Identik dengan Landing Page */}
+      <Footer adminPhone={settings()?.adminPhone} />
     </div>
   );
 }
