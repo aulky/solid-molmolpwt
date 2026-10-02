@@ -1,4 +1,4 @@
-import { eq, desc, and, isNull } from "drizzle-orm";
+import { eq, desc, and, ne, isNull } from "drizzle-orm";
 import { db } from "../db";
 import { batches, batchItems, menuItems, orders } from "../db/schema";
 
@@ -343,13 +343,26 @@ export async function createBatch(data: {
   status?: "draft" | "open" | "closed" | "production" | "delivered" | "cancelled";
   itemIds?: number[];
 }) {
+  const normalizedCode = data.code.trim().toUpperCase();
+
+  // Validasi kode batch unik
+  const existing = await db
+    .select({ id: batches.id })
+    .from(batches)
+    .where(eq(batches.code, normalizedCode))
+    .limit(1);
+
+  if (existing.length > 0) {
+    throw new Error(`Kode batch "${data.code}" sudah digunakan. Silakan gunakan kode unik yang berbeda.`);
+  }
+
   const slug = data.title
     .toLowerCase()
     .replace(/[^\w\s-]/g, "")
     .replace(/\s+/g, "-");
 
   const [res]: any = await db.insert(batches).values({
-    code: data.code,
+    code: normalizedCode,
     title: data.title,
     slug: `${slug}-${Date.now().toString(36)}`,
     description: data.description || null,
@@ -408,6 +421,20 @@ export async function updateBatch(
   }>
 ) {
   const { itemIds, ...batchFields } = data;
+
+  if (batchFields.code) {
+    const normalizedCode = batchFields.code.trim().toUpperCase();
+    const existing = await db
+      .select({ id: batches.id })
+      .from(batches)
+      .where(and(eq(batches.code, normalizedCode), ne(batches.id, batchId)))
+      .limit(1);
+
+    if (existing.length > 0) {
+      throw new Error(`Kode batch "${batchFields.code}" sudah digunakan pada gelombang PO lain. Silakan gunakan kode unik.`);
+    }
+    batchFields.code = normalizedCode;
+  }
 
   if (Object.keys(batchFields).length > 0) {
     await db

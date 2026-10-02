@@ -18,6 +18,7 @@ import {
   Trash2,
   UtensilsCrossed,
   AlertCircle,
+  X,
 } from "lucide-solid";
 
 export default function AdminBatchesPage() {
@@ -32,6 +33,7 @@ export default function AdminBatchesPage() {
   const [isSubmitting, setIsSubmitting] = createSignal(false);
   const [statusTogglingId, setStatusTogglingId] = createSignal<number | null>(null);
   const [uiError, setUiError] = createSignal<string | null>(null);
+  const [formError, setFormError] = createSignal<string | null>(null);
 
   // Confirm delete dialog state
   const [deleteConfirm, setDeleteConfirm] = createSignal<{
@@ -189,12 +191,15 @@ export default function AdminBatchesPage() {
     setSelectedMenuItemIds(availableMenus().map((m) => m.id));
 
     setUiError(null);
+    setFormError(null);
     setIsModalOpen(true);
   };
 
   const openEditModal = (b: any) => {
     setEditingBatchId(b.id);
     setBatchStep(1);
+    setUiError(null);
+    setFormError(null);
     setCode(b.code || "");
     setTitle(b.title || "");
     setDescription(b.description || "");
@@ -269,14 +274,57 @@ export default function AdminBatchesPage() {
     }
   };
 
+  const isCodeDuplicate = () => {
+    const val = code().trim().toUpperCase();
+    if (!val) return false;
+    return batches().some(
+      (b: any) => b.code?.toUpperCase() === val && b.id !== editingBatchId()
+    );
+  };
+
+  const handleNextStep = () => {
+    setFormError(null);
+    if (batchStep() === 1) {
+      if (!code().trim()) {
+        setFormError("Kode batch wajib diisi.");
+        return;
+      }
+      if (isCodeDuplicate()) {
+        setFormError(`Kode batch "${code().trim().toUpperCase()}" sudah digunakan pada gelombang PO lain. Gunakan kode unik.`);
+        return;
+      }
+      if (!title().trim()) {
+        setFormError("Judul gelombang PO wajib diisi.");
+        return;
+      }
+    } else if (batchStep() === 2) {
+      if (!orderCloseAt() || !deliveryDate()) {
+        setFormError("Batas tutup PO dan tanggal pengiriman wajib diisi.");
+        return;
+      }
+      if (new Date(deliveryDate()) <= new Date(orderCloseAt())) {
+        setFormError("Tanggal pengiriman harus setelah batas waktu tutup PO.");
+        return;
+      }
+    }
+    setBatchStep((s) => (s + 1) as any);
+  };
+
   const handleSaveBatch = async (e: Event) => {
     e.preventDefault();
+    setFormError(null);
+
+    if (isCodeDuplicate()) {
+      setFormError(`Kode batch "${code().trim().toUpperCase()}" sudah digunakan pada gelombang PO lain. Gunakan kode unik.`);
+      setBatchStep(1);
+      return;
+    }
+
     setIsSubmitting(true);
-    setUiError(null);
 
     try {
       const payload: any = {
-        code: code().trim(),
+        code: code().trim().toUpperCase(),
         title: title().trim(),
         description: description().trim(),
         orderOpenAt: orderOpenAt(),
@@ -314,14 +362,14 @@ export default function AdminBatchesPage() {
 
       const data = await res.json();
       if (!res.ok || !data.success) {
-        setUiError(data.error || "Gagal menyimpan batch");
+        setFormError(data.error || "Gagal menyimpan batch");
         return;
       }
 
       setIsModalOpen(false);
       await fetchBatches();
     } catch (err: any) {
-      setUiError(err?.message || "Terjadi kesalahan saat menyimpan batch");
+      setFormError(err?.message || "Terjadi kesalahan saat menyimpan batch");
     } finally {
       setIsSubmitting(false);
     }
@@ -537,6 +585,21 @@ export default function AdminBatchesPage() {
           maxWidth="max-w-xl"
         >
           <form onSubmit={handleSaveBatch} class="space-y-4 text-xs">
+            {/* Notifikasi Error di Dalam Form (Agar Selalu Kelihatan) */}
+            <Show when={formError()}>
+              <div class="p-3 rounded-lg bg-[#FFF5F5] border border-[#FCA5A5] text-xs text-[#EF4444] flex items-start gap-2 animate-in fade-in duration-150">
+                <AlertCircle size={15} class="shrink-0 mt-0.5" />
+                <div class="flex-1 font-medium">{formError()}</div>
+                <button
+                  type="button"
+                  onClick={() => setFormError(null)}
+                  class="text-[#EF4444] hover:opacity-85 cursor-pointer"
+                >
+                  <X size={14} />
+                </button>
+              </div>
+            </Show>
+
             {/* Step Navigation Tabs */}
             <div class="grid grid-cols-4 gap-1.5 border-b border-[#E8E8EC] pb-3 text-[11px]">
               <button
@@ -590,15 +653,28 @@ export default function AdminBatchesPage() {
               <div class="space-y-3.5 animate-in fade-in duration-150">
                 <div class="grid grid-cols-2 gap-3">
                   <div>
-                    <label class="block font-semibold text-[#0A0A0A] mb-1">Kode Batch</label>
+                    <label class="block font-semibold text-[#0A0A0A] mb-1">
+                      Kode Batch <span class="text-[#EF4444]">*</span>
+                    </label>
                     <input
                       type="text"
                       required
                       value={code()}
-                      onInput={(e) => setCode(e.currentTarget.value)}
+                      onInput={(e) => {
+                        setCode(e.currentTarget.value);
+                        setFormError(null);
+                      }}
                       placeholder="Contoh: PO-2026-10-B"
-                      class="input-base text-xs uppercase"
+                      class={`input-base text-xs uppercase ${
+                        isCodeDuplicate() ? "border-[#EF4444] focus:ring-[#EF4444]" : ""
+                      }`}
                     />
+                    <Show when={isCodeDuplicate()}>
+                      <p class="text-[11px] text-[#EF4444] font-medium mt-1 flex items-center gap-1">
+                        <AlertCircle size={12} class="shrink-0" />
+                        <span>Kode batch ini sudah digunakan. Mohon gunakan kode unik lain.</span>
+                      </p>
+                    </Show>
                   </div>
 
                   <div>
@@ -987,17 +1063,17 @@ export default function AdminBatchesPage() {
                   fallback={
                     <button
                       type="button"
-                      onClick={() => setBatchStep((s) => (s + 1) as any)}
-                      class="btn-primary btn-sm"
+                      onClick={handleNextStep}
+                      class="btn-primary btn-sm cursor-pointer"
                     >
-                      Lanjut ({batchStep() + 1}/4)
+                      Lanjut
                     </button>
                   }
                 >
                   <button
                     type="submit"
                     disabled={isSubmitting()}
-                    class="btn-primary btn-sm flex items-center gap-1.5"
+                    class="btn-primary btn-sm flex items-center gap-1.5 cursor-pointer"
                   >
                     <Show when={isSubmitting()}>
                       <Loader2 size={13} class="animate-spin" />
