@@ -61,14 +61,14 @@ function ProductShowcaseCard(props: { product: any }) {
   };
 
   return (
-    <div class="card-surface bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl overflow-hidden flex flex-col justify-between hover:border-[#CE2738]/50 hover:shadow-md transition group">
+    <div class="card-surface bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl overflow-hidden flex flex-col justify-between hover:border-[#D92D3A]/50 hover:shadow-md transition group">
       {/* Gambar Carousel */}
-      <div class="relative w-full aspect-4/3 bg-[#F3ECE2] overflow-hidden select-none">
+      <div class="relative w-full aspect-4/3 bg-[#F9EEDB] overflow-hidden select-none">
         <Show
           when={images().length > 0}
           fallback={
-            <div class="w-full h-full flex flex-col items-center justify-center text-[#8D7E73] p-4 text-center">
-              <UtensilsCrossed size={32} class="mb-2 text-[#CE2738]/50" />
+            <div class="w-full h-full flex flex-col items-center justify-center text-[#806B5C] p-4 text-center">
+              <UtensilsCrossed size={32} class="mb-2 text-[#D92D3A]/50" />
               <span class="text-xs font-medium">Mol-Mol Purwokerto</span>
             </div>
           }
@@ -85,7 +85,7 @@ function ProductShowcaseCard(props: { product: any }) {
             <button
               type="button"
               onClick={prevImg}
-              class="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-[#1C1917] shadow-xs flex items-center justify-center transition cursor-pointer"
+              class="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-[#5B4638] shadow-xs flex items-center justify-center transition cursor-pointer"
               title="Foto Sebelumnya"
             >
               <ChevronLeft size={14} />
@@ -93,7 +93,7 @@ function ProductShowcaseCard(props: { product: any }) {
             <button
               type="button"
               onClick={nextImg}
-              class="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-[#1C1917] shadow-xs flex items-center justify-center transition cursor-pointer"
+              class="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-[#5B4638] shadow-xs flex items-center justify-center transition cursor-pointer"
               title="Foto Berikutnya"
             >
               <ChevronRight size={14} />
@@ -117,7 +117,7 @@ function ProductShowcaseCard(props: { product: any }) {
         {/* Featured Tag */}
         <Show when={p().isFeatured}>
           <div class="absolute top-2.5 left-2.5">
-            <span class="bg-[#CE2738] text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-xs flex items-center gap-1">
+            <span class="bg-[#D92D3A] text-[#FFFDF8] text-[10px] font-bold px-2.5 py-1 rounded-full shadow-xs flex items-center gap-1">
               <Sparkles size={11} />
               <span>Favorit</span>
             </span>
@@ -129,35 +129,35 @@ function ProductShowcaseCard(props: { product: any }) {
       <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
         <div class="space-y-2">
           <div class="flex items-start justify-between gap-2">
-            <h3 class="font-heading font-bold text-base sm:text-lg text-[#1C1917] leading-snug">
+            <h3 class="font-heading font-bold text-base sm:text-lg text-[#5B4638] leading-snug">
               {p().name}
             </h3>
-            <span class="text-[11px] font-medium text-[#6C5F57] bg-[#F3ECE2] border border-[#E8DFD5] px-2.5 py-0.5 rounded-full shrink-0">
+            <span class="text-[11px] font-medium text-[#806B5C] bg-[#F9EEDB] border border-[#E7D8C3] px-2.5 py-0.5 rounded-full shrink-0">
               {p().weightGrams ? `${p().weightGrams}g` : "1 Porsi"}
             </span>
           </div>
 
-          <p class="text-xs sm:text-sm text-[#6C5F57] leading-relaxed line-clamp-3">
+          <p class="text-xs sm:text-sm text-[#806B5C] leading-relaxed line-clamp-3">
             {p().description || "Camilan khas Mol-Mol Purwokerto dengan resep istimewa, dibuat higienis dan disajikan segar."}
           </p>
         </div>
 
         {/* Harga & Tombol Pesan */}
-        <div class="pt-3 border-t border-[#E8DFD5] flex items-center justify-between gap-2">
+        <div class="pt-3 border-t border-[#E7D8C3] flex items-center justify-between gap-2">
           <div>
             <Show when={p().compareAtPrice && p().compareAtPrice > p().basePrice}>
-              <span class="text-xs text-[#8D7E73] line-through block font-medium">
+              <span class="text-xs text-[#806B5C] line-through block font-medium">
                 {formatRupiah(p().compareAtPrice)}
               </span>
             </Show>
-            <span class="font-heading font-bold text-base sm:text-lg text-[#CE2738]">
+            <span class="font-heading font-bold text-base sm:text-lg text-[#D92D3A]">
               {formatRupiah(p().basePrice)}
             </span>
           </div>
 
           <A
             href="/"
-            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#CE2738] hover:bg-[#B51F2F] text-white text-xs font-semibold shadow-xs transition active:scale-[0.98]"
+            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#D92D3A] hover:bg-[#B92230] text-[#FFFDF8] text-xs font-semibold shadow-xs transition active:scale-[0.98]"
           >
             <span>Pesan PO</span>
             <ArrowRight size={13} />
@@ -181,15 +181,15 @@ export default function ProductsPage() {
   };
 
   return (
-    <div class="min-h-screen bg-[#FAF7F2] flex flex-col justify-between">
+    <div class="min-h-screen bg-[#FFF4DE] flex flex-col justify-between">
       <div class="max-w-6xl mx-auto px-4 py-8 sm:py-12 w-full space-y-8">
         {/* Header Hero Section */}
         <div class="text-center max-w-2xl mx-auto space-y-3">
-          <h1 class="font-heading text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1C1917] tracking-tight">
+          <h1 class="font-heading text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#5B4638] tracking-tight">
             Varian Rasa & Menu Khas Mol-Mol
           </h1>
 
-          <p class="text-xs sm:text-sm text-[#6C5F57] leading-relaxed font-body">
+          <p class="text-xs sm:text-sm text-[#806B5C] leading-relaxed font-body">
             Seluruh produk kami dibuat dari bahan-bahan pilihan berkualitas dengan resep otentik.
             Setiap porsi disiapkan segar sesuai jadwal gelombang Pre-Order untuk menjaga kerenyahan maksimal.
           </p>
@@ -199,14 +199,14 @@ export default function ProductsPage() {
         <Show
           when={productList().length > 0}
           fallback={
-            <div class="card-surface p-12 bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl text-center space-y-4 max-w-md mx-auto">
-              <div class="w-14 h-14 mx-auto rounded-full bg-[#CE2738]/10 flex items-center justify-center text-[#CE2738]">
+            <div class="card-surface p-12 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl text-center space-y-4 max-w-md mx-auto">
+              <div class="w-14 h-14 mx-auto rounded-full bg-[#D92D3A]/10 flex items-center justify-center text-[#D92D3A]">
                 <Package size={28} />
               </div>
-              <h3 class="font-heading text-lg font-bold text-[#1C1917]">
+              <h3 class="font-heading text-lg font-bold text-[#5B4638]">
                 Katalog Sedang Diperbarui
               </h3>
-              <p class="text-xs text-[#6C5F57]">
+              <p class="text-xs text-[#806B5C]">
                 Admin sedang memperbarui varian produk terbaru. Silakan pantau berkala atau hubungi WhatsApp kami.
               </p>
             </div>
@@ -220,12 +220,12 @@ export default function ProductsPage() {
         </Show>
 
         {/* CTA Bawah: Jadwal Pre-Order & WhatsApp */}
-        <div class="card-surface p-6 sm:p-8 bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xs">
+        <div class="card-surface p-6 sm:p-8 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xs">
           <div class="space-y-1.5 text-center sm:text-left">
-            <h3 class="font-heading font-bold text-lg text-[#1C1917]">
+            <h3 class="font-heading font-bold text-lg text-[#5B4638]">
               Ingin Menikmati Mol-Mol Purwokerto?
             </h3>
-            <p class="text-xs sm:text-sm text-[#6C5F57]">
+            <p class="text-xs sm:text-sm text-[#806B5C]">
               Pilih jadwal gelombang Pre-Order aktif untuk pengantaran langsung ke rumah Anda.
             </p>
           </div>
@@ -233,7 +233,7 @@ export default function ProductsPage() {
           <div class="flex items-center gap-3 w-full sm:w-auto">
             <A
               href="/"
-              class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-[#CE2738] hover:bg-[#B51F2F] text-white text-xs sm:text-sm font-semibold shadow-xs transition active:scale-[0.98]"
+              class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-[#D92D3A] hover:bg-[#B92230] text-[#FFFDF8] text-xs sm:text-sm font-semibold shadow-xs transition active:scale-[0.98]"
             >
               <ShoppingBag size={15} />
               <span>Lihat Jadwal PO</span>
@@ -243,9 +243,9 @@ export default function ProductsPage() {
               href={waUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-[#E8DFD5] bg-[#F3ECE2] hover:bg-[#EAE1D4] text-[#1C1917] text-xs sm:text-sm font-semibold transition"
+              class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-[#E7D8C3] bg-[#F9EEDB] hover:bg-[#EEDEC7] text-[#5B4638] text-xs sm:text-sm font-semibold transition"
             >
-              <MessageCircle size={15} class="text-[#1B872A]" />
+              <MessageCircle size={15} class="text-[#7FA37A]" />
               <span>WhatsApp</span>
             </a>
           </div>

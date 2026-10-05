@@ -53,23 +53,23 @@ function NoActiveBatchView(props: {
     <div class="space-y-6 max-w-3xl mx-auto py-6 sm:py-10">
       {/* Pengumuman Toko jika aktif */}
       <Show when={props.announcement}>
-        <div class="bg-[#CE2738]/10 border border-[#CE2738]/20 rounded-2xl p-3 px-4 flex items-center gap-2.5 text-xs sm:text-sm text-[#1C1917]">
-          <Sparkles size={16} class="text-[#CE2738] shrink-0" />
+        <div class="bg-[#D92D3A]/10 border border-[#D92D3A]/20 rounded-2xl p-3 px-4 flex items-center gap-2.5 text-xs sm:text-sm text-[#5B4638]">
+          <Sparkles size={16} class="text-[#D92D3A] shrink-0" />
           <span class="font-medium">{props.announcement}</span>
         </div>
       </Show>
 
       {/* Main Empty State Card */}
-      <div class="card-surface p-8 sm:p-12 bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl text-center space-y-6 shadow-xs">
-        <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-[#CE2738]/10 border border-[#CE2738]/20 flex items-center justify-center text-[#CE2738]">
+      <div class="card-surface p-8 sm:p-12 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl text-center space-y-6 shadow-xs">
+        <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-[#D92D3A]/10 border border-[#D92D3A]/20 flex items-center justify-center text-[#D92D3A]">
           <CalendarX size={36} strokeWidth={1.75} />
         </div>
         <div class="space-y-2">
-          <h1 class="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1C1917] tracking-tight">
+          <h1 class="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold text-[#5B4638] tracking-tight">
             Belum Ada Gelombang Pre-Order yang Dibuka
           </h1>
 
-          <p class="text-sm text-[#6C5F57] leading-relaxed max-w-lg mx-auto font-body">
+          <p class="text-sm text-[#806B5C] leading-relaxed max-w-lg mx-auto font-body">
             Saat ini dapur <strong>Mol-Mol Purwokerto</strong> belum membuka gelombang pemesanan baru. Kami membuka pre-order secara berkala demi menjaga kesegaran dan kerenyahan camilan khas kami.
           </p>
         </div>
@@ -79,7 +79,7 @@ function NoActiveBatchView(props: {
             href={waUrl()}
             target="_blank"
             rel="noopener noreferrer"
-            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#1B872A] hover:bg-[#156D22] text-white text-sm font-semibold shadow-xs transition active:scale-[0.98]"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#7FA37A] hover:bg-[#6C8E68] text-white text-sm font-semibold shadow-xs transition active:scale-[0.98]"
           >
             <MessageCircle size={17} />
             <span>Tanya Jadwal PO via WhatsApp</span>
@@ -87,7 +87,7 @@ function NoActiveBatchView(props: {
 
           <a
             href="/track"
-            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#F3ECE2] hover:bg-[#EAE1D4] text-[#1C1917] text-sm font-semibold transition active:scale-[0.98] border border-[#E8DFD5]"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#F9EEDB] hover:bg-[#EEDEC7] text-[#5B4638] text-sm font-semibold transition active:scale-[0.98] border border-[#E7D8C3]"
           >
             <Search size={16} />
             <span>Lacak Pesanan Sebelumnya</span>
@@ -95,11 +95,11 @@ function NoActiveBatchView(props: {
         </div>
 
         {/* Info Tambahan */}
-        <div class="pt-6 border-t border-[#E8DFD5] grid grid-cols-1 sm:grid-cols-2 gap-3 text-left text-xs text-[#6C5F57]">
-          <div class="p-3.5 rounded-xl bg-[#FAF7F2] border border-[#E8DFD5] flex items-start gap-2.5">
-            <Clock size={16} class="text-[#CE2738] shrink-0 mt-0.5" />
+        <div class="pt-6 border-t border-[#E7D8C3] grid grid-cols-1 sm:grid-cols-2 gap-3 text-left text-xs text-[#806B5C]">
+          <div class="p-3.5 rounded-xl bg-[#F9EEDB]/60 border border-[#E7D8C3] flex items-start gap-2.5">
+            <Clock size={16} class="text-[#D92D3A] shrink-0 mt-0.5" />
             <div>
-              <span class="font-semibold text-[#1C1917] block">Jam Dapur & Admin</span>
+              <span class="font-semibold text-[#5B4638] block">Jam Dapur & Admin</span>
               <span>
                 {props.settings.operationalHours?.open || "08:00"} -{" "}
                 {props.settings.operationalHours?.close || "20:00"} WIB (
@@ -108,10 +108,10 @@ function NoActiveBatchView(props: {
             </div>
           </div>
 
-          <div class="p-3.5 rounded-xl bg-[#FAF7F2] border border-[#E8DFD5] flex items-start gap-2.5">
-            <MapPin size={16} class="text-[#CE2738] shrink-0 mt-0.5" />
+          <div class="p-3.5 rounded-xl bg-[#F9EEDB]/60 border border-[#E7D8C3] flex items-start gap-2.5">
+            <MapPin size={16} class="text-[#D92D3A] shrink-0 mt-0.5" />
             <div>
-              <span class="font-semibold text-[#1C1917] block">Wilayah Pengantaran</span>
+              <span class="font-semibold text-[#5B4638] block">Wilayah Pengantaran</span>
               <span>Purwokerto, Banyumas & sekitarnya</span>
             </div>
           </div>
@@ -248,7 +248,7 @@ export default function Home() {
   });
 
   return (
-    <div class="min-h-screen bg-[#FAF7F2] flex flex-col justify-between">
+    <div class="min-h-screen bg-[#FFF4DE] flex flex-col justify-between">
       {/* Container Konten Utama */}
       <div class="max-w-6xl mx-auto px-4 py-6 sm:py-8 w-full space-y-8 pb-28">
         <Show
@@ -264,13 +264,13 @@ export default function Home() {
         >
           {/* Multi-Batch Switcher if multiple active batches exist */}
           <Show when={activeBatches().length > 1}>
-            <div class="p-4 sm:p-5 bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl space-y-3 shadow-xs">
+            <div class="p-4 sm:p-5 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl space-y-3 shadow-xs">
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                <span class="text-xs font-bold uppercase tracking-wider text-[#1C1917] flex items-center gap-1.5">
-                  <span class="w-2 h-2 rounded-full bg-[#CE2738]" />
+                <span class="text-xs font-bold uppercase tracking-wider text-[#5B4638] flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-[#D92D3A]" />
                   Tersedia {activeBatches().length} Gelombang Pre-Order
                 </span>
-                <span class="text-xs text-[#6C5F57]">
+                <span class="text-xs text-[#806B5C]">
                   Pilih gelombang PO untuk melihat menu & jadwal pengiriman:
                 </span>
               </div>
@@ -286,14 +286,14 @@ export default function Home() {
                         onClick={() => setSelectedBatchId(b.id)}
                         class={`p-3.5 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between gap-1.5 ${
                           isSelected()
-                            ? "bg-[#CE2738]/5 border-[#CE2738] shadow-xs ring-1 ring-[#CE2738]/30"
-                            : "bg-[#FAF7F2] border-[#E8DFD5] hover:border-[#CE2738]/40 hover:bg-[#FFFDF9]"
+                            ? "bg-[#D92D3A]/5 border-[#D92D3A] shadow-xs ring-1 ring-[#D92D3A]/30"
+                            : "bg-[#F9EEDB]/60 border-[#E7D8C3] hover:border-[#D92D3A]/40 hover:bg-[#FFFDF8]"
                         }`}
                       >
                         <div class="flex items-center justify-between gap-2">
                           <span
                             class={`text-xs font-bold ${
-                              isSelected() ? "text-[#CE2738]" : "text-[#1C1917]"
+                              isSelected() ? "text-[#D92D3A]" : "text-[#5B4638]"
                             }`}
                           >
                             {b.code}
@@ -301,24 +301,24 @@ export default function Home() {
                           <Show
                             when={isSelected()}
                             fallback={
-                              <span class="text-[10px] text-[#6C5F57] bg-[#F3ECE2] px-2 py-0.5 rounded-full font-medium">
+                              <span class="text-[10px] text-[#806B5C] bg-[#F9EEDB] px-2 py-0.5 rounded-full font-medium">
                                 Pilih
                               </span>
                             }
                           >
-                            <span class="text-[10px] bg-[#CE2738] text-white px-2 py-0.5 rounded-full font-semibold">
+                            <span class="text-[10px] bg-[#D92D3A] text-white px-2 py-0.5 rounded-full font-semibold">
                               Aktif
                             </span>
                           </Show>
                         </div>
 
-                        <h4 class="font-heading font-semibold text-xs text-[#1C1917] line-clamp-1">
+                        <h4 class="font-heading font-semibold text-xs text-[#5B4638] line-clamp-1">
                           {b.title}
                         </h4>
 
-                        <div class="flex items-center justify-between text-xs text-[#6C5F57] pt-1 border-t border-[#E8DFD5]">
+                        <div class="flex items-center justify-between text-xs text-[#806B5C] pt-1 border-t border-[#E7D8C3]">
                           <span>Kirim: {formatTanggalWIB(b.deliveryDate, { includeTime: false })}</span>
-                          <span class="font-medium text-[#CE2738]">Sisa {remaining} slot</span>
+                          <span class="font-medium text-[#D92D3A]">Sisa {remaining} slot</span>
                         </div>
                       </button>
                     );
@@ -336,54 +336,54 @@ export default function Home() {
             }
           />
 
-          {/* Alur Pemesanan Cepat (Value Props UMKM) — Unified & Consistent */}
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 sm:p-5 bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl text-xs text-[#6C5F57] shadow-xs">
+          {/* Alur Pemesanan Cepat (Value Props UMKM) — Section 5 mol-mol-ui-revision-notes-v2 */}
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 sm:p-5 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl text-xs text-[#806B5C] shadow-xs">
             <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-[#F3ECE2] border border-[#E8DFD5] text-[#CE2738] flex items-center justify-center font-bold text-xs shrink-0">
+              <div class="w-8 h-8 rounded-full bg-[#D92D3A]/10 border border-[#D92D3A]/25 text-[#D92D3A] flex items-center justify-center font-bold text-xs shrink-0">
                 1
               </div>
               <div>
-                <span class="font-bold text-[#1C1917] block">Pilih Menu Favorit</span>
-                <span class="text-xs text-[#6C5F57]">Tentukan varian & porsi cemilan</span>
+                <span class="font-bold text-[#5B4638] block">Pilih Menu Favorit</span>
+                <span class="text-xs text-[#806B5C]">Tentukan varian & porsi cemilan</span>
               </div>
             </div>
             <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-[#F3ECE2] border border-[#E8DFD5] text-[#CE2738] flex items-center justify-center font-bold text-xs shrink-0">
+              <div class="w-8 h-8 rounded-full bg-[#D92D3A]/10 border border-[#D92D3A]/25 text-[#D92D3A] flex items-center justify-center font-bold text-xs shrink-0">
                 2
               </div>
               <div>
-                <span class="font-bold text-[#1C1917] block">Alamat / Titik GPS</span>
-                <span class="text-xs text-[#6C5F57]">Pilih antar kurir atau pickup outlet</span>
+                <span class="font-bold text-[#5B4638] block">Alamat / Titik GPS</span>
+                <span class="text-xs text-[#806B5C]">Pilih antar kurir atau pickup outlet</span>
               </div>
             </div>
             <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-[#F3ECE2] border border-[#E8DFD5] text-[#CE2738] flex items-center justify-center font-bold text-xs shrink-0">
+              <div class="w-8 h-8 rounded-full bg-[#D92D3A]/10 border border-[#D92D3A]/25 text-[#D92D3A] flex items-center justify-center font-bold text-xs shrink-0">
                 3
               </div>
               <div>
-                <span class="font-bold text-[#1C1917] block">Bayar & Lacak Order</span>
-                <span class="text-xs text-[#6C5F57]">Upload bukti QRIS/transfer & lacak live</span>
+                <span class="font-bold text-[#5B4638] block">Bayar & Lacak Order</span>
+                <span class="text-xs text-[#806B5C]">Upload bukti QRIS/transfer & lacak live</span>
               </div>
             </div>
           </div>
 
           {/* Section Heading Katalog */}
-          <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 pt-2 border-t border-[#E8DFD5]">
+          <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 pt-2 border-t border-[#E7D8C3]">
             <div>
               <div class="flex items-center gap-2 mb-1">
-                <span class="text-xs uppercase tracking-wider text-[#CE2738] font-bold bg-[#CE2738]/10 px-3 py-0.5 rounded-full border border-[#CE2738]/20">
+                <span class="text-xs uppercase tracking-wider text-[#D92D3A] font-bold bg-[#D92D3A]/10 px-3 py-0.5 rounded-full border border-[#D92D3A]/20">
                   Batch {currentBatch()?.code}
                 </span>
-                <span class="text-xs text-[#6C5F57]">
+                <span class="text-xs text-[#806B5C]">
                   • {productList().length} Menu Tersedia
                 </span>
               </div>
-              <h2 class="font-heading text-xl sm:text-2xl font-extrabold text-[#1C1917]">
+              <h2 class="font-heading text-xl sm:text-2xl font-extrabold text-[#5B4638]">
                 Katalog Pre-Order
               </h2>
             </div>
 
-            <p class="text-xs text-[#6C5F57]">
+            <p class="text-xs text-[#806B5C]">
               Porsi diproduksi segar sesuai pesanan • Bebas bahan pengawet
             </p>
           </div>
@@ -392,14 +392,14 @@ export default function Home() {
           <Show
             when={productList().length > 0}
             fallback={
-              <div class="card-surface p-10 sm:p-14 bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl text-center space-y-3">
-                <div class="w-14 h-14 mx-auto rounded-full bg-[#CE2738]/10 flex items-center justify-center text-[#CE2738]">
+              <div class="card-surface p-10 sm:p-14 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl text-center space-y-3">
+                <div class="w-14 h-14 mx-auto rounded-full bg-[#D92D3A]/10 flex items-center justify-center text-[#D92D3A]">
                   <ShoppingBag size={28} />
                 </div>
-                <h3 class="font-heading text-lg font-bold text-[#1C1917]">
+                <h3 class="font-heading text-lg font-bold text-[#5B4638]">
                   Menu Sedang Disiapkan
                 </h3>
-                <p class="text-xs sm:text-sm text-[#6C5F57] max-w-md mx-auto">
+                <p class="text-xs sm:text-sm text-[#806B5C] max-w-md mx-auto">
                   Belum ada menu yang diaktifkan untuk gelombang pre-order ini. Silakan pantau berkala atau hubungi admin.
                 </p>
               </div>
@@ -422,17 +422,17 @@ export default function Home() {
 
       {/* Floating / Sticky Mobile Cart Bar (Section 8.2 PLAN.md) */}
       <Show when={cartSummary().totalItems > 0}>
-        <aside aria-label="Ringkasan Keranjang Belanja" class="fixed bottom-0 left-0 right-0 z-40 bg-[#FFFDF9]/95 backdrop-blur-md border-t border-[#E8DFD5] p-3 sm:p-4 shadow-xl">
+        <aside aria-label="Ringkasan Keranjang Belanja" class="fixed bottom-0 left-0 right-0 z-40 bg-[#FFFDF8]/95 backdrop-blur-md border-t border-[#E7D8C3] p-3 sm:p-4 shadow-xl">
           <div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full bg-[#CE2738]/10 text-[#CE2738] flex items-center justify-center font-bold text-sm shrink-0">
+              <div class="w-10 h-10 rounded-full bg-[#D92D3A]/10 text-[#D92D3A] flex items-center justify-center font-bold text-sm shrink-0">
                 <ShoppingBag size={20} />
               </div>
               <div>
-                <span class="text-xs text-[#6C5F57] block font-medium">
+                <span class="text-xs text-[#806B5C] block font-medium">
                   {cartSummary().totalItems} porsi dipilih
                 </span>
-                <span class="font-heading font-bold text-base sm:text-lg text-[#1C1917]">
+                <span class="font-heading font-bold text-base sm:text-lg text-[#5B4638]">
                   {formatRupiah(cartSummary().subtotal)}
                 </span>
               </div>

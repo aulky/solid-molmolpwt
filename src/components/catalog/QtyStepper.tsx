@@ -30,18 +30,18 @@ export function QtyStepper(props: QtyStepperProps) {
   };
 
   return (
-    <div class="inline-flex items-center border border-[#E8DFD5] rounded-full bg-[#FFFDF9] overflow-hidden shadow-2xs">
+    <div class="inline-flex items-center border border-[#E7D8C3] rounded-full bg-[#FFFDF8] overflow-hidden shadow-2xs">
       <button
         type="button"
         onClick={handleDec}
         disabled={props.disabled || props.value <= minVal()}
-        class="w-8 h-8 flex items-center justify-center text-[#1C1917] hover:bg-[#F3ECE2] disabled:opacity-30 disabled:hover:bg-transparent transition active:scale-95 cursor-pointer"
+        class="w-8 h-8 flex items-center justify-center text-[#5B4638] hover:bg-[#F9EEDB] disabled:opacity-30 disabled:hover:bg-transparent transition active:scale-95 cursor-pointer"
         title="Kurangi"
       >
         <Minus size={14} />
       </button>
 
-      <span class="w-7 sm:w-8 text-center text-xs font-bold text-[#1C1917] select-none font-heading">
+      <span class="w-7 sm:w-8 text-center text-xs font-bold text-[#5B4638] select-none font-heading">
         {props.value}
       </span>
 
@@ -49,7 +49,7 @@ export function QtyStepper(props: QtyStepperProps) {
         type="button"
         onClick={handleInc}
         disabled={props.disabled || props.value >= maxVal()}
-        class="w-8 h-8 flex items-center justify-center text-[#1C1917] hover:bg-[#F3ECE2] disabled:opacity-30 disabled:hover:bg-transparent transition active:scale-95 cursor-pointer"
+        class="w-8 h-8 flex items-center justify-center text-[#5B4638] hover:bg-[#F9EEDB] disabled:opacity-30 disabled:hover:bg-transparent transition active:scale-95 cursor-pointer"
         title="Tambah"
       >
         <Plus size={14} />
