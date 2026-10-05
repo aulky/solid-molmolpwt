@@ -178,7 +178,7 @@ export default function AdminOrdersPage() {
         <div class="card-surface bg-[#FFFDF9] border border-[#E8DFD5] overflow-hidden rounded-2xl">
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs min-w-[700px]">
-              <thead class="bg-[#FAF7F2] text-[#6C5F57] border-b border-[#E8DFD5] text-[11px] font-semibold uppercase">
+              <thead class="bg-[#F9EEDB] text-[#806B5C] border-b border-[#E7D8C3] text-[11px] font-semibold uppercase">
                 <tr>
                   <th class="p-3">Kode</th>
                   <th class="p-3">Pemesan</th>
@@ -189,22 +189,11 @@ export default function AdminOrdersPage() {
                   <th class="p-3 text-right">Aksi</th>
                 </tr>
               </thead>
-              <thead class="bg-[#FAF7F2] text-[#6C5F57] border-b border-[#E8DFD5] uppercase text-[11px] font-semibold">
-                <tr>
-                  <th class="p-3">Kode</th>
-                  <th class="p-3">Pemesan</th>
-                  <th class="p-3">Layanan</th>
-                  <th class="p-3">Total</th>
-                  <th class="p-3">Status</th>
-                  <th class="p-3">Waktu Masuk</th>
-                  <th class="p-3 text-right">Aksi</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-[#E8DFD5]">
+              <tbody class="divide-y divide-[#E7D8C3]">
                 <Show when={!isLoading()} fallback={
                   <tr>
-                    <td colspan={7} class="p-8 text-center text-[#6C5F57]">
-                      <Loader2 size={24} class="animate-spin mx-auto mb-2 text-[#CE2738]" />
+                    <td colspan={7} class="p-8 text-center text-[#806B5C]">
+                      <Loader2 size={24} class="animate-spin mx-auto mb-2 text-[#D92D3A]" />
                       <span>Memuat data pesanan...</span>
                     </td>
                   </tr>
@@ -213,25 +202,25 @@ export default function AdminOrdersPage() {
                     each={orders()}
                     fallback={
                       <tr>
-                        <td colspan={7} class="p-8 text-center text-[#8D7E73]">
+                        <td colspan={7} class="p-8 text-center text-[#806B5C]">
                           Tidak ada pesanan yang sesuai dengan filter.
                         </td>
                       </tr>
                     }
                   >
                     {(o) => (
-                      <tr class="hover:bg-[#FAF7F2]/60 transition">
-                        <td class="p-3 font-bold text-[#CE2738]">
+                      <tr class="hover:bg-[#F9EEDB]/50 transition">
+                        <td class="p-3 font-bold text-[#D92D3A]">
                           {o.shortCode}
                         </td>
                         <td class="p-3">
-                          <span class="font-semibold text-[#1C1917] block">
+                          <span class="font-semibold text-[#5B4638] block">
                             {o.customerName}
                           </span>
-                          <span class="text-[#6C5F57] text-[11px] block">{o.customerPhone}</span>
+                          <span class="text-[#806B5C] text-[11px] block">{o.customerPhone}</span>
                         </td>
                         <td class="p-3">
-                          <span class="uppercase font-semibold text-[11px] block text-[#1C1917]">
+                          <span class="uppercase font-semibold text-[11px] block text-[#5B4638]">
                             {o.fulfillment}
                           </span>
                           <Show when={o.latitude && o.longitude}>
@@ -239,24 +228,24 @@ export default function AdminOrdersPage() {
                               href={`https://maps.google.com/?q=${o.latitude},${o.longitude}`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              class="inline-flex items-center gap-1 text-[11px] text-[#CE2738] hover:underline font-semibold mt-0.5"
+                              class="inline-flex items-center gap-1 text-[11px] text-[#D92D3A] hover:underline font-semibold mt-0.5"
                               title="Buka titik koordinat di Google Maps"
                             >
-                              <MapPin size={11} class="text-[#CE2738]" />
+                              <MapPin size={11} class="text-[#D92D3A]" />
                               <span>Peta GPS</span>
                               <ExternalLink size={10} />
                             </a>
                           </Show>
                         </td>
                         <td class="p-3">
-                          <span class="font-bold font-heading text-[#1C1917] block">
+                          <span class="font-bold font-heading text-[#5B4638] block">
                             {formatRupiah(o.total)}
                           </span>
                           <Show
                             when={o.paymentProofPath}
                             fallback={
                               <Show when={o.fulfillment === "cod"}>
-                                <span class="text-[10px] text-[#8D7E73] block mt-0.5">
+                                <span class="text-[10px] text-[#806B5C] block mt-0.5">
                                   Bayar COD
                                 </span>
                               </Show>
@@ -266,10 +255,10 @@ export default function AdminOrdersPage() {
                               href={o.paymentProofPath}
                               target="_blank"
                               rel="noopener noreferrer"
-                              class="inline-flex items-center gap-1 text-[11px] text-[#CE2738] hover:underline font-semibold mt-0.5"
+                              class="inline-flex items-center gap-1 text-[11px] text-[#D92D3A] hover:underline font-semibold mt-0.5"
                               title="Buka foto bukti transaksi / pembayaran"
                             >
-                              <Receipt size={11} class="text-[#CE2738]" />
+                              <Receipt size={11} class="text-[#D92D3A]" />
                               <span>Bukti Bayar</span>
                               <ExternalLink size={10} />
                             </a>
@@ -278,7 +267,7 @@ export default function AdminOrdersPage() {
                         <td class="p-3">
                           <OrderStatusBadge status={o.status} />
                         </td>
-                        <td class="p-3 text-[#8D7E73] text-[11px]">
+                        <td class="p-3 text-[#806B5C] text-[11px]">
                           {formatTanggalWIB(o.createdAt)}
                         </td>
                         <td class="p-3 text-right">
@@ -289,7 +278,7 @@ export default function AdminOrdersPage() {
                                 type="button"
                                 disabled={quickUpdatingId() === o.id}
                                 onClick={() => handleQuickUpdate(o.id, "dikonfirmasi")}
-                                class="px-2.5 py-1 rounded bg-[#20970B] hover:bg-[#15803D] text-white text-[11px] font-semibold flex items-center gap-1 shadow-2xs transition cursor-pointer disabled:opacity-50"
+                                class="px-2.5 py-1 rounded-full bg-[#7FA37A] hover:bg-[#6C8E68] text-white text-[11px] font-semibold flex items-center gap-1 shadow-2xs transition cursor-pointer disabled:opacity-50"
                                 title="1-Klik Konfirmasi Pembayaran Sah"
                               >
                                 <Show when={quickUpdatingId() === o.id} fallback={<CheckCircle size={12} />}>
@@ -303,7 +292,7 @@ export default function AdminOrdersPage() {
                                 type="button"
                                 disabled={quickUpdatingId() === o.id}
                                 onClick={() => handleQuickUpdate(o.id, "diproduksi")}
-                                class="px-2.5 py-1 rounded bg-[#CE2738] hover:bg-[#B51F2F] text-white text-[11px] font-semibold flex items-center gap-1 shadow-2xs transition cursor-pointer disabled:opacity-50"
+                                class="px-2.5 py-1 rounded-full bg-[#D92D3A] hover:bg-[#B92230] text-white text-[11px] font-semibold flex items-center gap-1 shadow-2xs transition cursor-pointer disabled:opacity-50"
                                 title="1-Klik Mulai Masak / Produksi"
                               >
                                 <Show when={quickUpdatingId() === o.id} fallback={<ChefHat size={12} />}>
@@ -317,7 +306,7 @@ export default function AdminOrdersPage() {
                                 type="button"
                                 disabled={quickUpdatingId() === o.id}
                                 onClick={() => handleQuickUpdate(o.id, o.fulfillment === "pickup" ? "siap_diambil" : "dikirim")}
-                                class="px-2.5 py-1 rounded bg-amber-600 hover:bg-amber-700 text-white text-[11px] font-semibold flex items-center gap-1 shadow-2xs transition cursor-pointer disabled:opacity-50"
+                                class="px-2.5 py-1 rounded-full bg-[#E9B45B] hover:bg-[#D6A045] text-[#3A2814] text-[11px] font-semibold flex items-center gap-1 shadow-2xs transition cursor-pointer disabled:opacity-50"
                                 title="1-Klik Tandai Siap Diambil / Kirim"
                               >
                                 <Show when={quickUpdatingId() === o.id} fallback={<PackageCheck size={12} />}>
@@ -380,9 +369,9 @@ export default function AdminOrdersPage() {
                     </span>
                   </div>
                 </Show>
-                <div class="flex justify-between font-bold pt-1 border-t border-[#E8DFD5]">
+                <div class="flex justify-between font-bold pt-1 border-t border-[#E7D8C3]">
                   <span>Total Tagihan:</span>
-                  <span class="font-bold text-[#CE2738] text-sm">
+                  <span class="font-bold text-[#D92D3A] text-sm">
                     {formatRupiah(activeOrder()?.total || 0)}
                   </span>
                 </div>
@@ -390,13 +379,13 @@ export default function AdminOrdersPage() {
 
               {/* Rincian Titik Koordinat GPS Lengkap (Requirement 1) */}
               <Show when={activeOrder()?.latitude && activeOrder()?.longitude}>
-                <div class="p-3.5 rounded-2xl bg-[#CE2738]/5 border border-[#CE2738]/20 space-y-2">
+                <div class="p-3.5 rounded-2xl bg-[#D92D3A]/5 border border-[#D92D3A]/20 space-y-2">
                   <div class="flex items-center justify-between">
-                    <span class="font-semibold text-xs text-[#1C1917] flex items-center gap-1.5">
-                      <MapPin size={15} class="text-[#CE2738]" />
+                    <span class="font-semibold text-xs text-[#5B4638] flex items-center gap-1.5">
+                      <MapPin size={15} class="text-[#D92D3A]" />
                       <span>Informasi Titik Koordinat GPS Pemesan</span>
                     </span>
-                    <span class="text-[10px] bg-[#CE2738]/10 text-[#CE2738] font-semibold px-2 py-0.5 rounded-full">
+                    <span class="text-[10px] bg-[#D92D3A]/10 text-[#D92D3A] font-semibold px-2 py-0.5 rounded-full">
                       {activeOrder()?.locationSource === "gps_device"
                         ? "Deteksi GPS Otomatis"
                         : activeOrder()?.locationSource === "maps_pin"
@@ -407,15 +396,15 @@ export default function AdminOrdersPage() {
 
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#4B5563]">
                     <div>
-                      <span class="text-[#6C5F57] block text-[11px]">Latitude, Longitude:</span>
-                      <span class="font-semibold text-[#1C1917] select-all">
+                      <span class="text-[#806B5C] block text-[11px]">Latitude, Longitude:</span>
+                      <span class="font-semibold text-[#5B4638] select-all">
                         {activeOrder()?.latitude}, {activeOrder()?.longitude}
                       </span>
                     </div>
                     <Show when={activeOrder()?.gpsAccuracyM}>
                       <div>
-                        <span class="text-[#6C5F57] block text-[11px]">Estimasi Akurasi:</span>
-                        <span class="font-medium text-[#1C1917]">
+                        <span class="text-[#806B5C] block text-[11px]">Estimasi Akurasi:</span>
+                        <span class="font-medium text-[#5B4638]">
                           ±{activeOrder()?.gpsAccuracyM} meter dari perangkat
                         </span>
                       </div>
@@ -423,9 +412,9 @@ export default function AdminOrdersPage() {
                   </div>
 
                   <Show when={activeOrder()?.addressNote}>
-                    <div class="text-xs pt-1 border-t border-[#CE2738]/10">
-                      <span class="text-[#6C5F57]">Patokan / Catatan Alamat:</span>
-                      <span class="font-medium text-[#1C1917] block">{activeOrder()?.addressNote}</span>
+                    <div class="text-xs pt-1 border-t border-[#D92D3A]/10">
+                      <span class="text-[#806B5C]">Patokan / Catatan Alamat:</span>
+                      <span class="font-medium text-[#5B4638] block">{activeOrder()?.addressNote}</span>
                     </div>
                   </Show>
 
@@ -471,27 +460,27 @@ export default function AdminOrdersPage() {
 
               {/* Bukti Bayar Thumbnail */}
               <Show when={activeOrder()?.paymentProofPath}>
-                <div class="p-3.5 rounded-2xl bg-[#FFFDF9] border border-[#E8DFD5] space-y-2">
-                  <span class="font-semibold text-[#1C1917] block">
+                <div class="p-3.5 rounded-2xl bg-[#FFFDF8] border border-[#E7D8C3] space-y-2">
+                  <span class="font-semibold text-[#5B4638] block">
                     Foto Bukti Pembayaran:
                   </span>
                   <div class="flex items-center gap-3">
                     <img
                       src={activeOrder()?.paymentProofPath}
                       alt="Bukti Transfer"
-                      class="w-24 h-24 object-cover rounded-xl border border-[#E8DFD5] cursor-pointer hover:opacity-90"
+                      class="w-24 h-24 object-cover rounded-xl border border-[#E7D8C3] cursor-pointer hover:opacity-90"
                       onClick={() => setIsProofZoomed(true)}
                     />
                     <div>
                       <button
                         type="button"
                         onClick={() => setIsProofZoomed(true)}
-                        class="text-[#CE2738] hover:underline flex items-center gap-1 font-semibold cursor-pointer"
+                        class="text-[#D92D3A] hover:underline flex items-center gap-1 font-semibold cursor-pointer"
                       >
                         <Eye size={13} />
                         <span>Perbesar Foto Bukti</span>
                       </button>
-                      <span class="text-[11px] text-[#6E5D53] block mt-1">
+                      <span class="text-[11px] text-[#806B5C] block mt-1">
                         Periksa keaslian nominal dan tanggal transaksi sebelum konfirmasi.
                       </span>
                     </div>

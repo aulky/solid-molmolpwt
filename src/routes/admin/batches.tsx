@@ -453,13 +453,13 @@ export default function AdminBatchesPage() {
             }
           >
             {(b) => (
-              <div class="card-surface p-5 bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl space-y-4 shadow-xs">
-                <div class="flex items-center justify-between pb-3 border-b border-[#E8DFD5]">
+              <div class="card-surface p-5 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl space-y-4 shadow-xs">
+                <div class="flex items-center justify-between pb-3 border-b border-[#E7D8C3]">
                   <div>
-                    <span class="text-xs font-bold text-[#CE2738] block font-heading">
+                    <span class="text-xs font-bold text-[#D92D3A] block font-heading">
                       {b.code}
                     </span>
-                    <h3 class="font-heading font-bold text-base text-[#1C1917]">
+                    <h3 class="font-heading font-bold text-base text-[#5B4638]">
                       {b.title}
                     </h3>
                   </div>
@@ -471,8 +471,8 @@ export default function AdminBatchesPage() {
                       onClick={() => handleToggleStatus(b)}
                       class={`px-2.5 py-1 rounded-full text-[11px] font-semibold flex items-center gap-1.5 transition cursor-pointer disabled:opacity-50 ${
                         b.status === "open"
-                          ? "bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100"
-                          : "bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200"
+                          ? "bg-[#7FA37A]/15 text-[#547C4F] border border-[#7FA37A]/30 hover:bg-[#7FA37A]/25"
+                          : "bg-[#F9EEDB] text-[#806B5C] border border-[#E7D8C3] hover:bg-[#EEDEC7]"
                       }`}
                       title={b.status === "open" ? "Klik untuk Tutup PO" : "Klik untuk Buka PO"}
                     >
@@ -483,7 +483,7 @@ export default function AdminBatchesPage() {
                           <span>Ditutup</span>
                         )
                       }>
-                        <Loader2 size={12} class="animate-spin text-[#CE2738]" />
+                        <Loader2 size={12} class="animate-spin text-[#D92D3A]" />
                         <span>Mengubah...</span>
                       </Show>
                     </button>
@@ -502,12 +502,12 @@ export default function AdminBatchesPage() {
                   </div>
                 </div>
 
-                <div class="space-y-1.5 text-xs text-[#6C5F57]">
+                <div class="space-y-1.5 text-xs text-[#806B5C]">
                   <div class="flex items-center justify-between">
                     <span class="flex items-center gap-1">
                       <Clock size={13} /> Tutup PO:
                     </span>
-                    <span class="font-medium text-[#1C1917]">
+                    <span class="font-medium text-[#5B4638]">
                       {formatTanggalWIB(b.orderCloseAt)}
                     </span>
                   </div>
@@ -516,7 +516,7 @@ export default function AdminBatchesPage() {
                     <span class="flex items-center gap-1">
                       <Calendar size={13} /> Jadwal Kirim:
                     </span>
-                    <span class="font-medium text-[#1C1917]">
+                    <span class="font-medium text-[#5B4638]">
                       {formatTanggalWIB(b.deliveryDate, { includeTime: false })}
                     </span>
                   </div>
@@ -525,22 +525,22 @@ export default function AdminBatchesPage() {
                     <span class="flex items-center gap-1">
                       <Layers size={13} /> Kuota Pesanan:
                     </span>
-                    <span class="font-semibold text-[#1C1917]">
+                    <span class="font-semibold text-[#5B4638]">
                       {b.quotaUsed} / {b.quotaTotal} slot
                     </span>
                   </div>
 
-                  <div class="flex items-center justify-between pt-1 border-t border-[#E8DFD5]/60">
+                  <div class="flex items-center justify-between pt-1 border-t border-[#E7D8C3]/60">
                     <span class="flex items-center gap-1">
-                      <UtensilsCrossed size={13} class="text-[#CE2738]" /> Menu Pre-Order:
+                      <UtensilsCrossed size={13} class="text-[#D92D3A]" /> Menu Pre-Order:
                     </span>
-                    <span class="font-semibold text-[#CE2738]">
+                    <span class="font-semibold text-[#D92D3A]">
                       {b.activeItemCount ?? b.selectedItemIds?.length ?? 0} varian dibuka
                     </span>
                   </div>
                 </div>
 
-                <div class="pt-3 border-t border-[#E8DFD5] flex flex-wrap items-center justify-between gap-2 text-xs text-[#6C5F57]">
+                <div class="pt-3 border-t border-[#E7D8C3] flex flex-wrap items-center justify-between gap-2 text-xs text-[#806B5C]">
                   <div class="space-x-1.5 sm:space-x-2 text-xs">
                     <span>Ongkir: {formatRupiah(b.deliveryFeeFlat)}</span>
                     <span>• Min Gratis: {formatRupiah(b.freeDeliveryMin || 0)}</span>
@@ -549,7 +549,7 @@ export default function AdminBatchesPage() {
                     <button
                       type="button"
                       onClick={() => openEditModal(b)}
-                      class="btn-secondary btn-sm text-[11px] h-7 px-2.5 flex items-center gap-1 cursor-pointer hover:text-[#CE2738] shrink-0"
+                      class="btn-secondary btn-sm text-[11px] h-7 px-2.5 flex items-center gap-1 cursor-pointer hover:text-[#D92D3A] shrink-0"
                       title="Edit Batch PO"
                     >
                       <Edit3 size={12} />
@@ -558,7 +558,7 @@ export default function AdminBatchesPage() {
                     <button
                       type="button"
                       onClick={() => confirmDeleteBatch(b.id, b.code)}
-                      class="btn-secondary btn-sm text-[11px] h-7 px-2.5 flex items-center gap-1 cursor-pointer text-[#CE2738] hover:bg-[#CE2738]/10 hover:border-[#CE2738]/30 shrink-0"
+                      class="btn-secondary btn-sm text-[11px] h-7 px-2.5 flex items-center gap-1 cursor-pointer text-[#D92D3A] hover:bg-[#D92D3A]/10 hover:border-[#D92D3A]/30 shrink-0"
                       title="Hapus Batch PO"
                     >
                       <Trash2 size={12} />
@@ -601,8 +601,8 @@ export default function AdminBatchesPage() {
                 onClick={() => setBatchStep(1)}
                 class={`py-1.5 px-2 rounded-xl font-semibold transition text-center cursor-pointer ${
                   batchStep() === 1
-                    ? "bg-[#CE2738] text-white shadow-2xs"
-                    : "bg-[#F3ECE2] text-[#6C5F57] hover:text-[#1C1917]"
+                    ? "bg-[#D92D3A] text-white shadow-2xs"
+                    : "bg-[#F9EEDB] text-[#806B5C] hover:text-[#5B4638]"
                 }`}
               >
                 1. Info Dasar
@@ -612,8 +612,8 @@ export default function AdminBatchesPage() {
                 onClick={() => setBatchStep(2)}
                 class={`py-1.5 px-2 rounded-xl font-semibold transition text-center cursor-pointer ${
                   batchStep() === 2
-                    ? "bg-[#CE2738] text-white shadow-2xs"
-                    : "bg-[#F3ECE2] text-[#6C5F57] hover:text-[#1C1917]"
+                    ? "bg-[#D92D3A] text-white shadow-2xs"
+                    : "bg-[#F9EEDB] text-[#806B5C] hover:text-[#5B4638]"
                 }`}
               >
                 2. Jadwal & Kuota
@@ -623,8 +623,8 @@ export default function AdminBatchesPage() {
                 onClick={() => setBatchStep(3)}
                 class={`py-1.5 px-2 rounded-xl font-semibold transition text-center cursor-pointer ${
                   batchStep() === 3
-                    ? "bg-[#CE2738] text-white shadow-2xs"
-                    : "bg-[#F3ECE2] text-[#6C5F57] hover:text-[#1C1917]"
+                    ? "bg-[#D92D3A] text-white shadow-2xs"
+                    : "bg-[#F9EEDB] text-[#806B5C] hover:text-[#5B4638]"
                 }`}
               >
                 3. Menu PO ({selectedMenuItemIds().length})
@@ -634,8 +634,8 @@ export default function AdminBatchesPage() {
                 onClick={() => setBatchStep(4)}
                 class={`py-1.5 px-2 rounded-xl font-semibold transition text-center cursor-pointer ${
                   batchStep() === 4
-                    ? "bg-[#CE2738] text-white shadow-2xs"
-                    : "bg-[#F3ECE2] text-[#6C5F57] hover:text-[#1C1917]"
+                    ? "bg-[#D92D3A] text-white shadow-2xs"
+                    : "bg-[#F9EEDB] text-[#806B5C] hover:text-[#5B4638]"
                 }`}
               >
                 4. Lokasi & Kirim
@@ -647,7 +647,7 @@ export default function AdminBatchesPage() {
               <div class="space-y-3.5 animate-in fade-in duration-150">
                 <div class="grid grid-cols-2 gap-3">
                   <div>
-                    <label class="block font-semibold text-[#0A0A0A] mb-1">
+                    <label class="block font-semibold text-[#5B4638] mb-1">
                       Kode Batch <span class="text-[#EF4444]">*</span>
                     </label>
                     <input
@@ -794,7 +794,7 @@ export default function AdminBatchesPage() {
                     <button
                       type="button"
                       onClick={() => setSelectedMenuItemIds(availableMenus().map((m) => m.id))}
-                      class="text-[11px] text-[#CE2738] hover:underline font-semibold cursor-pointer"
+                      class="text-[11px] text-[#D92D3A] hover:underline font-semibold cursor-pointer"
                     >
                       Pilih Semua
                     </button>
@@ -802,18 +802,18 @@ export default function AdminBatchesPage() {
                     <button
                       type="button"
                       onClick={() => setSelectedMenuItemIds([])}
-                      class="text-[11px] text-[#6B6B6B] hover:underline cursor-pointer"
+                      class="text-[11px] text-[#806B5C] hover:underline cursor-pointer"
                     >
                       Batal Pilih
                     </button>
                   </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-60 overflow-y-auto p-1.5 rounded-xl border border-[#E8E8EC] bg-[#FAFAFA]">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-60 overflow-y-auto p-1.5 rounded-xl border border-[#E7D8C3] bg-[#F9EEDB]/40">
                   <For
                     each={availableMenus()}
                     fallback={
-                      <div class="col-span-2 py-4 text-center text-xs text-[#9C9C9C]">
+                      <div class="col-span-2 py-4 text-center text-xs text-[#806B5C]">
                         Belum ada katalog menu dibuat di menu CMS.
                       </div>
                     }
@@ -833,20 +833,20 @@ export default function AdminBatchesPage() {
                           onClick={toggle}
                           class={`flex items-center gap-2.5 p-2.5 rounded-xl border text-xs cursor-pointer transition select-none ${
                             isChecked()
-                              ? "bg-[#FFFDF9] border-[#CE2738] shadow-2xs ring-1 ring-[#CE2738]/30"
-                              : "bg-[#FFFDF9]/80 border-[#E8DFD5] opacity-60 hover:opacity-100"
+                              ? "bg-[#FFFDF8] border-[#D92D3A] shadow-2xs ring-1 ring-[#D92D3A]/30"
+                              : "bg-[#FFFDF8]/80 border-[#E7D8C3] opacity-60 hover:opacity-100"
                           }`}
                         >
                           <input
                             type="checkbox"
                             checked={isChecked()}
                             onChange={() => {}}
-                            class="rounded text-[#CE2738] focus:ring-[#CE2738] cursor-pointer"
+                            class="rounded text-[#D92D3A] focus:ring-[#D92D3A] cursor-pointer"
                           />
                           <Show
                             when={m.imagePath}
                             fallback={
-                              <div class="w-8 h-8 rounded-lg bg-[#F3ECE2] flex items-center justify-center text-[#8D7E73] shrink-0">
+                              <div class="w-8 h-8 rounded-lg bg-[#F9EEDB] flex items-center justify-center text-[#806B5C] shrink-0">
                                 <UtensilsCrossed size={14} />
                               </div>
                             }
@@ -854,12 +854,12 @@ export default function AdminBatchesPage() {
                             <img
                               src={m.imagePath}
                               alt={m.name}
-                              class="w-8 h-8 rounded-lg object-cover border border-[#E8DFD5] shrink-0"
+                              class="w-8 h-8 rounded-lg object-cover border border-[#E7D8C3] shrink-0"
                             />
                           </Show>
                           <div class="min-w-0 flex-1">
-                            <span class="font-medium text-[#1C1917] block truncate">{m.name}</span>
-                            <span class="text-xs text-[#6C5F57]">
+                            <span class="font-medium text-[#5B4638] block truncate">{m.name}</span>
+                            <span class="text-xs text-[#806B5C]">
                               {formatRupiah(m.basePrice)}
                             </span>
                           </div>
@@ -875,34 +875,34 @@ export default function AdminBatchesPage() {
             <Show when={batchStep() === 4}>
               <div class="space-y-3.5 animate-in fade-in duration-150">
                 <div class="space-y-1.5">
-                  <label class="block font-semibold text-[#1C1917]">
+                  <label class="block font-semibold text-[#5B4638]">
                     Metode Pemenuhan yang Diizinkan
                   </label>
                   <div class="grid grid-cols-3 gap-2">
-                    <label class="flex items-center gap-2 p-2.5 rounded-xl border border-[#E8DFD5] bg-[#FAF7F2] cursor-pointer">
+                    <label class="flex items-center gap-2 p-2.5 rounded-xl border border-[#E7D8C3] bg-[#F9EEDB]/60 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={allowPickup()}
                         onChange={(e) => setAllowPickup(e.currentTarget.checked)}
-                        class="rounded text-[#CE2738]"
+                        class="rounded text-[#D92D3A]"
                       />
                       <span>Ambil Sendiri</span>
                     </label>
-                    <label class="flex items-center gap-2 p-2.5 rounded-xl border border-[#E8DFD5] bg-[#FAF7F2] cursor-pointer">
+                    <label class="flex items-center gap-2 p-2.5 rounded-xl border border-[#E7D8C3] bg-[#F9EEDB]/60 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={allowDelivery()}
                         onChange={(e) => setAllowDelivery(e.currentTarget.checked)}
-                        class="rounded text-[#CE2738]"
+                        class="rounded text-[#D92D3A]"
                       />
                       <span>Diantar Toko</span>
                     </label>
-                    <label class="flex items-center gap-2 p-2.5 rounded-xl border border-[#E8DFD5] bg-[#FAF7F2] cursor-pointer">
+                    <label class="flex items-center gap-2 p-2.5 rounded-xl border border-[#E7D8C3] bg-[#F9EEDB]/60 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={allowCod()}
                         onChange={(e) => setAllowCod(e.currentTarget.checked)}
-                        class="rounded text-[#CE2738]"
+                        class="rounded text-[#D92D3A]"
                       />
                       <span>COD</span>
                     </label>
@@ -911,29 +911,29 @@ export default function AdminBatchesPage() {
 
                 {/* Sub-form Pengambilan Mandiri */}
                 <Show when={allowPickup()}>
-                  <div class="p-3.5 rounded-2xl border border-[#CE2738]/30 bg-[#CE2738]/5 space-y-3">
-                    <div class="flex items-center justify-between pb-1.5 border-b border-[#CE2738]/15">
-                      <div class="flex items-center gap-1.5 font-bold text-xs text-[#1C1917]">
-                        <MapPin size={14} class="text-[#CE2738]" />
+                  <div class="p-3.5 rounded-2xl border border-[#D92D3A]/30 bg-[#D92D3A]/5 space-y-3">
+                    <div class="flex items-center justify-between pb-1.5 border-b border-[#D92D3A]/15">
+                      <div class="flex items-center gap-1.5 font-bold text-xs text-[#5B4638]">
+                        <MapPin size={14} class="text-[#D92D3A]" />
                         <span>Titik & Alamat Pengambilan (Pickup)</span>
                       </div>
                       <div class="flex items-center gap-2">
                         <button
                           type="button"
                           onClick={handleCopyStoreAddress}
-                          class="text-[11px] text-[#CE2738] hover:underline font-semibold cursor-pointer"
+                          class="text-[11px] text-[#D92D3A] hover:underline font-semibold cursor-pointer"
                         >
                           Salin dari Toko
                         </button>
-                        <span class="text-[#E8DFD5]">•</span>
+                        <span class="text-[#E7D8C3]">•</span>
                         <button
                           type="button"
                           onClick={handleGetBatchGps}
                           disabled={isDetectingGps()}
-                          class="text-[11px] text-[#CE2738] hover:underline font-semibold cursor-pointer flex items-center gap-1"
+                          class="text-[11px] text-[#D92D3A] hover:underline font-semibold cursor-pointer flex items-center gap-1"
                         >
                           <Show when={isDetectingGps()} fallback={<Navigation size={11} />}>
-                            <Loader2 size={11} class="animate-spin text-[#CE2738]" />
+                            <Loader2 size={11} class="animate-spin text-[#D92D3A]" />
                           </Show>
                           <span>{isDetectingGps() ? "Mendeteksi..." : "Deteksi GPS"}</span>
                         </button>
@@ -1013,12 +1013,12 @@ export default function AdminBatchesPage() {
 
                     <Show when={pickupMapsUrl()}>
                       <div class="pt-1 flex items-center justify-between text-[11px]">
-                        <span class="text-[#6E5D53]">Tautan Google Maps Titik Pickup:</span>
+                        <span class="text-[#806B5C]">Tautan Google Maps Titik Pickup:</span>
                         <a
                           href={pickupMapsUrl()}
                           target="_blank"
                           rel="noopener noreferrer"
-                          class="text-[#CE2738] flex items-center gap-1 hover:underline font-semibold"
+                          class="text-[#D92D3A] flex items-center gap-1 hover:underline font-semibold"
                         >
                           <MapPin size={12} />
                           <span>Buka di Google Maps</span>
@@ -1032,7 +1032,7 @@ export default function AdminBatchesPage() {
             </Show>
 
             {/* Stepper Bottom Action Buttons */}
-            <div class="pt-3 border-t border-[#E8E8EC] flex items-center justify-between gap-2">
+            <div class="pt-3 border-t border-[#E7D8C3] flex items-center justify-between gap-2">
               <button
                 type="button"
                 onClick={() => setIsModalOpen(false)}

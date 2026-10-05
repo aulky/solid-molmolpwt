@@ -109,22 +109,22 @@ export default function AdminProductionPage() {
         </div>
 
         {/* Printable Paper Card */}
-        <div class="card-surface p-8 bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl space-y-6 print:border-none print:shadow-none print:p-0">
-          <div class="border-b border-[#E8DFD5] pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="card-surface p-8 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl space-y-6 print:border-none print:shadow-none print:p-0">
+          <div class="border-b border-[#E7D8C3] pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h2 class="font-heading font-bold text-xl sm:text-2xl text-[#1C1917]">
+              <h2 class="font-heading font-bold text-xl sm:text-2xl text-[#5B4638]">
                 Rekap Kebutuhan Produksi
               </h2>
-              <span class="text-xs text-[#6C5F57] block mt-0.5">
+              <span class="text-xs text-[#806B5C] block mt-0.5">
                 Dihitung dari seluruh pesanan berstatus Dikonfirmasi, Diproduksi, atau Siap Diambil.
               </span>
             </div>
 
             <div class="sm:text-right">
-              <span class="text-xs text-[#8D7E73] block uppercase tracking-wider font-semibold">
+              <span class="text-xs text-[#806B5C] block uppercase tracking-wider font-semibold">
                 TOTAL PORSI WAJIB DIMASAK
               </span>
-              <span class="font-heading font-bold text-2xl sm:text-3xl text-[#CE2738]">
+              <span class="font-heading font-bold text-2xl sm:text-3xl text-[#D92D3A]">
                 {totalPortions()} porsi
               </span>
             </div>
@@ -133,7 +133,7 @@ export default function AdminProductionPage() {
           {/* Table */}
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs sm:text-sm min-w-[500px]">
-              <thead class="bg-[#FAF7F2] text-[#6C5F57] border-b border-[#E8DFD5] uppercase text-[11px] font-semibold">
+              <thead class="bg-[#F9EEDB] text-[#806B5C] border-b border-[#E7D8C3] uppercase text-[11px] font-semibold">
                 <tr>
                   <th class="p-3 w-12 text-center">No</th>
                   <th class="p-3">Nama Varian & Daftar Pemesan</th>
@@ -141,40 +141,40 @@ export default function AdminProductionPage() {
                   <th class="p-3 text-right w-40">Total Kuantitas</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-[#E8DFD5]">
+              <tbody class="divide-y divide-[#E7D8C3]">
                 <For
                   each={productionList()}
                   fallback={
                     <tr>
-                      <td colspan={4} class="p-8 text-center text-[#8D7E73]">
+                      <td colspan={4} class="p-8 text-center text-[#806B5C]">
                         Belum ada pesanan yang dikonfirmasi untuk batch ini.
                       </td>
                     </tr>
                   }
                 >
                   {(item, idx) => (
-                    <tr class="hover:bg-[#FAF7F2]/60 align-top">
-                      <td class="p-3 text-center text-[#6C5F57] font-medium pt-3.5">
+                    <tr class="hover:bg-[#F9EEDB]/40 align-top">
+                      <td class="p-3 text-center text-[#806B5C] font-medium pt-3.5">
                         {idx() + 1}
                       </td>
                       <td class="p-3 space-y-2">
-                        <span class="font-heading font-bold text-sm sm:text-base text-[#1C1917] block">
+                        <span class="font-heading font-bold text-sm sm:text-base text-[#5B4638] block">
                           {item.name}
                         </span>
 
                         {/* Rincian Pemesan & Kuantitas per Orang (Requirement 5) */}
                         <Show when={item.customers && item.customers.length > 0}>
                           <div class="space-y-1.5 pt-1">
-                            <span class="text-[11px] font-semibold text-[#CE2738] block uppercase tracking-wider">
+                            <span class="text-[11px] font-semibold text-[#D92D3A] block uppercase tracking-wider">
                               Customers({item.customers.length} orang):
                             </span>
                             <div class="flex flex-wrap gap-1.5">
                               <For each={item.customers}>
                                 {(c: any) => (
-                                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#FAF7F2] border border-[#E8DFD5] text-xs text-[#1C1917] shadow-2xs">
-                                    <span class="font-semibold text-[#1C1917]">{c.customerName}</span>
-                                    <span class="text-[#6C5F57] text-[10px]">({c.shortCode})</span>:
-                                    <span class="font-bold text-[#CE2738] bg-[#CE2738]/10 px-1.5 py-0.2 rounded text-[11px]">
+                                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#F9EEDB]/60 border border-[#E7D8C3] text-xs text-[#5B4638] shadow-2xs">
+                                    <span class="font-semibold text-[#5B4638]">{c.customerName}</span>
+                                    <span class="text-[#806B5C] text-[10px]">({c.shortCode})</span>:
+                                    <span class="font-bold text-[#D92D3A] bg-[#D92D3A]/10 px-1.5 py-0.2 rounded text-[11px]">
                                       {c.qty} porsi
                                     </span>
                                     <Show when={c.notes}>
@@ -189,11 +189,11 @@ export default function AdminProductionPage() {
                           </div>
                         </Show>
                       </td>
-                      <td class="p-3 text-center text-[#6C5F57] pt-3.5 font-medium">
+                      <td class="p-3 text-center text-[#806B5C] pt-3.5 font-medium">
                         {item.totalOrders} orang
                       </td>
-                      <td class="p-3 text-right font-bold text-lg text-[#1C1917] pt-3.5">
-                        <span class="text-[#CE2738]">{item.totalQty}</span> porsi
+                      <td class="p-3 text-right font-bold text-lg text-[#5B4638] pt-3.5">
+                        <span class="text-[#D92D3A]">{item.totalQty}</span> porsi
                       </td>
                     </tr>
                   )}
@@ -202,7 +202,7 @@ export default function AdminProductionPage() {
             </table>
           </div>
 
-          <div class="pt-6 border-t border-[#E8DFD5] text-xs text-[#8D7E73] flex justify-between">
+          <div class="pt-6 border-t border-[#E7D8C3] text-xs text-[#806B5C] flex justify-between">
             <span>Mol-Mol Purwokerto • Produksi Bersih & Higienis</span>
             <span>Dicetak: {new Date().toLocaleString("id-ID")}</span>
           </div>

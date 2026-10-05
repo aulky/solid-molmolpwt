@@ -392,7 +392,7 @@ export default function AdminSettingsPage() {
 
             <div>
               <div class="flex items-center justify-between mb-1">
-                <label class="block font-semibold text-[#1C1917]">
+                <label class="block font-semibold text-[#5B4638]">
                   Tautan Google Maps Titik Outlet
                 </label>
                 <Show when={pickupMapsUrl()}>
@@ -400,7 +400,7 @@ export default function AdminSettingsPage() {
                     href={pickupMapsUrl()}
                     target="_blank"
                     rel="noreferrer"
-                    class="text-[#CE2738] hover:underline text-xs inline-flex items-center gap-1 font-medium"
+                    class="text-[#D92D3A] hover:underline text-xs inline-flex items-center gap-1 font-medium"
                   >
                     <span>Uji Buka di Google Maps</span>
                     <ExternalLink size={12} />
@@ -419,13 +419,13 @@ export default function AdminSettingsPage() {
         </div>
 
         {/* Rekening & QRIS */}
-        <div class="card-surface p-4 sm:p-6 bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl space-y-5 shadow-xs">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E8DFD5]">
+        <div class="card-surface p-4 sm:p-6 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl space-y-5 shadow-xs">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E7D8C3]">
             <div>
-              <h3 class="font-heading font-bold text-base text-[#1C1917]">
+              <h3 class="font-heading font-bold text-base text-[#5B4638]">
                 Pembayaran QRIS & Rekening Bank
               </h3>
-              <p class="text-xs text-[#6C5F57]">
+              <p class="text-xs text-[#806B5C]">
                 Kelola daftar rekening bank tujuan transfer dan upload barcode QRIS toko.
               </p>
             </div>
@@ -440,21 +440,21 @@ export default function AdminSettingsPage() {
           </div>
 
           <div class="space-y-3">
-            <span class="text-xs font-semibold text-[#1C1917] block">
+            <span class="text-xs font-semibold text-[#5B4638] block">
               Daftar Nomor Rekening Aktif
             </span>
             <For each={bankAccounts()}>
               {(acc, idx) => (
-                <div class="p-3.5 rounded-xl border border-[#E8DFD5] bg-[#FAF7F2] space-y-3">
+                <div class="p-3.5 rounded-xl border border-[#E7D8C3] bg-[#F9EEDB] space-y-3">
                   <div class="flex items-center justify-between">
-                    <span class="text-xs font-semibold text-[#CE2738] uppercase">
+                    <span class="text-xs font-semibold text-[#D92D3A] uppercase">
                       Rekening #{idx() + 1} {idx() === 0 ? "(Utama)" : ""}
                     </span>
                     <Show when={bankAccounts().length > 1}>
                       <button
                         type="button"
                         onClick={() => removeBankAccount(idx())}
-                        class="text-[#CE2738] hover:opacity-80 text-xs flex items-center gap-1 cursor-pointer font-medium"
+                        class="text-[#D92D3A] hover:opacity-80 text-xs flex items-center gap-1 cursor-pointer font-medium"
                         title="Hapus Rekening"
                       >
                         <Trash2 size={13} />
@@ -465,7 +465,7 @@ export default function AdminSettingsPage() {
 
                   <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                     <div>
-                      <label class="block font-medium text-[#1C1917] mb-1">Nama Bank / E-Wallet</label>
+                      <label class="block font-medium text-[#5B4638] mb-1">Nama Bank / E-Wallet</label>
                       <input
                         type="text"
                         required
@@ -477,7 +477,7 @@ export default function AdminSettingsPage() {
                     </div>
 
                     <div>
-                      <label class="block font-medium text-[#1C1917] mb-1">Nomor Rekening</label>
+                      <label class="block font-medium text-[#5B4638] mb-1">Nomor Rekening</label>
                       <input
                         type="text"
                         required
@@ -489,7 +489,7 @@ export default function AdminSettingsPage() {
                     </div>
 
                     <div>
-                      <label class="block font-medium text-[#1C1917] mb-1">Atas Nama Rekening</label>
+                      <label class="block font-medium text-[#5B4638] mb-1">Atas Nama Rekening</label>
                       <input
                         type="text"
                         required
@@ -505,22 +505,22 @@ export default function AdminSettingsPage() {
             </For>
           </div>
 
-          <div class="pt-3 border-t border-[#E8DFD5] text-xs space-y-2">
-            <label class="block font-semibold text-[#1C1917]">
+          <div class="pt-3 border-t border-[#E7D8C3] text-xs space-y-2">
+            <label class="block font-semibold text-[#5B4638]">
               Foto Barcode QRIS Resmi Toko
             </label>
             <input
               type="file"
               accept="image/jpeg,image/png,image/webp"
               onChange={handleQrisUpload}
-              class="text-xs file:mr-2 file:py-1 file:px-2.5 file:rounded-full file:border-0 file:text-xs file:bg-[#CE2738]/10 file:text-[#CE2738] cursor-pointer"
+              class="text-xs file:mr-2 file:py-1 file:px-2.5 file:rounded-full file:border-0 file:text-xs file:bg-[#D92D3A]/10 file:text-[#D92D3A] cursor-pointer"
             />
             <Show when={qrisImagePath()}>
-              <div class="mt-2 flex items-center gap-3 p-2 bg-[#FAF7F2] rounded-xl border border-[#E8DFD5] w-fit">
+              <div class="mt-2 flex items-center gap-3 p-2 bg-[#F9EEDB] rounded-xl border border-[#E7D8C3] w-fit">
                 <img
                   src={qrisImagePath()}
                   alt="QRIS Toko"
-                  class="w-32 h-auto rounded-lg border border-[#E8DFD5] bg-white object-contain"
+                  class="w-32 h-auto rounded-lg border border-[#E7D8C3] bg-white object-contain"
                 />
                 <button
                   type="button"
@@ -535,14 +535,14 @@ export default function AdminSettingsPage() {
         </div>
 
         {/* Pengiriman & Ongkir */}
-        <div class="card-surface p-6 bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl space-y-4 shadow-xs">
-          <h3 class="font-heading font-bold text-base text-[#1C1917] pb-2 border-b border-[#E8DFD5]">
+        <div class="card-surface p-6 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl space-y-4 shadow-xs">
+          <h3 class="font-heading font-bold text-base text-[#5B4638] pb-2 border-b border-[#E7D8C3]">
             Ketentuan Pengiriman & Tarif
           </h3>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
             <div>
-              <label class="block font-semibold text-[#1C1917] mb-1">Ongkir Flat Standar (Rp)</label>
+              <label class="block font-semibold text-[#5B4638] mb-1">Ongkir Flat Standar (Rp)</label>
               <input
                 type="number"
                 min={0}
@@ -554,7 +554,7 @@ export default function AdminSettingsPage() {
             </div>
 
             <div>
-              <label class="block font-semibold text-[#1C1917] mb-1">Minimal Belanja Gratis Ongkir (Rp)</label>
+              <label class="block font-semibold text-[#5B4638] mb-1">Minimal Belanja Gratis Ongkir (Rp)</label>
               <input
                 type="number"
                 min={0}
@@ -571,9 +571,9 @@ export default function AdminSettingsPage() {
                 type="checkbox"
                 checked={allowDelivery()}
                 onChange={(e) => setAllowDelivery(e.currentTarget.checked)}
-                class="rounded text-[#CE2738] focus:ring-0"
+                class="rounded text-[#D92D3A] focus:ring-0"
               />
-              <span class="font-medium text-[#1C1917]">Aktifkan Layanan Antar Kurir</span>
+              <span class="font-medium text-[#5B4638]">Aktifkan Layanan Antar Kurir</span>
             </label>
 
             <label class="flex items-center gap-2 cursor-pointer">
@@ -581,22 +581,22 @@ export default function AdminSettingsPage() {
                 type="checkbox"
                 checked={allowCod()}
                 onChange={(e) => setAllowCod(e.currentTarget.checked)}
-                class="rounded text-[#CE2738] focus:ring-0"
+                class="rounded text-[#D92D3A] focus:ring-0"
               />
-              <span class="font-medium text-[#1C1917]">Aktifkan Layanan COD (Bayar di Tempat)</span>
+              <span class="font-medium text-[#5B4638]">Aktifkan Layanan COD (Bayar di Tempat)</span>
             </label>
           </div>
         </div>
 
         {/* Banner Pengumuman & Telegram */}
-        <div class="card-surface p-6 bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl space-y-4 shadow-xs">
-          <h3 class="font-heading font-bold text-base text-[#1C1917] pb-2 border-b border-[#E8DFD5]">
+        <div class="card-surface p-6 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl space-y-4 shadow-xs">
+          <h3 class="font-heading font-bold text-base text-[#5B4638] pb-2 border-b border-[#E7D8C3]">
             Pengumuman & Notifikasi Bot Telegram
           </h3>
 
           <div class="space-y-3 text-xs">
             <div>
-              <label class="block font-semibold text-[#1C1917] mb-1">
+              <label class="block font-semibold text-[#5B4638] mb-1">
                 Teks Pengumuman Promo / Info Batch PO
               </label>
               <input
@@ -613,13 +613,13 @@ export default function AdminSettingsPage() {
                 type="checkbox"
                 checked={announcementActive()}
                 onChange={(e) => setAnnouncementActive(e.currentTarget.checked)}
-                class="rounded text-[#CE2738] focus:ring-0"
+                class="rounded text-[#D92D3A] focus:ring-0"
               />
-              <span class="font-medium text-[#1C1917]">Tampilkan Banner Pengumuman di Halaman Depan</span>
+              <span class="font-medium text-[#5B4638]">Tampilkan Banner Pengumuman di Halaman Depan</span>
             </label>
 
             <div class="pt-2">
-              <label class="block font-semibold text-[#1C1917] mb-1">
+              <label class="block font-semibold text-[#5B4638] mb-1">
                 Telegram Chat ID Admin (Grup/Pribadi)
               </label>
               <input

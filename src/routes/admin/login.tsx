@@ -81,25 +81,25 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div class="min-h-screen bg-[#FAF7F2] flex flex-col justify-center items-center px-3 sm:px-4 py-8 sm:py-12">
-      <div class="w-full max-w-sm card-surface p-6 sm:p-8 bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl space-y-5 sm:space-y-6 shadow-xs">
+    <div class="min-h-screen bg-[#FFF4DE] flex flex-col justify-center items-center px-3 sm:px-4 py-8 sm:py-12">
+      <div class="w-full max-w-sm card-surface p-6 sm:p-8 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl space-y-5 sm:space-y-6 shadow-xs">
         <div class="text-center space-y-2">
           <img
             src="/molmol-logo.jpg"
             alt="Logo Mol-Mol"
-            class="w-16 h-16 rounded-full object-cover mx-auto border border-[#E8DFD5] shadow-xs"
+            class="w-16 h-16 rounded-full object-cover mx-auto border border-[#E7D8C3] shadow-xs"
           />
-          <h1 class="font-heading font-bold text-xl sm:text-2xl text-[#1C1917]">
+          <h1 class="font-heading font-bold text-xl sm:text-2xl text-[#5B4638]">
             Login Admin Mol-Mol
           </h1>
-          <p class="text-xs text-[#6C5F57]">
+          <p class="text-xs text-[#806B5C]">
             Masuk untuk mengelola pesanan, stok batch PO, dan operasional Mol-Mol Purwokerto.
           </p>
         </div>
 
         <form onSubmit={handleLogin} class="space-y-4">
           <div>
-            <label for="username" class="block text-xs font-semibold text-[#1C1917] mb-1">
+            <label for="username" class="block text-xs font-semibold text-[#5B4638] mb-1">
               Username Admin
             </label>
             <div class="relative">
@@ -116,12 +116,12 @@ export default function AdminLoginPage() {
                 class="input-base text-xs"
                 style={{ "padding-left": "2.5rem" }}
               />
-              <User size={15} class="absolute left-3 top-1/2 -translate-y-1/2 text-[#8E7F75] pointer-events-none" />
+              <User size={15} class="absolute left-3 top-1/2 -translate-y-1/2 text-[#806B5C] pointer-events-none" />
             </div>
           </div>
 
           <div>
-            <label for="password" class="block text-xs font-semibold text-[#1C1917] mb-1">
+            <label for="password" class="block text-xs font-semibold text-[#5B4638] mb-1">
               Password
             </label>
             <div class="relative">
@@ -138,11 +138,11 @@ export default function AdminLoginPage() {
                 class="input-base text-xs"
                 style={{ "padding-left": "2.5rem", "padding-right": "2.5rem" }}
               />
-              <Lock size={15} class="absolute left-3 top-1/2 -translate-y-1/2 text-[#8E7F75] pointer-events-none" />
+              <Lock size={15} class="absolute left-3 top-1/2 -translate-y-1/2 text-[#806B5C] pointer-events-none" />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword())}
-                class="absolute right-3 top-2.5 text-[#8E7F75] hover:text-[#1C1917] cursor-pointer"
+                class="absolute right-3 top-2.5 text-[#806B5C] hover:text-[#5B4638] cursor-pointer"
                 title={showPassword() ? "Sembunyikan password" : "Tampilkan password"}
               >
                 <Show when={showPassword()} fallback={<Eye size={15} />}>
@@ -153,7 +153,7 @@ export default function AdminLoginPage() {
           </div>
 
           <Show when={errorMsg()}>
-            <div class="p-2.5 rounded-xl bg-[#FFF5F5] border border-[#FECDD3] text-xs text-[#CE2738] flex items-center gap-1.5">
+            <div class="p-2.5 rounded-xl bg-[#FFF5F5] border border-[#FECDD3] text-xs text-[#D92D3A] flex items-center gap-1.5">
               <AlertCircle size={14} class="shrink-0" />
               <span>{errorMsg()}</span>
             </div>
@@ -171,8 +171,8 @@ export default function AdminLoginPage() {
           </button>
         </form>
 
-        <div class="pt-4 border-t border-[#E8DFD5] text-center">
-          <a href="/" class="text-xs text-[#CE2738] font-semibold hover:underline inline-flex items-center gap-1">
+        <div class="pt-4 border-t border-[#E7D8C3] text-center">
+          <a href="/" class="text-xs text-[#D92D3A] font-semibold hover:underline inline-flex items-center gap-1">
             <ArrowLeft size={13} />
             <span>Kembali ke Website Pre-Order</span>
           </a>

@@ -171,26 +171,26 @@ export function AdminLayout(props: AdminLayoutProps) {
     <Show
       when={isAuthenticated()}
       fallback={
-        <div class="min-h-screen bg-[#FAF7F2] flex flex-col items-center justify-center space-y-3">
-          <Loader2 size={32} class="animate-spin text-[#CE2738]" />
-          <span class="text-xs text-[#6C5F57] font-medium">Memeriksa sesi admin...</span>
+        <div class="min-h-screen bg-[#FFF4DE] flex flex-col items-center justify-center space-y-3">
+          <Loader2 size={32} class="animate-spin text-[#D92D3A]" />
+          <span class="text-xs text-[#806B5C] font-medium">Memeriksa sesi admin...</span>
         </div>
       }
     >
-      <div class="min-h-screen bg-[#FAF7F2] text-[#1C1917] flex flex-col">
+      <div class="min-h-screen bg-[#FFF4DE] text-[#5B4638] flex flex-col">
         {/* Mobile Header Bar */}
-      <div class="md:hidden bg-[#FFFDF9] border-b border-[#E8DFD5] h-16 px-4 sm:px-6 flex items-center justify-between sticky top-0 z-30">
+      <div class="md:hidden bg-[#FFFDF8] border-b border-[#E7D8C3] h-16 px-4 sm:px-6 flex items-center justify-between sticky top-0 z-30">
         <div class="flex items-center gap-2.5">
           <img
             src="/molmol-logo.jpg"
             alt="Logo Mol-Mol"
-            class="w-8 h-8 rounded-full object-cover border border-[#E8DFD5]"
+            class="w-8 h-8 rounded-full object-cover border border-[#E7D8C3]"
           />
           <div class="flex flex-col">
-            <span class="font-heading font-bold text-base leading-none text-[#CE2738]">
+            <span class="font-heading font-bold text-base leading-none text-[#D92D3A]">
               Mol-Mol
             </span>
-            <span class="text-[10px] uppercase tracking-wider font-semibold text-[#8D7E73]">
+            <span class="text-[10px] uppercase tracking-wider font-semibold text-[#806B5C]">
               Admin
             </span>
           </div>
@@ -199,7 +199,7 @@ export function AdminLayout(props: AdminLayoutProps) {
         <button
           type="button"
           onClick={() => setMobileSidebarOpen(!mobileSidebarOpen())}
-          class="p-2 rounded-xl text-[#1C1917] hover:bg-[#F3ECE2] transition cursor-pointer"
+          class="p-2 rounded-xl text-[#5B4638] hover:bg-[#F9EEDB] transition cursor-pointer"
           aria-label="Toggle Menu Admin"
         >
           <Show when={mobileSidebarOpen()} fallback={<Menu size={20} />}>
@@ -212,24 +212,24 @@ export function AdminLayout(props: AdminLayoutProps) {
       <div class="flex-1 flex">
         {/* Desktop Fixed Sidebar */}
         <aside
-          class={`fixed inset-y-0 left-0 z-40 w-64 bg-[#FFFDF9] border-r border-[#E8DFD5] flex flex-col justify-between transition-transform duration-200 md:translate-x-0 ${
+          class={`fixed inset-y-0 left-0 z-40 w-64 bg-[#FFFDF8] border-r border-[#E7D8C3] flex flex-col justify-between transition-transform duration-200 md:translate-x-0 ${
             mobileSidebarOpen() ? "translate-x-0 shadow-2xl" : "-translate-x-full"
           }`}
         >
           <div class="flex flex-col h-full">
             {/* Sidebar Brand Header */}
-            <div class="h-16 px-5 border-b border-[#E8DFD5] flex items-center justify-between shrink-0">
+            <div class="h-16 px-5 border-b border-[#E7D8C3] flex items-center justify-between shrink-0">
               <div class="flex items-center gap-2.5">
                 <img
                   src="/molmol-logo.jpg"
                   alt="Logo Mol-Mol"
-                  class="w-8 h-8 rounded-full object-cover border border-[#E8DFD5]"
+                  class="w-8 h-8 rounded-full object-cover border border-[#E7D8C3]"
                 />
                 <div>
-                  <span class="font-heading font-bold text-sm text-[#CE2738] leading-tight block">
+                  <span class="font-heading font-bold text-sm text-[#D92D3A] leading-tight block">
                     Mol-Mol Admin
                   </span>
-                  <span class="text-[10px] uppercase tracking-wider font-semibold text-[#8D7E73]">
+                  <span class="text-[10px] uppercase tracking-wider font-semibold text-[#806B5C]">
                     Panel Administrasi
                   </span>
                 </div>
@@ -238,7 +238,7 @@ export function AdminLayout(props: AdminLayoutProps) {
               <A
                 href="/"
                 target="_blank"
-                class="text-[#8D7E73] hover:text-[#CE2738] p-1.5 rounded-lg hover:bg-[#F3ECE2] transition"
+                class="text-[#806B5C] hover:text-[#D92D3A] p-1.5 rounded-lg hover:bg-[#F9EEDB] transition"
                 title="Buka Website Publik"
               >
                 <ExternalLink size={14} />
@@ -256,8 +256,8 @@ export function AdminLayout(props: AdminLayoutProps) {
                     onClick={() => setMobileSidebarOpen(false)}
                     class={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition min-h-[40px] ${
                       active()
-                        ? "bg-[#CE2738] text-white shadow-xs"
-                        : "text-[#6C5F57] hover:text-[#1C1917] hover:bg-[#F3ECE2]"
+                        ? "bg-[#D92D3A] text-[#FFFDF8] shadow-xs"
+                        : "text-[#806B5C] hover:text-[#5B4638] hover:bg-[#F9EEDB]"
                     }`}
                   >
                     <Icon size={16} />
@@ -268,22 +268,22 @@ export function AdminLayout(props: AdminLayoutProps) {
             </div>
 
             {/* User Profile & Actions Footer */}
-            <div class="p-3 border-t border-[#E8DFD5] bg-[#FAF7F2] space-y-2 shrink-0">
+            <div class="p-3 border-t border-[#E7D8C3] bg-[#F9EEDB] space-y-2 shrink-0">
               <div class="px-2 py-1 flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-full bg-[#CE2738]/10 text-[#CE2738] flex items-center justify-center font-bold text-xs shrink-0">
+                <div class="w-8 h-8 rounded-full bg-[#D92D3A]/10 text-[#D92D3A] flex items-center justify-center font-bold text-xs shrink-0">
                   <User size={15} />
                 </div>
                 <div class="truncate flex-1">
-                  <span class="text-xs font-semibold text-[#1C1917] block truncate">
+                  <span class="text-xs font-semibold text-[#5B4638] block truncate">
                     {currentUser()?.displayName || "Admin Toko"}
                   </span>
-                  <span class="text-[10px] text-[#6C5F57] block">
+                  <span class="text-[10px] text-[#806B5C] block">
                     Role: {currentUser()?.role || "owner"}
                   </span>
                 </div>
               </div>
 
-              <div class="grid grid-cols-2 gap-1.5 pt-1 border-t border-[#E8DFD5]">
+              <div class="grid grid-cols-2 gap-1.5 pt-1 border-t border-[#E7D8C3]">
                 <button
                   type="button"
                   onClick={() => setIsPasswordModalOpen(true)}
@@ -319,15 +319,15 @@ export function AdminLayout(props: AdminLayoutProps) {
         {/* Content Wrapper (Offset by sidebar on desktop) */}
         <div class="flex-1 md:pl-64 flex flex-col min-w-0">
           {/* Top Bar for Desktop */}
-          <header class="hidden md:flex h-16 bg-[#FFFDF9] border-b border-[#E8DFD5] px-6 sm:px-8 items-center justify-between sticky top-0 z-20">
-            <div class="flex items-center gap-2 text-xs font-medium text-[#6C5F57]">
+          <header class="hidden md:flex h-16 bg-[#FFFDF8] border-b border-[#E7D8C3] px-6 sm:px-8 items-center justify-between sticky top-0 z-20">
+            <div class="flex items-center gap-2 text-xs font-medium text-[#806B5C]">
               <span>Admin</span>
               <span>/</span>
-              <span class="text-[#1C1917] font-semibold">{props.title}</span>
+              <span class="text-[#5B4638] font-semibold">{props.title}</span>
             </div>
 
             <div class="flex items-center gap-3">
-              <span class="text-xs text-[#8D7E73] font-medium">
+              <span class="text-xs text-[#806B5C] font-medium">
                 {currentUser()?.displayName || "Admin Toko"}
               </span>
               <button
@@ -344,8 +344,8 @@ export function AdminLayout(props: AdminLayoutProps) {
 
           {/* Page Body Container (Full fluid centered max-w-7xl) */}
           <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-            <div class="flex flex-wrap items-center justify-between gap-4 pb-2 border-b border-[#E8DFD5]">
-              <h1 class="font-heading font-bold text-xl sm:text-2xl lg:text-3xl text-[#1C1917]">
+            <div class="flex flex-wrap items-center justify-between gap-4 pb-2 border-b border-[#E7D8C3]">
+              <h1 class="font-heading font-bold text-xl sm:text-2xl lg:text-3xl text-[#5B4638]">
                 {props.title}
               </h1>
             </div>
@@ -364,7 +364,7 @@ export function AdminLayout(props: AdminLayoutProps) {
       >
         <form onSubmit={handleChangePassword} class="space-y-4 text-xs">
           <div>
-            <label class="block font-semibold text-[#1C1917] mb-1">
+            <label class="block font-semibold text-[#5B4638] mb-1">
               Password Saat Ini
             </label>
             <input
@@ -378,7 +378,7 @@ export function AdminLayout(props: AdminLayoutProps) {
           </div>
 
           <div>
-            <label class="block font-semibold text-[#1C1917] mb-1">
+            <label class="block font-semibold text-[#5B4638] mb-1">
               Password Baru (Minimal 6 karakter)
             </label>
             <input
@@ -392,7 +392,7 @@ export function AdminLayout(props: AdminLayoutProps) {
           </div>
 
           <div>
-            <label class="block font-semibold text-[#1C1917] mb-1">
+            <label class="block font-semibold text-[#5B4638] mb-1">
               Konfirmasi Password Baru
             </label>
             <input
@@ -406,14 +406,14 @@ export function AdminLayout(props: AdminLayoutProps) {
           </div>
 
           <Show when={passwordError()}>
-            <div class="p-2.5 rounded-xl bg-[#FFF5F5] border border-[#FECDD3] text-xs text-[#CE2738] flex items-center gap-1.5">
+            <div class="p-2.5 rounded-xl bg-[#FFF5F5] border border-[#FECDD3] text-xs text-[#D92D3A] flex items-center gap-1.5">
               <AlertCircle size={14} class="shrink-0" />
               <span>{passwordError()}</span>
             </div>
           </Show>
 
           <Show when={passwordSuccess()}>
-            <div class="p-2.5 rounded-xl bg-[#F0FDF4] border border-[#BBF7D0] text-xs text-[#1B872A] flex items-center gap-1.5">
+            <div class="p-2.5 rounded-xl bg-[#7FA37A]/15 border border-[#7FA37A]/30 text-[#547C4F] text-xs flex items-center gap-1.5">
               <CheckCircle2 size={14} class="shrink-0" />
               <span>{passwordSuccess()}</span>
             </div>
