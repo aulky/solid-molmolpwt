@@ -123,12 +123,12 @@ export function PaymentProofUpload(props: PaymentProofUploadProps) {
   return (
     <div class="space-y-4">
       {/* Detail Pembayaran Toko */}
-      <div class="p-4 rounded-2xl border border-[#E8DFD5] bg-[#FAF7F2] space-y-3">
-        <div class="flex items-center justify-between pb-2 border-b border-[#E8DFD5]">
-          <span class="text-xs text-[#6C5F57] uppercase tracking-wider font-semibold">
+      <div class="p-4 rounded-2xl border border-[#E7D8C3] bg-[#F9EEDB] space-y-3">
+        <div class="flex items-center justify-between pb-2 border-b border-[#E7D8C3]">
+          <span class="text-xs text-[#806B5C] uppercase tracking-wider font-semibold">
             Total Harus Dibayar
           </span>
-          <span class="text-lg font-bold font-heading text-[#CE2738]">
+          <span class="text-lg font-bold font-heading text-[#D92D3A]">
             {formatRupiah(props.totalAmount)}
           </span>
         </div>
@@ -136,19 +136,19 @@ export function PaymentProofUpload(props: PaymentProofUploadProps) {
         {/* QRIS Channel */}
         <Show when={props.paymentMethod === "qris"}>
           <div class="space-y-3">
-            <div class="flex items-center gap-2 text-xs font-semibold text-[#1C1917]">
-              <QrCode size={16} class="text-[#CE2738]" />
+            <div class="flex items-center gap-2 text-xs font-semibold text-[#5B4638]">
+              <QrCode size={16} class="text-[#D92D3A]" />
               <span>Scan QRIS Resmi Toko Mol-Mol Purwokerto</span>
             </div>
 
-            <div class="flex justify-center p-3 bg-[#FFFDF9] rounded-xl border border-[#E8DFD5]">
+            <div class="flex justify-center p-3 bg-[#FFFDF8] rounded-xl border border-[#E7D8C3]">
               <Show
                 when={props.qrisImagePath}
                 fallback={
-                  <div class="w-48 h-48 bg-[#F3ECE2] border border-dashed border-[#E8DFD5] rounded-xl flex flex-col items-center justify-center p-4 text-center">
-                    <QrCode size={48} class="text-[#CE2738] mb-2 opacity-80" />
-                    <span class="text-xs font-semibold text-[#1C1917]">QRIS Mol-Mol</span>
-                    <span class="text-[10px] text-[#6C5F57] mt-0.5">Semua Bank & E-Wallet</span>
+                  <div class="w-48 h-48 bg-[#F9EEDB] border border-dashed border-[#E7D8C3] rounded-xl flex flex-col items-center justify-center p-4 text-center">
+                    <QrCode size={48} class="text-[#D92D3A] mb-2 opacity-80" />
+                    <span class="text-xs font-semibold text-[#5B4638]">QRIS Mol-Mol</span>
+                    <span class="text-[10px] text-[#806B5C] mt-0.5">Semua Bank & E-Wallet</span>
                   </div>
                 }
               >
@@ -159,7 +159,7 @@ export function PaymentProofUpload(props: PaymentProofUploadProps) {
                 />
               </Show>
             </div>
-            <p class="text-[11px] text-[#6C5F57] text-center">
+            <p class="text-[11px] text-[#806B5C] text-center">
               Dapat dibayar menggunakan BCA, Mandiri, BRI, BNI, Dana, GoPay, OVO, ShopeePay, dan LinkAja.
             </p>
           </div>
@@ -168,7 +168,7 @@ export function PaymentProofUpload(props: PaymentProofUploadProps) {
         {/* Transfer Bank & E-Wallet Channels */}
         <Show when={props.paymentMethod === "transfer"}>
           <div class="space-y-3">
-            <span class="text-xs font-semibold text-[#1C1917] block">
+            <span class="text-xs font-semibold text-[#5B4638] block">
               Pilih Tujuan Transfer / Saldo:
             </span>
 
@@ -181,8 +181,8 @@ export function PaymentProofUpload(props: PaymentProofUploadProps) {
                     onClick={() => setSelectedChannelId(ch.id)}
                     class={`p-2.5 rounded-xl border text-left text-xs transition cursor-pointer flex items-center gap-2 ${
                       selectedChannelId() === ch.id
-                        ? "border-[#CE2738] bg-[#CE2738]/10 text-[#CE2738] font-semibold"
-                        : "border-[#E8DFD5] bg-[#FFFDF9] text-[#1C1917] hover:bg-[#F3ECE2]"
+                        ? "border-[#D92D3A] bg-[#D92D3A]/10 text-[#D92D3A] font-semibold"
+                        : "border-[#E7D8C3] bg-[#FFFDF8] text-[#5B4638] hover:bg-[#F9EEDB]"
                     }`}
                   >
                     <Show
@@ -198,16 +198,16 @@ export function PaymentProofUpload(props: PaymentProofUploadProps) {
             </div>
 
             {/* Selected Account Box */}
-            <div class="p-3 bg-[#FFFDF9] rounded-xl border border-[#E8DFD5] text-xs space-y-1.5">
-              <div class="flex justify-between py-1 border-b border-[#E8DFD5]/60">
-                <span class="text-[#6C5F57]">Tujuan:</span>
-                <span class="font-semibold text-[#1C1917]">{currentChannel().name}</span>
+            <div class="p-3 bg-[#FFFDF8] rounded-xl border border-[#E7D8C3] text-xs space-y-1.5">
+              <div class="flex justify-between py-1 border-b border-[#E7D8C3]/60">
+                <span class="text-[#806B5C]">Tujuan:</span>
+                <span class="font-semibold text-[#5B4638]">{currentChannel().name}</span>
               </div>
 
-              <div class="flex items-center justify-between py-1 border-b border-[#E8DFD5]/60">
+              <div class="flex items-center justify-between py-1 border-b border-[#E7D8C3]/60">
                 <div>
-                  <span class="text-[#6C5F57] block">Nomor Rekening / Saldo:</span>
-                  <span class="font-heading font-bold text-[#CE2738] text-sm select-all">
+                  <span class="text-[#806B5C] block">Nomor Rekening / Saldo:</span>
+                  <span class="font-heading font-bold text-[#D92D3A] text-sm select-all">
                     {currentChannel().accountNo}
                   </span>
                 </div>
@@ -227,15 +227,15 @@ export function PaymentProofUpload(props: PaymentProofUploadProps) {
                       </>
                     }
                   >
-                    <Check size={12} class="text-[#1B872A]" />
-                    <span class="text-[#1B872A]">Tersalin</span>
+                    <Check size={12} class="text-[#7FA37A]" />
+                    <span class="text-[#547C4F]">Tersalin</span>
                   </Show>
                 </button>
               </div>
 
               <div class="flex justify-between py-1">
-                <span class="text-[#6C5F57]">Atas Nama:</span>
-                <span class="font-medium text-[#1C1917]">{currentChannel().accountName}</span>
+                <span class="text-[#806B5C]">Atas Nama:</span>
+                <span class="font-medium text-[#5B4638]">{currentChannel().accountName}</span>
               </div>
             </div>
           </div>
@@ -244,11 +244,11 @@ export function PaymentProofUpload(props: PaymentProofUploadProps) {
 
       {/* Upload Bukti Bayar Box */}
       <div class="space-y-2">
-        <label class="block text-xs font-semibold text-[#1C1917]">
-          Unggah Foto Bukti Transfer / Struk QRIS <span class="text-[#CE2738]">*</span>
+        <label class="block text-xs font-semibold text-[#5B4638]">
+          Unggah Foto Bukti Transfer / Struk QRIS <span class="text-[#D92D3A]">*</span>
         </label>
 
-        <div class="relative border-2 border-dashed border-[#E8DFD5] hover:border-[#CE2738] rounded-2xl p-4 text-center bg-[#FFFDF9] transition cursor-pointer">
+        <div class="relative border-2 border-dashed border-[#E7D8C3] hover:border-[#D92D3A] rounded-2xl p-4 text-center bg-[#FFFDF8] transition cursor-pointer">
           <input
             type="file"
             accept="image/jpeg,image/png,image/webp"
@@ -261,17 +261,17 @@ export function PaymentProofUpload(props: PaymentProofUploadProps) {
             when={!localPreview() && !props.uploadedPath}
             fallback={
               <div class="flex flex-col items-center py-2">
-                <CheckCircle2 size={30} class="text-[#1B872A] mb-1.5" />
-                <span class="text-xs font-semibold text-[#1C1917]">
+                <CheckCircle2 size={30} class="text-[#7FA37A] mb-1.5" />
+                <span class="text-xs font-semibold text-[#5B4638]">
                   Bukti Pembayaran Terunggah
                 </span>
-                <span class="text-[11px] text-[#6C5F57] mt-0.5">
+                <span class="text-[11px] text-[#806B5C] mt-0.5">
                   Klik untuk mengganti foto lain jika salah
                 </span>
                 <img
                   src={localPreview() || props.uploadedPath!}
                   alt="Preview Bukti"
-                  class="mt-3 max-h-36 rounded-xl border border-[#E8DFD5] object-contain shadow-xs bg-[#FFFDF9]"
+                  class="mt-3 max-h-36 rounded-xl border border-[#E7D8C3] object-contain shadow-xs bg-[#FFFDF8]"
                 />
               </div>
             }
@@ -281,25 +281,25 @@ export function PaymentProofUpload(props: PaymentProofUploadProps) {
                 when={isUploading()}
                 fallback={
                   <>
-                    <UploadCloud size={30} class="text-[#CE2738] mb-2" />
-                    <span class="text-xs font-semibold text-[#1C1917]">
+                    <UploadCloud size={30} class="text-[#D92D3A] mb-2" />
+                    <span class="text-xs font-semibold text-[#5B4638]">
                       Pilih atau Seret Foto Bukti Pembayaran
                     </span>
-                    <span class="text-[11px] text-[#6C5F57] mt-0.5">
+                    <span class="text-[11px] text-[#806B5C] mt-0.5">
                       Format JPG, PNG, atau WebP (Maksimal 4 MB)
                     </span>
                   </>
                 }
               >
-                <Loader2 size={30} class="text-[#CE2738] animate-spin mb-2" />
-                <span class="text-xs font-semibold text-[#1C1917]">Mengunggah foto...</span>
+                <Loader2 size={30} class="text-[#D92D3A] animate-spin mb-2" />
+                <span class="text-xs font-semibold text-[#5B4638]">Mengunggah foto...</span>
               </Show>
             </div>
           </Show>
         </div>
 
         <Show when={errorMsg()}>
-          <div class="text-xs text-[#CE2738] flex items-center gap-1.5 mt-1">
+          <div class="text-xs text-[#D92D3A] flex items-center gap-1.5 mt-1">
             <AlertCircle size={13} />
             <span>{errorMsg()}</span>
           </div>

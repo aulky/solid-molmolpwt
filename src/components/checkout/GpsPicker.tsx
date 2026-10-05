@@ -179,17 +179,17 @@ export function GpsPicker(props: GpsPickerProps) {
   };
 
   return (
-    <div class="p-3.5 sm:p-4 rounded-2xl border border-[#E8DFD5] bg-[#FAF7F2] space-y-3">
+    <div class="p-3.5 sm:p-4 rounded-2xl border border-[#E7D8C3] bg-[#F9EEDB] space-y-3">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
         <div class="flex items-center gap-2">
-          <div class="w-7 h-7 rounded-lg bg-[#CE2738]/10 flex items-center justify-center text-[#CE2738] shrink-0">
+          <div class="w-7 h-7 rounded-lg bg-[#D92D3A]/10 flex items-center justify-center text-[#D92D3A] shrink-0">
             <MapPin size={16} />
           </div>
           <div>
-            <span class="text-xs sm:text-sm font-semibold text-[#1C1917] block">
+            <span class="text-xs sm:text-sm font-semibold text-[#5B4638] block">
               Titik Koordinat Pengantaran (GPS)
             </span>
-            <span class="text-xs text-[#6C5F57] block">
+            <span class="text-xs text-[#806B5C] block">
               Memudahkan kurir mengantarkan langsung ke titik rumah Anda
             </span>
           </div>
@@ -211,7 +211,7 @@ export function GpsPicker(props: GpsPickerProps) {
           <button
             type="button"
             onClick={() => setShowManualInput(!showManualInput())}
-            class="p-1.5 text-xs text-[#6C5F57] hover:text-[#CE2738] border border-[#E8DFD5] rounded-xl bg-[#FFFDF9] hover:bg-[#F3ECE2] transition cursor-pointer"
+            class="p-1.5 text-xs text-[#806B5C] hover:text-[#D92D3A] border border-[#E7D8C3] rounded-xl bg-[#FFFDF8] hover:bg-[#F9EEDB] transition cursor-pointer"
             title="Tempel link Google Maps atau koordinat manual"
           >
             <Link2 size={14} />
@@ -221,16 +221,16 @@ export function GpsPicker(props: GpsPickerProps) {
 
       {/* Manual Maps / Coordinate Paste Input */}
       <Show when={showManualInput()}>
-        <div class="p-3 bg-[#FFFDF9] rounded-xl border border-[#CE2738]/30 shadow-2xs space-y-2 animate-in fade-in duration-150">
+        <div class="p-3 bg-[#FFFDF8] rounded-xl border border-[#D92D3A]/30 shadow-2xs space-y-2 animate-in fade-in duration-150">
           <div class="flex items-center justify-between text-xs">
-            <span class="font-medium text-[#1C1917] flex items-center gap-1">
-              <Link2 size={13} class="text-[#CE2738]" />
+            <span class="font-medium text-[#5B4638] flex items-center gap-1">
+              <Link2 size={13} class="text-[#D92D3A]" />
               <span>Tempel Link / Koordinat Google Maps</span>
             </span>
             <button
               type="button"
               onClick={() => setShowManualInput(false)}
-              class="text-[11px] text-[#8D7E73] hover:text-[#1C1917]"
+              class="text-[11px] text-[#806B5C] hover:text-[#5B4638]"
             >
               Tutup
             </button>
@@ -252,9 +252,9 @@ export function GpsPicker(props: GpsPickerProps) {
             </button>
           </div>
           <Show when={manualError()}>
-            <p class="text-[11px] text-[#CE2738]">{manualError()}</p>
+            <p class="text-[11px] text-[#D92D3A]">{manualError()}</p>
           </Show>
-          <p class="text-[10px] text-[#6C5F57]">
+          <p class="text-[10px] text-[#806B5C]">
             Tips: Buka Google Maps di HP, tahan titik rumah Anda, lalu salin koordinat atau tautan bagikan.
           </p>
         </div>
@@ -262,9 +262,9 @@ export function GpsPicker(props: GpsPickerProps) {
 
       {/* GPS Info Status */}
       <Show when={props.location.latitude && props.location.longitude}>
-        <div class="p-3 bg-[#FFFDF9] rounded-xl border border-[#E8DFD5] text-xs space-y-2">
+        <div class="p-3 bg-[#FFFDF8] rounded-xl border border-[#E7D8C3] text-xs space-y-2">
           <div class="flex items-center justify-between">
-            <span class="font-medium text-[#1B872A] flex items-center gap-1">
+            <span class="font-medium text-[#7FA37A] flex items-center gap-1">
               <CheckCircle2 size={14} /> Titik koordinat tersimpan
             </span>
             <Show when={mapsUrl()}>
@@ -272,7 +272,7 @@ export function GpsPicker(props: GpsPickerProps) {
                 href={mapsUrl()!}
                 target="_blank"
                 rel="noreferrer"
-                class="text-[#CE2738] hover:underline flex items-center gap-1 text-xs font-medium"
+                class="text-[#D92D3A] hover:underline flex items-center gap-1 text-xs font-medium"
               >
                 <span>Lihat di Maps</span>
                 <ExternalLink size={12} />
@@ -280,32 +280,32 @@ export function GpsPicker(props: GpsPickerProps) {
             </Show>
           </div>
 
-          <div class="text-xs text-[#6C5F57] font-medium">
+          <div class="text-xs text-[#806B5C] font-medium">
             Lat: {props.location.latitude}, Lng: {props.location.longitude}
             <Show when={props.location.accuracyM !== null}>
               <span class="ml-2">• Akurasi: ~{props.location.accuracyM} m</span>
             </Show>
             <Show when={props.location.locationSource === "maps_pin"}>
-              <span class="ml-2 text-[#CE2738] font-sans font-medium">(Pin Google Maps)</span>
+              <span class="ml-2 text-[#D92D3A] font-sans font-medium">(Pin Google Maps)</span>
             </Show>
           </div>
 
           <Show when={isGeocoding()}>
-            <div class="flex items-center gap-1.5 text-[11px] text-[#CE2738] py-1">
+            <div class="flex items-center gap-1.5 text-[11px] text-[#D92D3A] py-1">
               <Loader2 size={12} class="animate-spin" />
               <span>Mengambil nama jalan & detail alamat presisi...</span>
             </div>
           </Show>
 
           <Show when={resolvedAddress()}>
-            <div class="p-2.5 rounded-lg bg-[#F0FDF4] border border-[#BBF7D0] text-[#166534] text-[11px] space-y-0.5">
-              <div class="font-semibold flex items-center gap-1 text-[#15803D]">
+            <div class="p-2.5 rounded-lg bg-[#7FA37A]/10 border border-[#7FA37A]/25 text-[#547C4F] text-[11px] space-y-0.5">
+              <div class="font-semibold flex items-center gap-1 text-[#547C4F]">
                 <CheckCircle2 size={12} /> Alamat presisi terisi otomatis:
               </div>
-              <div class="text-[#1C1917] font-medium leading-relaxed">
+              <div class="text-[#5B4638] font-medium leading-relaxed">
                 {resolvedAddress()}
               </div>
-              <span class="text-[10px] text-[#15803D] block">
+              <span class="text-[10px] text-[#547C4F] block">
                 Alamat pengiriman di atas telah terisi otomatis. Anda dapat melengkapi nomor rumah/patokan bila diperlukan.
               </span>
             </div>
@@ -315,7 +315,7 @@ export function GpsPicker(props: GpsPickerProps) {
 
       {/* Error Message */}
       <Show when={gpsError()}>
-        <div class="p-2.5 rounded-xl bg-[#FFF5F5] border border-[#FECDD3] text-xs text-[#CE2738] flex items-start gap-2">
+        <div class="p-2.5 rounded-xl bg-[#FFF5F5] border border-[#FECDD3] text-xs text-[#D92D3A] flex items-start gap-2">
           <AlertCircle size={14} class="shrink-0 mt-0.5" />
           <div class="space-y-1">
             <span>{gpsError()}</span>
@@ -323,7 +323,7 @@ export function GpsPicker(props: GpsPickerProps) {
               <button
                 type="button"
                 onClick={() => setShowManualInput(true)}
-                class="text-[11px] text-[#CE2738] underline font-medium block cursor-pointer"
+                class="text-[11px] text-[#D92D3A] underline font-medium block cursor-pointer"
               >
                 Gunakan link / koordinat Google Maps secara manual
               </button>
