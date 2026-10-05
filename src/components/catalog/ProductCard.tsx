@@ -80,13 +80,13 @@ export function ProductCard(props: ProductCardProps) {
   return (
     <>
       <div
-        class={`card-surface card-hover flex flex-col justify-between h-full group bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl ${
+        class={`card-surface card-hover flex flex-col justify-between h-full group bg-[#FFF9EE] border border-[#E2CCA8] rounded-2xl ${
           isOut() ? "opacity-75" : ""
         }`}
       >
         {/* Product Image Area with Slider */}
         <div
-          class="relative w-full aspect-4/3 sm:aspect-5/4 bg-[#F9EEDB] overflow-hidden border-b border-[#E7D8C3] select-none"
+          class="relative w-full aspect-4/3 sm:aspect-5/4 bg-[#F3E2C4] overflow-hidden border-b border-[#E2CCA8] select-none"
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
@@ -196,7 +196,7 @@ export function ProductCard(props: ProductCardProps) {
           </div>
 
           {/* Price & Action Row */}
-          <div class="mt-4 pt-3 border-t border-[#E7D8C3] flex items-center justify-between gap-2">
+          <div class="mt-4 pt-3 border-t border-[#E2CCA8] flex items-center justify-between gap-2">
             <div>
               <span class="text-[11px] text-[#806B5C] uppercase tracking-wider block font-medium">
                 Harga
@@ -249,7 +249,7 @@ export function ProductCard(props: ProductCardProps) {
         maxWidth="max-w-2xl"
       >
         <div class="space-y-4">
-          <div class="relative w-full aspect-16/10 bg-[#F9EEDB] rounded-xl overflow-hidden border border-[#E7D8C3]">
+          <div class="relative w-full aspect-16/10 bg-[#F3E2C4] rounded-xl overflow-hidden border border-[#E2CCA8]">
             <Show
               when={imageList().length > 0}
               fallback={

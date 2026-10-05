@@ -3,7 +3,7 @@ import { ArrowLeft, ShieldCheck, Clock, Truck, AlertCircle, FileText } from "luc
 
 export default function TermsPage() {
   return (
-    <div class="min-h-screen bg-[#FFF4DE] py-8 px-4 sm:px-6 text-[#5B4638]">
+    <div class="min-h-screen bg-[#F7EBD7] py-8 px-4 sm:px-6 text-[#5B4638]">
       <div class="max-w-3xl mx-auto space-y-6">
         {/* Back Link */}
         <A
@@ -15,8 +15,8 @@ export default function TermsPage() {
         </A>
 
         {/* Main Document Card */}
-        <div class="card-surface p-6 sm:p-10 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl space-y-6 sm:space-y-8 shadow-xs">
-          <div class="border-b border-[#E7D8C3] pb-6 space-y-2">
+        <div class="card-surface p-6 sm:p-10 bg-[#FFF9EE] border border-[#E2CCA8] rounded-2xl space-y-6 sm:space-y-8 shadow-xs">
+          <div class="border-b border-[#E2CCA8] pb-6 space-y-2">
             <h1 class="font-heading font-bold text-xl sm:text-3xl text-[#5B4638]">
               Syarat, Ketentuan & Kebijakan Pre-Order
             </h1>
@@ -77,7 +77,7 @@ export default function TermsPage() {
             </p>
           </div>
 
-          <div class="pt-6 border-t border-[#E7D8C3] flex flex-wrap items-center justify-between text-xs text-[#806B5C]">
+          <div class="pt-6 border-t border-[#E2CCA8] flex flex-wrap items-center justify-between text-xs text-[#806B5C]">
             <span>Mol-Mol Purwokerto • Dessert & Cemilan Purwokerto</span>
             <span>Pembaruan Terakhir: Oktober 2026</span>
           </div>

@@ -61,9 +61,9 @@ function ProductShowcaseCard(props: { product: any }) {
   };
 
   return (
-    <div class="card-surface bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl overflow-hidden flex flex-col justify-between hover:border-[#D92D3A]/50 hover:shadow-md transition group">
+    <div class="card-surface bg-[#FFF9EE] border border-[#E2CCA8] rounded-2xl overflow-hidden flex flex-col justify-between hover:border-[#D92D3A]/50 hover:shadow-md transition group">
       {/* Gambar Carousel */}
-      <div class="relative w-full aspect-4/3 bg-[#F9EEDB] overflow-hidden select-none">
+      <div class="relative w-full aspect-4/3 bg-[#F3E2C4] overflow-hidden select-none">
         <Show
           when={images().length > 0}
           fallback={
@@ -132,7 +132,7 @@ function ProductShowcaseCard(props: { product: any }) {
             <h3 class="font-heading font-bold text-base sm:text-lg text-[#5B4638] leading-snug">
               {p().name}
             </h3>
-            <span class="text-[11px] font-medium text-[#806B5C] bg-[#F9EEDB] border border-[#E7D8C3] px-2.5 py-0.5 rounded-full shrink-0">
+            <span class="text-[11px] font-medium text-[#806B5C] bg-[#F3E2C4] border border-[#E2CCA8] px-2.5 py-0.5 rounded-full shrink-0">
               {p().weightGrams ? `${p().weightGrams}g` : "1 Porsi"}
             </span>
           </div>
@@ -143,7 +143,7 @@ function ProductShowcaseCard(props: { product: any }) {
         </div>
 
         {/* Harga & Tombol Pesan */}
-        <div class="pt-3 border-t border-[#E7D8C3] flex items-center justify-between gap-2">
+        <div class="pt-3 border-t border-[#E2CCA8] flex items-center justify-between gap-2">
           <div>
             <Show when={p().compareAtPrice && p().compareAtPrice > p().basePrice}>
               <span class="text-xs text-[#806B5C] line-through block font-medium">
@@ -181,7 +181,7 @@ export default function ProductsPage() {
   };
 
   return (
-    <div class="min-h-screen bg-[#FFF4DE] flex flex-col justify-between">
+    <div class="min-h-screen bg-[#F7EBD7] flex flex-col justify-between">
       <div class="max-w-6xl mx-auto px-4 py-8 sm:py-12 w-full space-y-8">
         {/* Header Hero Section */}
         <div class="text-center max-w-2xl mx-auto space-y-3">
@@ -199,7 +199,7 @@ export default function ProductsPage() {
         <Show
           when={productList().length > 0}
           fallback={
-            <div class="card-surface p-12 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl text-center space-y-4 max-w-md mx-auto">
+            <div class="card-surface p-12 bg-[#FFF9EE] border border-[#E2CCA8] rounded-2xl text-center space-y-4 max-w-md mx-auto">
               <div class="w-14 h-14 mx-auto rounded-full bg-[#D92D3A]/10 flex items-center justify-center text-[#D92D3A]">
                 <Package size={28} />
               </div>
@@ -220,7 +220,7 @@ export default function ProductsPage() {
         </Show>
 
         {/* CTA Bawah: Jadwal Pre-Order & WhatsApp */}
-        <div class="card-surface p-6 sm:p-8 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xs">
+        <div class="card-surface p-6 sm:p-8 bg-[#FFF9EE] border border-[#E2CCA8] rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xs">
           <div class="space-y-1.5 text-center sm:text-left">
             <h3 class="font-heading font-bold text-lg text-[#5B4638]">
               Ingin Menikmati Mol-Mol Purwokerto?
@@ -243,7 +243,7 @@ export default function ProductsPage() {
               href={waUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-[#E7D8C3] bg-[#F9EEDB] hover:bg-[#EEDEC7] text-[#5B4638] text-xs sm:text-sm font-semibold transition"
+              class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-[#E2CCA8] bg-[#F3E2C4] hover:bg-[#E8D4B2] text-[#5B4638] text-xs sm:text-sm font-semibold transition"
             >
               <MessageCircle size={15} class="text-[#7FA37A]" />
               <span>WhatsApp</span>

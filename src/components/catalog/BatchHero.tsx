@@ -45,7 +45,7 @@ export function BatchHero(props: { batch: BatchInfo | null; announcement?: strin
       </Show>
 
       {/* Main Hero Card dengan Styling Elegan & Human-Crafted */}
-      <div class="p-6 sm:p-8 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl shadow-xs relative">
+      <div class="p-6 sm:p-8 bg-[#FFF9EE] border border-[#E2CCA8] rounded-2xl shadow-xs relative">
         {/* Top Badges Row */}
         <div class="flex flex-wrap items-center justify-between gap-2.5 mb-4">
           <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#7FA37A]/15 text-[#547C4F] text-xs font-semibold border border-[#7FA37A]/30">
@@ -79,7 +79,7 @@ export function BatchHero(props: { batch: BatchInfo | null; announcement?: strin
         </div>
 
         {/* Information Grid: Compact & Balanced across Mobile & Desktop */}
-        <div class="mt-6 pt-5 border-t border-[#E7D8C3] grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div class="mt-6 pt-5 border-t border-[#E2CCA8] grid grid-cols-1 sm:grid-cols-3 gap-3">
           {/* Batas Tutup PO - Soft Red Tint */}
           <div class="flex items-center sm:items-start gap-3 p-3.5 rounded-xl bg-[#D92D3A]/5 border border-[#D92D3A]/20">
             <div class="p-2 rounded-lg bg-[#D92D3A]/10 text-[#D92D3A] shrink-0">
@@ -134,7 +134,7 @@ export function BatchHero(props: { batch: BatchInfo | null; announcement?: strin
 
         {/* Quota Progress Bar: Clean, sleek & Informative */}
         <Show when={b()}>
-          <div class="mt-5 pt-4 border-t border-[#E7D8C3]">
+          <div class="mt-5 pt-4 border-t border-[#E2CCA8]">
             <div class="flex items-center justify-between text-xs mb-1.5">
               <span class="font-medium text-[#806B5C]">Kapasitas Kuota Pesanan:</span>
               <span class="text-xs font-semibold text-[#5B4638]">
