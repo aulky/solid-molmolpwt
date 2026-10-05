@@ -25,7 +25,7 @@ export default function TrackDetailPage() {
   const data = createAsync(() => getOrderData(params.id, searchParams.phoneLast4));
 
   return (
-    <div class="min-h-screen bg-[#FFF4DE] py-8 px-4 sm:px-6">
+    <div class="min-h-screen bg-[#F7EBD7] py-8 px-4 sm:px-6">
       <div class="max-w-4xl mx-auto space-y-6">
         {/* Navigation Back */}
         <div class="flex items-center justify-between">
@@ -49,7 +49,7 @@ export default function TrackDetailPage() {
         <Show
           when={data()?.order}
           fallback={
-            <div class="card-surface p-8 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl text-center space-y-4 max-w-md mx-auto my-12 shadow-xs">
+            <div class="card-surface p-8 bg-[#FFF9EE] border border-[#E2CCA8] rounded-2xl text-center space-y-4 max-w-md mx-auto my-12 shadow-xs">
               <div class="w-12 h-12 rounded-full bg-[#FFF5F5] text-[#D92D3A] flex items-center justify-center mx-auto">
                 <AlertCircle size={24} />
               </div>

@@ -70,7 +70,7 @@ export function TrackingTimeline(props: TrackingTimelineProps) {
   };
 
   return (
-    <div class="relative pl-11 space-y-6 before:absolute before:left-[15px] before:top-3 before:bottom-3 before:w-[2px] before:bg-[#E7D8C3]">
+    <div class="relative pl-11 space-y-6 before:absolute before:left-[15px] before:top-3 before:bottom-3 before:w-[2px] before:bg-[#E2CCA8]">
       <For each={props.history}>
         {(step, index) => {
           const isLatest = index() === 0;
@@ -79,10 +79,10 @@ export function TrackingTimeline(props: TrackingTimelineProps) {
             <div class="relative group">
               {/* Stepper Node Icon dengan Posisi Presisi & Jarak Bernapas */}
               <div
-                class={`absolute left-[-44px] top-0 w-8 h-8 rounded-full flex items-center justify-center bg-[#FFFDF8] border ${
+                class={`absolute left-[-44px] top-0 w-8 h-8 rounded-full flex items-center justify-center bg-[#FFF9EE] border ${
                   isLatest
                     ? "border-[#D92D3A] shadow-2xs ring-2 ring-[#D92D3A]/20"
-                    : "border-[#E7D8C3]"
+                    : "border-[#E2CCA8]"
                 }`}
               >
                 {getStatusIcon(step.toStatus)}
@@ -104,7 +104,7 @@ export function TrackingTimeline(props: TrackingTimelineProps) {
                 </div>
 
                 <Show when={step.note}>
-                  <p class="text-xs text-[#806B5C] leading-relaxed bg-[#F9EEDB] p-2.5 rounded-xl border border-[#E7D8C3] mt-1">
+                  <p class="text-xs text-[#806B5C] leading-relaxed bg-[#F3E2C4] p-2.5 rounded-xl border border-[#E2CCA8] mt-1">
                     {step.note}
                   </p>
                 </Show>

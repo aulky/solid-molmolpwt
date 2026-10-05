@@ -20,8 +20,8 @@ export default function TrackSearchPage() {
   };
 
   return (
-    <div class="min-h-[80vh] flex flex-col justify-center items-center px-4 sm:px-6 py-8 sm:py-12 bg-[#FFF4DE]">
-      <div class="w-full max-w-md card-surface p-6 sm:p-8 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl space-y-5 sm:space-y-6 shadow-xs">
+    <div class="min-h-[80vh] flex flex-col justify-center items-center px-4 sm:px-6 py-8 sm:py-12 bg-[#F7EBD7]">
+      <div class="w-full max-w-md card-surface p-6 sm:p-8 bg-[#FFF9EE] border border-[#E2CCA8] rounded-2xl space-y-5 sm:space-y-6 shadow-xs">
         <div class="text-center space-y-2">
           <div class="w-12 h-12 rounded-full bg-[#D92D3A]/10 text-[#D92D3A] flex items-center justify-center mx-auto">
             <Search size={24} />
@@ -68,7 +68,7 @@ export default function TrackSearchPage() {
           </button>
         </form>
 
-        <div class="pt-4 border-t border-[#E7D8C3] text-center">
+        <div class="pt-4 border-t border-[#E2CCA8] text-center">
           <span class="text-xs text-[#806B5C]">
             Lupa kode pesanan Anda? Silakan hubungi admin via WhatsApp.
           </span>

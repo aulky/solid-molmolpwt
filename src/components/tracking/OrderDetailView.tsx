@@ -67,8 +67,8 @@ export function OrderDetailView(props: OrderDetailViewProps) {
   return (
     <div class="space-y-6">
       {/* Top Banner Card */}
-      <div class="card-surface p-4 sm:p-6 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl space-y-4">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-4 border-b border-[#E7D8C3]">
+      <div class="card-surface p-4 sm:p-6 bg-[#FFF9EE] border border-[#E2CCA8] rounded-2xl space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-4 border-b border-[#E2CCA8]">
           <div class="flex items-center justify-between sm:block gap-2">
             <div>
               <span class="text-xs uppercase text-[#806B5C] block tracking-wider font-semibold">
@@ -100,7 +100,7 @@ export function OrderDetailView(props: OrderDetailViewProps) {
         {/* Info Grid */}
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
           {/* Customer */}
-          <div class="p-3 rounded-xl bg-[#F9EEDB] border border-[#E7D8C3] space-y-1">
+          <div class="p-3 rounded-xl bg-[#F3E2C4] border border-[#E2CCA8] space-y-1">
             <span class="text-[#806B5C] block uppercase font-semibold text-[10px]">Pemesan</span>
             <span class="font-semibold text-sm text-[#5B4638] block">
               {o().customerName}
@@ -109,7 +109,7 @@ export function OrderDetailView(props: OrderDetailViewProps) {
           </div>
 
           {/* Fulfillment */}
-          <div class="p-3 rounded-xl bg-[#F9EEDB] border border-[#E7D8C3] space-y-1">
+          <div class="p-3 rounded-xl bg-[#F3E2C4] border border-[#E2CCA8] space-y-1">
             <span class="text-[#806B5C] block uppercase font-semibold text-[10px]">Metode Pengiriman</span>
             <span class="font-semibold text-sm text-[#5B4638] block">
               {fulfillmentText()}
@@ -123,7 +123,7 @@ export function OrderDetailView(props: OrderDetailViewProps) {
           </div>
 
           {/* Payment Method */}
-          <div class="p-3 rounded-xl bg-[#F9EEDB] border border-[#E7D8C3] space-y-1">
+          <div class="p-3 rounded-xl bg-[#F3E2C4] border border-[#E2CCA8] space-y-1">
             <span class="text-[#806B5C] block uppercase font-semibold text-[10px]">Pembayaran</span>
             <span class="font-semibold text-sm text-[#5B4638] block uppercase">
               {o().paymentMethod}
@@ -148,7 +148,7 @@ export function OrderDetailView(props: OrderDetailViewProps) {
 
         {/* Address and GPS if Delivery */}
         <Show when={o().fulfillment !== "pickup"}>
-          <div class="p-4 rounded-xl bg-[#F9EEDB] border border-[#E7D8C3] space-y-2 text-xs">
+          <div class="p-4 rounded-xl bg-[#F3E2C4] border border-[#E2CCA8] space-y-2 text-xs">
             <div class="flex items-center justify-between">
               <span class="font-semibold text-[#5B4638] flex items-center gap-1.5">
                 <MapPin size={15} class="text-[#D92D3A]" />
@@ -181,7 +181,7 @@ export function OrderDetailView(props: OrderDetailViewProps) {
 
         {/* Outlet Pickup Location if Pickup */}
         <Show when={o().fulfillment === "pickup"}>
-          <div class="p-4 rounded-xl bg-[#F9EEDB] border border-[#E7D8C3] space-y-2 text-xs">
+          <div class="p-4 rounded-xl bg-[#F3E2C4] border border-[#E2CCA8] space-y-2 text-xs">
             <div class="flex items-center justify-between">
               <span class="font-semibold text-[#5B4638] flex items-center gap-1.5">
                 <MapPin size={15} class="text-[#D92D3A]" />
@@ -219,8 +219,8 @@ export function OrderDetailView(props: OrderDetailViewProps) {
       {/* Stepper Timeline & Order Items Grid */}
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Timeline (Left) */}
-        <div class="lg:col-span-6 card-surface p-6 bg-[#FFFDF8] border border-[#E7D8C3] space-y-4 rounded-2xl">
-          <h3 class="font-heading font-semibold text-base text-[#5B4638] pb-2 border-b border-[#E7D8C3]">
+        <div class="lg:col-span-6 card-surface p-6 bg-[#FFF9EE] border border-[#E2CCA8] space-y-4 rounded-2xl">
+          <h3 class="font-heading font-semibold text-base text-[#5B4638] pb-2 border-b border-[#E2CCA8]">
             Riwayat Status Pesanan
           </h3>
 
@@ -228,14 +228,14 @@ export function OrderDetailView(props: OrderDetailViewProps) {
         </div>
 
         {/* Items Breakdown (Right) */}
-        <div class="lg:col-span-6 card-surface p-6 bg-[#FFFDF8] border border-[#E7D8C3] space-y-4 flex flex-col justify-between rounded-2xl">
+        <div class="lg:col-span-6 card-surface p-6 bg-[#FFF9EE] border border-[#E2CCA8] space-y-4 flex flex-col justify-between rounded-2xl">
           <div>
-            <h3 class="font-heading font-semibold text-base text-[#5B4638] pb-2 border-b border-[#E7D8C3] flex items-center justify-between">
+            <h3 class="font-heading font-semibold text-base text-[#5B4638] pb-2 border-b border-[#E2CCA8] flex items-center justify-between">
               <span>Rincian Menu Pesanan</span>
               <Package size={16} class="text-[#D92D3A]" />
             </h3>
 
-            <div class="divide-y divide-[#E7D8C3] mt-2">
+            <div class="divide-y divide-[#E2CCA8] mt-2">
               <For each={o().items}>
                 {(item: any) => (
                   <div class="py-2.5 flex items-center justify-between text-xs sm:text-sm">
@@ -255,7 +255,7 @@ export function OrderDetailView(props: OrderDetailViewProps) {
           </div>
 
           {/* Pricing Totals & WA Button */}
-          <div class="space-y-4 pt-4 border-t border-[#E7D8C3]">
+          <div class="space-y-4 pt-4 border-t border-[#E2CCA8]">
             <div class="space-y-1.5 text-xs text-[#806B5C]">
               <div class="flex justify-between">
                 <span>Subtotal Menu:</span>
@@ -267,7 +267,7 @@ export function OrderDetailView(props: OrderDetailViewProps) {
                   {o().deliveryFee === 0 ? "GRATIS" : formatRupiah(o().deliveryFee)}
                 </span>
               </div>
-              <div class="flex justify-between text-base font-bold text-[#5B4638] pt-2 border-t border-[#E7D8C3]">
+              <div class="flex justify-between text-base font-bold text-[#5B4638] pt-2 border-t border-[#E2CCA8]">
                 <span>Total:</span>
                 <span class="font-heading font-bold text-[#D92D3A]">{formatRupiah(o().total)}</span>
               </div>
@@ -298,7 +298,7 @@ export function OrderDetailView(props: OrderDetailViewProps) {
           <img
             src={o().paymentProofPath}
             alt="Bukti Transfer"
-            class="max-h-[75vh] w-auto object-contain rounded-2xl border border-[#E7D8C3]"
+            class="max-h-[75vh] w-auto object-contain rounded-2xl border border-[#E2CCA8]"
           />
         </div>
       </Modal>
