@@ -12,17 +12,17 @@ export function Badge(props: BadgeProps) {
   const variantClass = () => {
     switch (props.variant) {
       case "primary":
-        return "bg-[#6366F1]/10 text-[#6366F1] border border-[#6366F1]/20";
+        return "bg-[#CE2738]/10 text-[#CE2738] border border-[#CE2738]/20";
       case "success":
-        return "bg-[#10B981]/10 text-[#059669] border border-[#10B981]/25";
+        return "bg-[#1B872A]/10 text-[#1B872A] border border-[#1B872A]/25";
       case "warning":
-        return "bg-[#F59E0B]/10 text-[#D97706] border border-[#F59E0B]/25";
+        return "bg-[#D97706]/10 text-[#B45309] border border-[#D97706]/25";
       case "error":
-        return "bg-[#EF4444]/10 text-[#DC2626] border border-[#EF4444]/25";
+        return "bg-[#CE2738]/10 text-[#CE2738] border border-[#CE2738]/25";
       case "secondary":
-        return "bg-[#20970B]/10 text-[#20970B] border border-[#20970B]/25";
+        return "bg-[#1B872A]/10 text-[#1B872A] border border-[#1B872A]/25";
       default:
-        return "bg-[#F3F4F6] text-[#4B5563] border border-[#E5E7EB]";
+        return "bg-[#F3ECE2] text-[#1C1917] border border-[#E8DFD5]";
     }
   };
 
