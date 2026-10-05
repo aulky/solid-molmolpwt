@@ -42,20 +42,20 @@ export function Modal(props: ModalProps) {
           <div
             class={`relative w-full ${
               props.maxWidth || "max-w-lg"
-            } bg-[#FFFDF9] rounded-2xl border border-[#E8DFD5] shadow-2xl p-4 sm:p-6 transition-all text-[#1C1917] max-h-[95vh] flex flex-col`}
+            } bg-[#FFFDF8] rounded-2xl border border-[#E7D8C3] shadow-2xl p-4 sm:p-6 transition-all text-[#5B4638] max-h-[95vh] flex flex-col`}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div class="flex items-center justify-between pb-3 mb-3 border-b border-[#E8DFD5] shrink-0">
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-[#E7D8C3] shrink-0">
               <Show when={props.title}>
-                <h3 class="font-heading font-semibold text-base sm:text-lg text-[#1C1917] truncate pr-2">
+                <h3 class="font-heading font-semibold text-base sm:text-lg text-[#5B4638] truncate pr-2">
                   {props.title}
                 </h3>
               </Show>
               <button
                 type="button"
                 onClick={props.onClose}
-                class="text-[#6C5F57] hover:text-[#CE2738] p-1.5 rounded-lg hover:bg-[#F3ECE2] transition cursor-pointer shrink-0"
+                class="text-[#806B5C] hover:text-[#D92D3A] p-1.5 rounded-lg hover:bg-[#F9EEDB] transition cursor-pointer shrink-0"
                 title="Tutup"
               >
                 <X size={18} />

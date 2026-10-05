@@ -14,24 +14,24 @@ export default function Nav() {
   const closeMenu = () => setMobileMenuOpen(false);
 
   return (
-    <header class="sticky top-0 z-40 w-full bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#E8DFD5] transition-all">
+    <header class="sticky top-0 z-40 w-full bg-[#FFF4DE]/95 backdrop-blur-md border-b border-[#E7D8C3] transition-all">
       <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         {/* Brand Logo */}
         <A
           href="/"
           onClick={closeMenu}
-          class="flex items-center gap-2.5 text-[#1C1917] font-semibold tracking-tight hover:opacity-90 transition"
+          class="flex items-center gap-2.5 text-[#5B4638] font-semibold tracking-tight hover:opacity-90 transition"
         >
           <img
             src="/molmol-logo.jpg"
             alt="Mol-Mol Purwokerto Logo"
-            class="w-10 h-10 rounded-full object-cover border border-[#E8DFD5] shadow-xs"
+            class="w-10 h-10 rounded-full object-cover border border-[#E7D8C3] shadow-xs"
           />
           <div class="flex flex-col">
-            <span class="font-heading font-bold text-lg leading-tight text-[#CE2738]">
+            <span class="font-heading font-bold text-lg leading-tight text-[#D92D3A]">
               Mol-Mol
             </span>
-            <span class="text-[10px] uppercase tracking-wider font-semibold text-[#8D7E73]">
+            <span class="text-[10px] uppercase tracking-wider font-semibold text-[#806B5C]">
               Purwokerto
             </span>
           </div>
@@ -43,8 +43,8 @@ export default function Nav() {
             href="/"
             class={`px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 ${
               isActive("/")
-                ? "bg-[#CE2738] text-white shadow-xs"
-                : "text-[#6C5F57] hover:text-[#1C1917] hover:bg-[#F3ECE2]"
+                ? "bg-[#D92D3A] text-[#FFFDF8] shadow-xs"
+                : "text-[#806B5C] hover:text-[#5B4638] hover:bg-[#F9EEDB]"
             }`}
           >
             <Package size={15} />
@@ -55,8 +55,8 @@ export default function Nav() {
             href="/products"
             class={`px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 ${
               isActive("/products")
-                ? "bg-[#CE2738] text-white shadow-xs"
-                : "text-[#6C5F57] hover:text-[#1C1917] hover:bg-[#F3ECE2]"
+                ? "bg-[#D92D3A] text-[#FFFDF8] shadow-xs"
+                : "text-[#806B5C] hover:text-[#5B4638] hover:bg-[#F9EEDB]"
             }`}
           >
             <UtensilsCrossed size={15} />
@@ -67,8 +67,8 @@ export default function Nav() {
             href="/track"
             class={`px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 ${
               isActive("/track")
-                ? "bg-[#CE2738] text-white shadow-xs"
-                : "text-[#6C5F57] hover:text-[#1C1917] hover:bg-[#F3ECE2]"
+                ? "bg-[#D92D3A] text-[#FFFDF8] shadow-xs"
+                : "text-[#806B5C] hover:text-[#5B4638] hover:bg-[#F9EEDB]"
             }`}
           >
             <Search size={15} />
@@ -79,8 +79,8 @@ export default function Nav() {
             href="/terms"
             class={`px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 ${
               isActive("/terms")
-                ? "bg-[#CE2738] text-white shadow-xs"
-                : "text-[#6C5F57] hover:text-[#1C1917] hover:bg-[#F3ECE2]"
+                ? "bg-[#D92D3A] text-[#FFFDF8] shadow-xs"
+                : "text-[#806B5C] hover:text-[#5B4638] hover:bg-[#F9EEDB]"
             }`}
           >
             <FileText size={15} />
@@ -91,8 +91,8 @@ export default function Nav() {
             href="/admin"
             class={`px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 ${
               isActive("/admin")
-                ? "bg-[#CE2738] text-white shadow-xs"
-                : "text-[#6C5F57] bg-[#FFFDF9] border border-[#E8DFD5] hover:text-[#1C1917] hover:border-[#CE2738]/40"
+                ? "bg-[#D92D3A] text-[#FFFDF8] shadow-xs"
+                : "text-[#806B5C] bg-[#FFFDF8] border border-[#E7D8C3] hover:text-[#5B4638] hover:border-[#D92D3A]/40"
             }`}
           >
             <ShieldCheck size={15} />
@@ -105,7 +105,7 @@ export default function Nav() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen())}
-            class="p-2 rounded-xl text-[#1C1917] hover:bg-[#F3ECE2] transition cursor-pointer"
+            class="p-2 rounded-xl text-[#5B4638] hover:bg-[#F9EEDB] transition cursor-pointer"
             aria-label="Toggle Navigation Menu"
           >
             <Show when={mobileMenuOpen()} fallback={<Menu size={22} />}>
@@ -117,14 +117,14 @@ export default function Nav() {
 
       {/* Mobile Drawer Dropdown */}
       <Show when={mobileMenuOpen()}>
-        <div class="md:hidden border-t border-[#E8DFD5] bg-[#FAF7F2] px-4 py-3 space-y-1.5 shadow-lg transition-all animate-in fade-in slide-in-from-top-2">
+        <div class="md:hidden border-t border-[#E7D8C3] bg-[#FFF4DE] px-4 py-3 space-y-1.5 shadow-lg transition-all animate-in fade-in slide-in-from-top-2">
           <A
             href="/"
             onClick={closeMenu}
             class={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold min-h-[44px] ${
               isActive("/")
-                ? "bg-[#CE2738] text-white shadow-xs"
-                : "text-[#1C1917] hover:bg-[#F3ECE2]"
+                ? "bg-[#D92D3A] text-[#FFFDF8] shadow-xs"
+                : "text-[#5B4638] hover:bg-[#F9EEDB]"
             }`}
           >
             <Package size={18} />
@@ -136,8 +136,8 @@ export default function Nav() {
             onClick={closeMenu}
             class={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold min-h-[44px] ${
               isActive("/products")
-                ? "bg-[#CE2738] text-white shadow-xs"
-                : "text-[#1C1917] hover:bg-[#F3ECE2]"
+                ? "bg-[#D92D3A] text-[#FFFDF8] shadow-xs"
+                : "text-[#5B4638] hover:bg-[#F9EEDB]"
             }`}
           >
             <UtensilsCrossed size={18} />
@@ -149,8 +149,8 @@ export default function Nav() {
             onClick={closeMenu}
             class={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold min-h-[44px] ${
               isActive("/track")
-                ? "bg-[#CE2738] text-white shadow-xs"
-                : "text-[#1C1917] hover:bg-[#F3ECE2]"
+                ? "bg-[#D92D3A] text-[#FFFDF8] shadow-xs"
+                : "text-[#5B4638] hover:bg-[#F9EEDB]"
             }`}
           >
             <Search size={18} />
@@ -162,19 +162,19 @@ export default function Nav() {
             onClick={closeMenu}
             class={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold min-h-[44px] ${
               isActive("/terms")
-                ? "bg-[#CE2738] text-white shadow-xs"
-                : "text-[#1C1917] hover:bg-[#F3ECE2]"
+                ? "bg-[#D92D3A] text-[#FFFDF8] shadow-xs"
+                : "text-[#5B4638] hover:bg-[#F9EEDB]"
             }`}
           >
             <FileText size={18} />
             <span>Syarat & Ketentuan PO</span>
           </A>
 
-          <div class="pt-2 border-t border-[#E8DFD5] mt-2">
+          <div class="pt-2 border-t border-[#E7D8C3] mt-2">
             <A
               href="/admin"
               onClick={closeMenu}
-              class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#CE2738] bg-[#FFFDF9] border border-[#E8DFD5] hover:bg-[#F3ECE2] min-h-[44px]"
+              class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#D92D3A] bg-[#FFFDF8] border border-[#E7D8C3] hover:bg-[#F9EEDB] min-h-[44px]"
             >
               <ShieldCheck size={18} />
               <span>Login Admin</span>

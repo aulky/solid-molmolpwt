@@ -9,7 +9,7 @@ export function Footer(props: FooterProps) {
   const phone = () => props.adminPhone || "081234567890";
 
   return (
-    <footer class="bg-[#2C221E] border-t border-[#42342D] py-12 mt-16 text-[#D8CBC0] text-xs">
+    <footer class="bg-[#241D19] border-t border-[#3A2E27] py-12 mt-16 text-[#CDBCA9] text-xs">
       <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-3 gap-8">
         {/* 1. Brand & Social Media */}
         <div class="space-y-3">
@@ -17,13 +17,13 @@ export function Footer(props: FooterProps) {
             <img
               src="/molmol-logo.jpg"
               alt="Logo Mol-Mol"
-              class="w-8 h-8 rounded-full object-cover border border-[#E8DFD5]/40 shadow-xs"
+              class="w-8 h-8 rounded-full object-cover border border-[#E7D8C3]/30 shadow-xs"
             />
-            <h5 class="font-heading font-bold text-base text-[#FFFDF9]">
+            <h5 class="font-heading font-bold text-base text-[#FFF4DE]">
               Mol-Mol Purwokerto
             </h5>
           </div>
-          <p class="leading-relaxed text-[#D8CBC0]">
+          <p class="leading-relaxed text-[#CDBCA9]">
             Dessert & Cemilan Purwokerto manis dan gurih dengan resep otentik, higienis, dan cita rasa premium.
           </p>
           <div class="pt-1 flex items-center gap-2">
@@ -31,7 +31,7 @@ export function Footer(props: FooterProps) {
               href="https://www.instagram.com/molmol.purwokerto/"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-8 h-8 rounded-full bg-[#3C302A] border border-[#4F4037] flex items-center justify-center text-[#E1306C] hover:bg-[#E1306C] hover:text-white hover:border-[#E1306C] transition shadow-2xs cursor-pointer"
+              class="w-8 h-8 rounded-full bg-[#332924] border border-[#4A3C34] flex items-center justify-center text-[#E1306C] hover:bg-[#E1306C] hover:text-white hover:border-[#E1306C] transition shadow-2xs cursor-pointer"
               title="Instagram @molmol.purwokerto"
               aria-label="Instagram @molmol.purwokerto"
             >
@@ -46,7 +46,7 @@ export function Footer(props: FooterProps) {
               href="https://www.threads.com/@molmol.purwokerto"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-8 h-8 rounded-full bg-[#3C302A] border border-[#4F4037] flex items-center justify-center text-[#FFFDF9] hover:bg-white hover:text-[#1C1917] hover:border-white transition shadow-2xs cursor-pointer"
+              class="w-8 h-8 rounded-full bg-[#332924] border border-[#4A3C34] flex items-center justify-center text-[#FFF4DE] hover:bg-white hover:text-[#241D19] hover:border-white transition shadow-2xs cursor-pointer"
               title="Threads @molmol.purwokerto"
               aria-label="Threads @molmol.purwokerto"
             >
@@ -59,7 +59,7 @@ export function Footer(props: FooterProps) {
               href="https://www.tiktok.com/@molmol.purwokerto"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-8 h-8 rounded-full bg-[#3C302A] border border-[#4F4037] flex items-center justify-center text-[#FFFDF9] hover:bg-[#000000] hover:text-[#00F2FE] hover:border-[#000000] transition shadow-2xs cursor-pointer"
+              class="w-8 h-8 rounded-full bg-[#332924] border border-[#4A3C34] flex items-center justify-center text-[#FFF4DE] hover:bg-[#000000] hover:text-[#00F2FE] hover:border-[#000000] transition shadow-2xs cursor-pointer"
               title="TikTok @molmol.purwokerto"
               aria-label="TikTok @molmol.purwokerto"
             >
@@ -72,16 +72,16 @@ export function Footer(props: FooterProps) {
 
         {/* 2. Kontak & Layanan */}
         <div class="space-y-3">
-          <h5 class="font-heading font-bold text-base text-[#FFFDF9]">
+          <h5 class="font-heading font-bold text-base text-[#FFF4DE]">
             Layanan & Operasional
           </h5>
-          <div class="space-y-2 text-[#D8CBC0]">
+          <div class="space-y-2 text-[#CDBCA9]">
             <div class="flex items-center gap-2">
-              <MapPin size={15} class="text-[#CE2738] shrink-0" />
+              <MapPin size={15} class="text-[#D92D3A] shrink-0" />
               <span>Purwokerto, Jawa Tengah</span>
             </div>
             <div class="flex items-center gap-2">
-              <Phone size={15} class="text-[#CE2738] shrink-0" />
+              <Phone size={15} class="text-[#D92D3A] shrink-0" />
               <span>WhatsApp: {phone()}</span>
             </div>
           </div>
@@ -89,22 +89,22 @@ export function Footer(props: FooterProps) {
 
         {/* 3. Ketentuan Pre-Order */}
         <div class="space-y-3">
-          <h5 class="font-heading font-bold text-base text-[#FFFDF9]">
+          <h5 class="font-heading font-bold text-base text-[#FFF4DE]">
             Ketentuan Pre-Order
           </h5>
-          <p class="leading-relaxed text-[#D8CBC0]">
+          <p class="leading-relaxed text-[#CDBCA9]">
             Pesanan diproduksi segar sesuai kuota gelombang PO. Bukti pembayaran wajib diunggah untuk konfirmasi jadwal pengantaran.
           </p>
         </div>
       </div>
 
-      <div class="max-w-6xl mx-auto px-4 mt-10 pt-4 border-t border-[#42342D] flex flex-wrap items-center justify-between gap-2 text-[11px] text-[#A8988C]">
+      <div class="max-w-6xl mx-auto px-4 mt-10 pt-4 border-t border-[#3A2E27] flex flex-wrap items-center justify-between gap-2 text-[11px] text-[#A69584]">
         <div class="flex items-center gap-3">
           <span>© 2026 Mol-Mol Purwokerto. Semua hak cipta dilindungi.</span>
           <span>•</span>
-          <A href="/terms" class="hover:text-[#CE2738] underline transition">Syarat & Kebijakan PO</A>
+          <A href="/terms" class="hover:text-[#D92D3A] underline transition">Syarat & Kebijakan PO</A>
         </div>
-        <A href="/admin" class="hover:text-[#CE2738] flex items-center gap-1 transition">
+        <A href="/admin" class="hover:text-[#D92D3A] flex items-center gap-1 transition">
           <ShieldCheck size={13} />
           <span>Login Admin</span>
         </A>
