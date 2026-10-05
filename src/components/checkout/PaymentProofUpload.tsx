@@ -123,8 +123,8 @@ export function PaymentProofUpload(props: PaymentProofUploadProps) {
   return (
     <div class="space-y-4">
       {/* Detail Pembayaran Toko */}
-      <div class="p-4 rounded-2xl border border-[#E7D8C3] bg-[#F9EEDB] space-y-3">
-        <div class="flex items-center justify-between pb-2 border-b border-[#E7D8C3]">
+      <div class="p-4 rounded-2xl border border-[#E2CCA8] bg-[#F3E2C4] space-y-3">
+        <div class="flex items-center justify-between pb-2 border-b border-[#E2CCA8]">
           <span class="text-xs text-[#806B5C] uppercase tracking-wider font-semibold">
             Total Harus Dibayar
           </span>
@@ -141,11 +141,11 @@ export function PaymentProofUpload(props: PaymentProofUploadProps) {
               <span>Scan QRIS Resmi Toko Mol-Mol Purwokerto</span>
             </div>
 
-            <div class="flex justify-center p-3 bg-[#FFFDF8] rounded-xl border border-[#E7D8C3]">
+            <div class="flex justify-center p-3 bg-[#FFF9EE] rounded-xl border border-[#E2CCA8]">
               <Show
                 when={props.qrisImagePath}
                 fallback={
-                  <div class="w-48 h-48 bg-[#F9EEDB] border border-dashed border-[#E7D8C3] rounded-xl flex flex-col items-center justify-center p-4 text-center">
+                  <div class="w-48 h-48 bg-[#F3E2C4] border border-dashed border-[#E2CCA8] rounded-xl flex flex-col items-center justify-center p-4 text-center">
                     <QrCode size={48} class="text-[#D92D3A] mb-2 opacity-80" />
                     <span class="text-xs font-semibold text-[#5B4638]">QRIS Mol-Mol</span>
                     <span class="text-[10px] text-[#806B5C] mt-0.5">Semua Bank & E-Wallet</span>
@@ -182,7 +182,7 @@ export function PaymentProofUpload(props: PaymentProofUploadProps) {
                     class={`p-2.5 rounded-xl border text-left text-xs transition cursor-pointer flex items-center gap-2 ${
                       selectedChannelId() === ch.id
                         ? "border-[#D92D3A] bg-[#D92D3A]/10 text-[#D92D3A] font-semibold"
-                        : "border-[#E7D8C3] bg-[#FFFDF8] text-[#5B4638] hover:bg-[#F9EEDB]"
+                        : "border-[#E2CCA8] bg-[#FFF9EE] text-[#5B4638] hover:bg-[#F3E2C4]"
                     }`}
                   >
                     <Show
@@ -198,13 +198,13 @@ export function PaymentProofUpload(props: PaymentProofUploadProps) {
             </div>
 
             {/* Selected Account Box */}
-            <div class="p-3 bg-[#FFFDF8] rounded-xl border border-[#E7D8C3] text-xs space-y-1.5">
-              <div class="flex justify-between py-1 border-b border-[#E7D8C3]/60">
+            <div class="p-3 bg-[#FFF9EE] rounded-xl border border-[#E2CCA8] text-xs space-y-1.5">
+              <div class="flex justify-between py-1 border-b border-[#E2CCA8]/60">
                 <span class="text-[#806B5C]">Tujuan:</span>
                 <span class="font-semibold text-[#5B4638]">{currentChannel().name}</span>
               </div>
 
-              <div class="flex items-center justify-between py-1 border-b border-[#E7D8C3]/60">
+              <div class="flex items-center justify-between py-1 border-b border-[#E2CCA8]/60">
                 <div>
                   <span class="text-[#806B5C] block">Nomor Rekening / Saldo:</span>
                   <span class="font-heading font-bold text-[#D92D3A] text-sm select-all">
@@ -248,7 +248,7 @@ export function PaymentProofUpload(props: PaymentProofUploadProps) {
           Unggah Foto Bukti Transfer / Struk QRIS <span class="text-[#D92D3A]">*</span>
         </label>
 
-        <div class="relative border-2 border-dashed border-[#E7D8C3] hover:border-[#D92D3A] rounded-2xl p-4 text-center bg-[#FFFDF8] transition cursor-pointer">
+        <div class="relative border-2 border-dashed border-[#E2CCA8] hover:border-[#D92D3A] rounded-2xl p-4 text-center bg-[#FFF9EE] transition cursor-pointer">
           <input
             type="file"
             accept="image/jpeg,image/png,image/webp"
@@ -271,7 +271,7 @@ export function PaymentProofUpload(props: PaymentProofUploadProps) {
                 <img
                   src={localPreview() || props.uploadedPath!}
                   alt="Preview Bukti"
-                  class="mt-3 max-h-36 rounded-xl border border-[#E7D8C3] object-contain shadow-xs bg-[#FFFDF8]"
+                  class="mt-3 max-h-36 rounded-xl border border-[#E2CCA8] object-contain shadow-xs bg-[#FFF9EE]"
                 />
               </div>
             }

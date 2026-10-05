@@ -179,7 +179,7 @@ export function GpsPicker(props: GpsPickerProps) {
   };
 
   return (
-    <div class="p-3.5 sm:p-4 rounded-2xl border border-[#E7D8C3] bg-[#F9EEDB] space-y-3">
+    <div class="p-3.5 sm:p-4 rounded-2xl border border-[#E2CCA8] bg-[#F3E2C4] space-y-3">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
         <div class="flex items-center gap-2">
           <div class="w-7 h-7 rounded-lg bg-[#D92D3A]/10 flex items-center justify-center text-[#D92D3A] shrink-0">
@@ -211,7 +211,7 @@ export function GpsPicker(props: GpsPickerProps) {
           <button
             type="button"
             onClick={() => setShowManualInput(!showManualInput())}
-            class="p-1.5 text-xs text-[#806B5C] hover:text-[#D92D3A] border border-[#E7D8C3] rounded-xl bg-[#FFFDF8] hover:bg-[#F9EEDB] transition cursor-pointer"
+            class="p-1.5 text-xs text-[#806B5C] hover:text-[#D92D3A] border border-[#E2CCA8] rounded-xl bg-[#FFF9EE] hover:bg-[#F3E2C4] transition cursor-pointer"
             title="Tempel link Google Maps atau koordinat manual"
           >
             <Link2 size={14} />
@@ -221,7 +221,7 @@ export function GpsPicker(props: GpsPickerProps) {
 
       {/* Manual Maps / Coordinate Paste Input */}
       <Show when={showManualInput()}>
-        <div class="p-3 bg-[#FFFDF8] rounded-xl border border-[#D92D3A]/30 shadow-2xs space-y-2 animate-in fade-in duration-150">
+        <div class="p-3 bg-[#FFF9EE] rounded-xl border border-[#D92D3A]/30 shadow-2xs space-y-2 animate-in fade-in duration-150">
           <div class="flex items-center justify-between text-xs">
             <span class="font-medium text-[#5B4638] flex items-center gap-1">
               <Link2 size={13} class="text-[#D92D3A]" />
@@ -262,7 +262,7 @@ export function GpsPicker(props: GpsPickerProps) {
 
       {/* GPS Info Status */}
       <Show when={props.location.latitude && props.location.longitude}>
-        <div class="p-3 bg-[#FFFDF8] rounded-xl border border-[#E7D8C3] text-xs space-y-2">
+        <div class="p-3 bg-[#FFF9EE] rounded-xl border border-[#E2CCA8] text-xs space-y-2">
           <div class="flex items-center justify-between">
             <span class="font-medium text-[#7FA37A] flex items-center gap-1">
               <CheckCircle2 size={14} /> Titik koordinat tersimpan

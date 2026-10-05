@@ -203,7 +203,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
             </div>
 
             {/* Kode Pesanan Box */}
-            <div class="p-4 bg-[#F9EEDB] border border-[#E7D8C3] rounded-2xl text-left space-y-2">
+            <div class="p-4 bg-[#F3E2C4] border border-[#E2CCA8] rounded-2xl text-left space-y-2">
               <div class="flex items-center justify-between">
                 <span class="text-xs text-[#806B5C] uppercase tracking-wider font-semibold">
                   Kode Pesanan (Short Code):
@@ -222,7 +222,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
                 {successOrder()?.shortCode}
               </div>
 
-              <div class="text-[11px] text-[#806B5C] break-all pt-1 border-t border-[#E7D8C3]">
+              <div class="text-[11px] text-[#806B5C] break-all pt-1 border-t border-[#E2CCA8]">
                 Order ID: {successOrder()?.orderId}
               </div>
             </div>
@@ -253,7 +253,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
       >
         <form onSubmit={handleSubmit} class="space-y-4">
           {/* Stepper Header Bar */}
-          <div class="flex items-center justify-between pb-3 border-b border-[#E7D8C3] text-xs">
+          <div class="flex items-center justify-between pb-3 border-b border-[#E2CCA8] text-xs">
             <button
               type="button"
               onClick={() => setCurrentStep(1)}
@@ -271,7 +271,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
               <span>1. Data Pemesan</span>
             </button>
 
-            <div class="h-0.5 flex-1 mx-3 bg-[#E7D8C3]">
+            <div class="h-0.5 flex-1 mx-3 bg-[#E2CCA8]">
               <div
                 class={`h-full transition-all duration-300 ${
                   currentStep() === 2 ? "bg-[#D92D3A]" : "bg-transparent"
@@ -288,7 +288,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
             >
               <span
                 class={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                  currentStep() === 2 ? "bg-[#D92D3A] text-white" : "bg-[#E7D8C3] text-[#806B5C]"
+                  currentStep() === 2 ? "bg-[#D92D3A] text-white" : "bg-[#E2CCA8] text-[#806B5C]"
                 }`}
               >
                 2
@@ -301,8 +301,8 @@ export function CheckoutModal(props: CheckoutModalProps) {
           <Show when={currentStep() === 1}>
             <div class="space-y-4">
               {/* Ringkasan Item Pesanan */}
-              <div class="p-3 bg-[#F9EEDB] rounded-2xl border border-[#E7D8C3] space-y-2 max-h-40 overflow-y-auto">
-                <div class="text-xs font-semibold text-[#5B4638] flex items-center justify-between pb-1 border-b border-[#E7D8C3]">
+              <div class="p-3 bg-[#F3E2C4] rounded-2xl border border-[#E2CCA8] space-y-2 max-h-40 overflow-y-auto">
+                <div class="text-xs font-semibold text-[#5B4638] flex items-center justify-between pb-1 border-b border-[#E2CCA8]">
                   <div class="flex items-center gap-1.5">
                     <ShoppingBag size={14} class="text-[#D92D3A]" />
                     <span>Daftar Menu ({props.cartItems.length} item)</span>
@@ -385,7 +385,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
               </Show>
 
               {/* Step 1 Actions */}
-              <div class="flex items-center justify-between gap-2 pt-2 border-t border-[#E7D8C3]">
+              <div class="flex items-center justify-between gap-2 pt-2 border-t border-[#E2CCA8]">
                 <button
                   type="button"
                   onClick={props.onClose}
@@ -421,7 +421,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
                     class={`p-3 rounded-2xl border text-xs cursor-pointer flex flex-col justify-between transition ${
                       fulfillment() === "pickup"
                         ? "border-[#D92D3A] bg-[#D92D3A]/5 text-[#D92D3A] font-semibold ring-1 ring-[#D92D3A]/30"
-                        : "border-[#E7D8C3] bg-[#FFFDF8] text-[#5B4638] hover:bg-[#F9EEDB]"
+                        : "border-[#E2CCA8] bg-[#FFF9EE] text-[#5B4638] hover:bg-[#F3E2C4]"
                     }`}
                   >
                     <input
@@ -443,7 +443,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
                       class={`p-3 rounded-2xl border text-xs cursor-pointer flex flex-col justify-between transition ${
                         fulfillment() === "delivery"
                           ? "border-[#D92D3A] bg-[#D92D3A]/5 text-[#D92D3A] font-semibold ring-1 ring-[#D92D3A]/30"
-                          : "border-[#E7D8C3] bg-[#FFFDF8] text-[#5B4638] hover:bg-[#F9EEDB]"
+                          : "border-[#E2CCA8] bg-[#FFF9EE] text-[#5B4638] hover:bg-[#F3E2C4]"
                       }`}
                     >
                       <input
@@ -466,7 +466,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
                       class={`p-3 rounded-2xl border text-xs cursor-pointer flex flex-col justify-between transition ${
                         fulfillment() === "cod"
                           ? "border-[#D92D3A] bg-[#D92D3A]/5 text-[#D92D3A] font-semibold ring-1 ring-[#D92D3A]/30"
-                          : "border-[#E7D8C3] bg-[#FFFDF8] text-[#5B4638] hover:bg-[#F9EEDB]"
+                          : "border-[#E2CCA8] bg-[#FFF9EE] text-[#5B4638] hover:bg-[#F3E2C4]"
                       }`}
                     >
                       <input
@@ -488,7 +488,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
 
               {/* Info Titik Pengambilan Mandiri bila Pickup */}
               <Show when={fulfillment() === "pickup"}>
-                <div class="p-3.5 rounded-2xl border border-[#E7D8C3] bg-[#F9EEDB]/60 space-y-1.5 text-xs">
+                <div class="p-3.5 rounded-2xl border border-[#E2CCA8] bg-[#F3E2C4]/60 space-y-1.5 text-xs">
                   <div class="flex items-center gap-1.5 font-semibold text-[#5B4638]">
                     <MapPin size={15} class="text-[#D92D3A]" />
                     <span>Lokasi Pengambilan Mandiri (Outlet Toko):</span>
@@ -574,7 +574,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
                       class={`p-2.5 rounded-xl border text-xs font-medium cursor-pointer transition ${
                         paymentMethod() === "qris"
                           ? "border-[#D92D3A] bg-[#D92D3A]/10 text-[#D92D3A] font-semibold"
-                          : "border-[#E7D8C3] bg-[#FFFDF8] text-[#5B4638] hover:bg-[#F9EEDB]"
+                          : "border-[#E2CCA8] bg-[#FFF9EE] text-[#5B4638] hover:bg-[#F3E2C4]"
                       }`}
                     >
                       QRIS (Scan All Bank / E-Wallet)
@@ -586,7 +586,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
                       class={`p-2.5 rounded-xl border text-xs font-medium cursor-pointer transition ${
                         paymentMethod() === "transfer"
                           ? "border-[#D92D3A] bg-[#D92D3A]/10 text-[#D92D3A] font-semibold"
-                          : "border-[#E7D8C3] bg-[#FFFDF8] text-[#5B4638] hover:bg-[#F9EEDB]"
+                          : "border-[#E2CCA8] bg-[#FFF9EE] text-[#5B4638] hover:bg-[#F3E2C4]"
                       }`}
                     >
                       Transfer Bank ({props.storeSettings.bankName || "BCA"})
@@ -610,7 +610,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
               </Show>
 
               {/* Rincian Subtotal & Total Pembayaran */}
-              <div class="p-3 bg-[#F9EEDB] rounded-2xl border border-[#E7D8C3] space-y-1.5 text-xs">
+              <div class="p-3 bg-[#F3E2C4] rounded-2xl border border-[#E2CCA8] space-y-1.5 text-xs">
                 <div class="flex justify-between text-[#806B5C]">
                   <span>Subtotal Menu:</span>
                   <span class="font-semibold text-[#5B4638]">
@@ -627,7 +627,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
                   </span>
                 </div>
 
-                <div class="flex justify-between text-sm font-bold text-[#5B4638] pt-2 border-t border-[#E7D8C3]">
+                <div class="flex justify-between text-sm font-bold text-[#5B4638] pt-2 border-t border-[#E2CCA8]">
                   <span>Total Tagihan:</span>
                   <span class="font-heading font-bold text-[#D92D3A] text-base">
                     {formatRupiah(pricing().total)}
@@ -644,7 +644,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
               </Show>
 
               {/* Step 2 Actions */}
-              <div class="flex items-center justify-between gap-2 pt-2 border-t border-[#E7D8C3]">
+              <div class="flex items-center justify-between gap-2 pt-2 border-t border-[#E2CCA8]">
                 <button
                   type="button"
                   onClick={() => setCurrentStep(1)}
