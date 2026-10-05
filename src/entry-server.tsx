@@ -18,7 +18,7 @@ export default createHandler(() => (
             content="Mol-Mol Purwokerto, dessert purwokerto, cemilan purwokerto, kuliner purwokerto, jajanan purwokerto, pre order cemilan purwokerto, molmol.purwokerto"
           />
           <meta name="author" content="Mol-Mol Purwokerto (@molmol.purwokerto)" />
-          <meta name="theme-color" content="#6366F1" />
+          <meta name="theme-color" content="#CE2738" />
           <meta name="robots" content="index, follow" />
 
           {/* Open Graph / Facebook / Instagram */}
