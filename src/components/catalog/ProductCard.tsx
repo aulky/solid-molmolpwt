@@ -80,22 +80,22 @@ export function ProductCard(props: ProductCardProps) {
   return (
     <>
       <div
-        class={`card-surface card-hover flex flex-col justify-between h-full group bg-white border border-[#E8E8EC] ${
+        class={`card-surface card-hover flex flex-col justify-between h-full group bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl ${
           isOut() ? "opacity-75" : ""
         }`}
       >
         {/* Product Image Area with Slider */}
         <div
-          class="relative w-full aspect-4/3 sm:aspect-5/4 bg-[#F4F4F6] overflow-hidden border-b border-[#E8E8EC] select-none"
+          class="relative w-full aspect-4/3 sm:aspect-5/4 bg-[#F3ECE2] overflow-hidden border-b border-[#E8DFD5] select-none"
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
           <Show
             when={imageList().length > 0}
             fallback={
-              <div class="w-full h-full flex flex-col items-center justify-center text-[#9C9C9C] p-4 text-center">
-                <UtensilsCrossed size={32} class="mb-2 text-[#6366F1]/50" />
-                <span class="text-xs font-mono font-medium">Mol-Mol Purwokerto</span>
+              <div class="w-full h-full flex flex-col items-center justify-center text-[#8D7E73] p-4 text-center">
+                <UtensilsCrossed size={32} class="mb-2 text-[#CE2738]/50" />
+                <span class="text-xs font-medium">Mol-Mol Purwokerto</span>
               </div>
             }
           >
@@ -113,7 +113,7 @@ export function ProductCard(props: ProductCardProps) {
               <button
                 type="button"
                 onClick={prevSlide}
-                class="absolute left-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/80 hover:bg-white text-[#0A0A0A] shadow-xs flex items-center justify-center transition opacity-80 hover:opacity-100 cursor-pointer"
+                class="absolute left-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/80 hover:bg-white text-[#1C1917] shadow-xs flex items-center justify-center transition opacity-80 hover:opacity-100 cursor-pointer"
                 title="Foto Sebelumnya"
               >
                 <ChevronLeft size={14} />
@@ -122,7 +122,7 @@ export function ProductCard(props: ProductCardProps) {
               <button
                 type="button"
                 onClick={nextSlide}
-                class="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/80 hover:bg-white text-[#0A0A0A] shadow-xs flex items-center justify-center transition opacity-80 hover:opacity-100 cursor-pointer"
+                class="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/80 hover:bg-white text-[#1C1917] shadow-xs flex items-center justify-center transition opacity-80 hover:opacity-100 cursor-pointer"
                 title="Foto Berikutnya"
               >
                 <ChevronRight size={14} />
@@ -135,7 +135,7 @@ export function ProductCard(props: ProductCardProps) {
                     <span
                       class={`h-1.5 rounded-full transition-all ${
                         currentSlide() === idx()
-                          ? "w-4 bg-[#6366F1]"
+                          ? "w-4 bg-[#CE2738]"
                           : "w-1.5 bg-black/30"
                       }`}
                     />
@@ -172,7 +172,7 @@ export function ProductCard(props: ProductCardProps) {
           </div>
 
           <Show when={p().weightGrams}>
-            <div class="absolute bottom-2 right-2 bg-black/60 backdrop-blur-xs text-white text-[11px] font-mono px-2 py-0.5 rounded-[4px] pointer-events-none">
+            <div class="absolute bottom-2 right-2 bg-black/60 backdrop-blur-xs text-white text-[11px] font-medium px-2 py-0.5 rounded-[4px] pointer-events-none">
               {p().weightGrams}g
             </div>
           </Show>
@@ -183,25 +183,25 @@ export function ProductCard(props: ProductCardProps) {
           <div>
             <h4
               onClick={() => setIsLightboxOpen(true)}
-              class="font-heading font-bold text-base sm:text-lg text-[#0A0A0A] leading-snug group-hover:text-[#6366F1] transition cursor-pointer"
+              class="font-heading font-bold text-base sm:text-lg text-[#1C1917] leading-snug group-hover:text-[#CE2738] transition cursor-pointer"
             >
               {p().name}
             </h4>
 
             <Show when={p().description}>
-              <p class="text-xs sm:text-[13px] text-[#6B6B6B] line-clamp-2 mt-1 leading-relaxed">
+              <p class="text-xs sm:text-[13px] text-[#6C5F57] line-clamp-2 mt-1 leading-relaxed">
                 {p().description}
               </p>
             </Show>
           </div>
 
           {/* Price & Action Row */}
-          <div class="mt-4 pt-3 border-t border-[#E8E8EC] flex items-center justify-between gap-2">
+          <div class="mt-4 pt-3 border-t border-[#E8DFD5] flex items-center justify-between gap-2">
             <div>
-              <span class="text-[11px] text-[#9C9C9C] uppercase font-mono tracking-wider block">
+              <span class="text-[11px] text-[#8D7E73] uppercase tracking-wider block font-medium">
                 Harga
               </span>
-              <span class="text-base sm:text-lg font-bold font-mono text-[#0A0A0A]">
+              <span class="text-base sm:text-lg font-bold font-heading text-[#1C1917]">
                 {formatRupiah(p().effectivePrice)}
               </span>
             </div>
@@ -210,7 +210,7 @@ export function ProductCard(props: ProductCardProps) {
               <Show
                 when={!isOut()}
                 fallback={
-                  <span class="text-xs font-medium text-[#EF4444] px-2 py-1 bg-[#EF4444]/10 rounded-[6px]">
+                  <span class="text-xs font-medium text-[#CE2738] px-2.5 py-1 bg-[#CE2738]/10 rounded-full">
                     Habis
                   </span>
                 }
@@ -249,11 +249,11 @@ export function ProductCard(props: ProductCardProps) {
         maxWidth="max-w-2xl"
       >
         <div class="space-y-4">
-          <div class="relative w-full aspect-16/10 bg-[#F4F4F6] rounded-lg overflow-hidden border border-[#E8E8EC]">
+          <div class="relative w-full aspect-16/10 bg-[#F3ECE2] rounded-xl overflow-hidden border border-[#E8DFD5]">
             <Show
               when={imageList().length > 0}
               fallback={
-                <div class="w-full h-full flex flex-col items-center justify-center text-[#9C9C9C]">
+                <div class="w-full h-full flex flex-col items-center justify-center text-[#8D7E73]">
                   <UtensilsCrossed size={40} />
                 </div>
               }
@@ -268,14 +268,14 @@ export function ProductCard(props: ProductCardProps) {
                 <button
                   type="button"
                   onClick={prevSlide}
-                  class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 shadow text-[#0A0A0A] flex items-center justify-center cursor-pointer"
+                  class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 shadow text-[#1C1917] flex items-center justify-center cursor-pointer"
                 >
                   <ChevronLeft size={16} />
                 </button>
                 <button
                   type="button"
                   onClick={nextSlide}
-                  class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 shadow text-[#0A0A0A] flex items-center justify-center cursor-pointer"
+                  class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 shadow text-[#1C1917] flex items-center justify-center cursor-pointer"
                 >
                   <ChevronRight size={16} />
                 </button>
@@ -285,14 +285,14 @@ export function ProductCard(props: ProductCardProps) {
 
           <div class="space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-xl font-bold font-mono text-[#0A0A0A]">
+              <span class="text-xl font-bold font-heading text-[#1C1917]">
                 {formatRupiah(p().effectivePrice)}
               </span>
-              <span class="text-xs font-mono text-[#6B6B6B]">
+              <span class="text-xs text-[#6C5F57] font-medium">
                 Berat: {p().weightGrams || 250}g / porsi
               </span>
             </div>
-            <p class="text-xs sm:text-sm text-[#6B6B6B] leading-relaxed">
+            <p class="text-xs sm:text-sm text-[#6C5F57] leading-relaxed">
               {p().description || "Dessert & cemilan khas Mol-Mol Purwokerto dibuat higienis tanpa bahan pengawet."}
             </p>
           </div>
