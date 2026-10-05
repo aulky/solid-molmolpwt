@@ -20,24 +20,24 @@ export default function TrackSearchPage() {
   };
 
   return (
-    <div class="min-h-[80vh] flex flex-col justify-center items-center px-4 sm:px-6 py-8 sm:py-12 bg-[#FAF7F2]">
-      <div class="w-full max-w-md card-surface p-6 sm:p-8 bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl space-y-5 sm:space-y-6 shadow-xs">
+    <div class="min-h-[80vh] flex flex-col justify-center items-center px-4 sm:px-6 py-8 sm:py-12 bg-[#FFF4DE]">
+      <div class="w-full max-w-md card-surface p-6 sm:p-8 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl space-y-5 sm:space-y-6 shadow-xs">
         <div class="text-center space-y-2">
-          <div class="w-12 h-12 rounded-full bg-[#CE2738]/10 text-[#CE2738] flex items-center justify-center mx-auto">
+          <div class="w-12 h-12 rounded-full bg-[#D92D3A]/10 text-[#D92D3A] flex items-center justify-center mx-auto">
             <Search size={24} />
           </div>
-          <h1 class="font-heading font-bold text-2xl text-[#1C1917]">
+          <h1 class="font-heading font-bold text-2xl text-[#5B4638]">
             Lacak Pesanan Pre-Order
           </h1>
-          <p class="text-xs sm:text-sm text-[#6C5F57] leading-relaxed">
+          <p class="text-xs sm:text-sm text-[#806B5C] leading-relaxed">
             Periksa status verifikasi pembayaran, proses produksi pesanan, dan jadwal pengiriman Anda.
           </p>
         </div>
 
         <form onSubmit={handleSearch} class="space-y-4">
           <div>
-            <label class="block text-xs font-semibold text-[#1C1917] mb-1">
-              Kode Pesanan atau Order ID <span class="text-[#CE2738]">*</span>
+            <label class="block text-xs font-semibold text-[#5B4638] mb-1">
+              Kode Pesanan atau Order ID <span class="text-[#D92D3A]">*</span>
             </label>
             <input
               type="text"
@@ -47,13 +47,13 @@ export default function TrackSearchPage() {
               placeholder="Contoh: MM-7K2P4Q atau Order ID"
               class="input-base uppercase font-semibold text-xs tracking-wider"
             />
-            <span class="text-[11px] text-[#6C5F57] block mt-1">
+            <span class="text-[11px] text-[#806B5C] block mt-1">
               Diterbitkan di layar konfirmasi saat Anda berhasil checkout.
             </span>
           </div>
 
           <Show when={errorMsg()}>
-            <div class="p-3 rounded-xl bg-[#FFF5F5] border border-[#FECDD3] text-xs text-[#CE2738] flex items-center gap-1.5">
+            <div class="p-3 rounded-xl bg-[#FFF5F5] border border-[#FECDD3] text-xs text-[#D92D3A] flex items-center gap-1.5">
               <AlertCircle size={14} class="shrink-0" />
               <span>{errorMsg()}</span>
             </div>
@@ -68,8 +68,8 @@ export default function TrackSearchPage() {
           </button>
         </form>
 
-        <div class="pt-4 border-t border-[#E8DFD5] text-center">
-          <span class="text-xs text-[#8D7E73]">
+        <div class="pt-4 border-t border-[#E7D8C3] text-center">
+          <span class="text-xs text-[#806B5C]">
             Lupa kode pesanan Anda? Silakan hubungi admin via WhatsApp.
           </span>
         </div>
