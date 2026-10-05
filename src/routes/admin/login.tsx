@@ -81,23 +81,25 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div class="min-h-screen bg-[#FAFAFA] flex flex-col justify-center items-center px-3 sm:px-4 py-8 sm:py-12">
-      <div class="w-full max-w-sm card-surface p-5 sm:p-8 bg-white border border-[#E8E8EC] space-y-5 sm:space-y-6 shadow-md">
+    <div class="min-h-screen bg-[#FAF7F2] flex flex-col justify-center items-center px-3 sm:px-4 py-8 sm:py-12">
+      <div class="w-full max-w-sm card-surface p-6 sm:p-8 bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl space-y-5 sm:space-y-6 shadow-xs">
         <div class="text-center space-y-2">
-          <div class="w-12 h-12 rounded-[8px] bg-[#6366F1] text-white flex items-center justify-center mx-auto shadow-xs">
-            <ShieldCheck size={24} />
-          </div>
-          <h1 class="font-heading font-bold text-xl sm:text-2xl text-[#0A0A0A]">
+          <img
+            src="/molmol-logo.jpg"
+            alt="Logo Mol-Mol"
+            class="w-16 h-16 rounded-full object-cover mx-auto border border-[#E8DFD5] shadow-xs"
+          />
+          <h1 class="font-heading font-bold text-xl sm:text-2xl text-[#1C1917]">
             Login Admin Mol-Mol
           </h1>
-          <p class="text-xs text-[#6B6B6B]">
+          <p class="text-xs text-[#6C5F57]">
             Masuk untuk mengelola pesanan, stok batch PO, dan operasional Mol-Mol Purwokerto.
           </p>
         </div>
 
         <form onSubmit={handleLogin} class="space-y-4">
           <div>
-            <label for="username" class="block text-xs font-semibold text-[#0A0A0A] mb-1">
+            <label for="username" class="block text-xs font-semibold text-[#1C1917] mb-1">
               Username Admin
             </label>
             <div class="relative">
@@ -114,12 +116,12 @@ export default function AdminLoginPage() {
                 class="input-base text-xs"
                 style={{ "padding-left": "2.5rem" }}
               />
-              <User size={15} class="absolute left-3 top-1/2 -translate-y-1/2 text-[#9C9C9C] pointer-events-none" />
+              <User size={15} class="absolute left-3 top-1/2 -translate-y-1/2 text-[#8E7F75] pointer-events-none" />
             </div>
           </div>
 
           <div>
-            <label for="password" class="block text-xs font-semibold text-[#0A0A0A] mb-1">
+            <label for="password" class="block text-xs font-semibold text-[#1C1917] mb-1">
               Password
             </label>
             <div class="relative">
@@ -136,11 +138,11 @@ export default function AdminLoginPage() {
                 class="input-base text-xs"
                 style={{ "padding-left": "2.5rem", "padding-right": "2.5rem" }}
               />
-              <Lock size={15} class="absolute left-3 top-1/2 -translate-y-1/2 text-[#9C9C9C] pointer-events-none" />
+              <Lock size={15} class="absolute left-3 top-1/2 -translate-y-1/2 text-[#8E7F75] pointer-events-none" />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword())}
-                class="absolute right-3 top-2.5 text-[#9C9C9C] hover:text-[#0A0A0A] cursor-pointer"
+                class="absolute right-3 top-2.5 text-[#8E7F75] hover:text-[#1C1917] cursor-pointer"
                 title={showPassword() ? "Sembunyikan password" : "Tampilkan password"}
               >
                 <Show when={showPassword()} fallback={<Eye size={15} />}>
@@ -151,7 +153,7 @@ export default function AdminLoginPage() {
           </div>
 
           <Show when={errorMsg()}>
-            <div class="p-2.5 rounded-[6px] bg-[#FFF5F5] border border-[#FCA5A5] text-xs text-[#EF4444] flex items-center gap-1.5">
+            <div class="p-2.5 rounded-xl bg-[#FFF5F5] border border-[#FECDD3] text-xs text-[#CE2738] flex items-center gap-1.5">
               <AlertCircle size={14} class="shrink-0" />
               <span>{errorMsg()}</span>
             </div>
@@ -160,7 +162,7 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={isLoading()}
-            class="btn-primary w-full flex items-center justify-center gap-2 h-10 cursor-pointer"
+            class="btn-primary w-full flex items-center justify-center gap-2 h-11 cursor-pointer"
           >
             <Show when={isLoading()} fallback={<span>Masuk ke Dashboard</span>}>
               <Loader2 size={16} class="animate-spin" />
@@ -169,8 +171,8 @@ export default function AdminLoginPage() {
           </button>
         </form>
 
-        <div class="pt-4 border-t border-[#E8E8EC] text-center">
-          <a href="/" class="text-xs text-[#6366F1] hover:underline inline-flex items-center gap-1">
+        <div class="pt-4 border-t border-[#E8DFD5] text-center">
+          <a href="/" class="text-xs text-[#CE2738] font-semibold hover:underline inline-flex items-center gap-1">
             <ArrowLeft size={13} />
             <span>Kembali ke Website Pre-Order</span>
           </a>

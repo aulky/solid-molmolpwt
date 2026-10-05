@@ -175,10 +175,10 @@ export default function AdminOrdersPage() {
         </div>
 
         {/* Orders Table */}
-        <div class="card-surface bg-white border border-[#E8E8EC] overflow-hidden">
+        <div class="card-surface bg-[#FFFDF9] border border-[#E8DFD5] overflow-hidden rounded-2xl">
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs min-w-[700px]">
-              <thead class="bg-[#FAFAFA] text-[#6B6B6B] border-b border-[#E8E8EC] font-mono uppercase">
+              <thead class="bg-[#FAF7F2] text-[#6C5F57] border-b border-[#E8DFD5] text-[11px] font-semibold uppercase">
                 <tr>
                   <th class="p-3">Kode</th>
                   <th class="p-3">Pemesan</th>
@@ -189,11 +189,22 @@ export default function AdminOrdersPage() {
                   <th class="p-3 text-right">Aksi</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-[#E8E8EC]">
+              <thead class="bg-[#FAF7F2] text-[#6C5F57] border-b border-[#E8DFD5] uppercase text-[11px] font-semibold">
+                <tr>
+                  <th class="p-3">Kode</th>
+                  <th class="p-3">Pemesan</th>
+                  <th class="p-3">Layanan</th>
+                  <th class="p-3">Total</th>
+                  <th class="p-3">Status</th>
+                  <th class="p-3">Waktu Masuk</th>
+                  <th class="p-3 text-right">Aksi</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[#E8DFD5]">
                 <Show when={!isLoading()} fallback={
                   <tr>
-                    <td colspan={7} class="p-8 text-center text-[#6B6B6B]">
-                      <Loader2 size={24} class="animate-spin mx-auto mb-2 text-[#6366F1]" />
+                    <td colspan={7} class="p-8 text-center text-[#6C5F57]">
+                      <Loader2 size={24} class="animate-spin mx-auto mb-2 text-[#CE2738]" />
                       <span>Memuat data pesanan...</span>
                     </td>
                   </tr>
@@ -202,25 +213,25 @@ export default function AdminOrdersPage() {
                     each={orders()}
                     fallback={
                       <tr>
-                        <td colspan={7} class="p-8 text-center text-[#9C9C9C]">
+                        <td colspan={7} class="p-8 text-center text-[#8D7E73]">
                           Tidak ada pesanan yang sesuai dengan filter.
                         </td>
                       </tr>
                     }
                   >
                     {(o) => (
-                      <tr class="hover:bg-[#FAFAFA] transition">
-                        <td class="p-3 font-mono font-bold text-[#0A0A0A]">
+                      <tr class="hover:bg-[#FAF7F2]/60 transition">
+                        <td class="p-3 font-bold text-[#CE2738]">
                           {o.shortCode}
                         </td>
                         <td class="p-3">
-                          <span class="font-semibold text-[#0A0A0A] block">
+                          <span class="font-semibold text-[#1C1917] block">
                             {o.customerName}
                           </span>
-                          <span class="text-[#6B6B6B] text-[11px] block">{o.customerPhone}</span>
+                          <span class="text-[#6C5F57] text-[11px] block">{o.customerPhone}</span>
                         </td>
                         <td class="p-3">
-                          <span class="uppercase font-semibold text-[11px] block text-[#0A0A0A]">
+                          <span class="uppercase font-semibold text-[11px] block text-[#1C1917]">
                             {o.fulfillment}
                           </span>
                           <Show when={o.latitude && o.longitude}>
@@ -228,24 +239,24 @@ export default function AdminOrdersPage() {
                               href={`https://maps.google.com/?q=${o.latitude},${o.longitude}`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              class="inline-flex items-center gap-1 text-[11px] text-[#6366F1] hover:underline font-medium mt-0.5"
+                              class="inline-flex items-center gap-1 text-[11px] text-[#CE2738] hover:underline font-semibold mt-0.5"
                               title="Buka titik koordinat di Google Maps"
                             >
-                              <MapPin size={11} class="text-[#6366F1]" />
+                              <MapPin size={11} class="text-[#CE2738]" />
                               <span>Peta GPS</span>
                               <ExternalLink size={10} />
                             </a>
                           </Show>
                         </td>
                         <td class="p-3">
-                          <span class="font-semibold text-[#0A0A0A] block">
+                          <span class="font-bold font-heading text-[#1C1917] block">
                             {formatRupiah(o.total)}
                           </span>
                           <Show
                             when={o.paymentProofPath}
                             fallback={
                               <Show when={o.fulfillment === "cod"}>
-                                <span class="text-[10px] text-[#9C9C9C] block mt-0.5">
+                                <span class="text-[10px] text-[#8D7E73] block mt-0.5">
                                   Bayar COD
                                 </span>
                               </Show>
@@ -255,10 +266,10 @@ export default function AdminOrdersPage() {
                               href={o.paymentProofPath}
                               target="_blank"
                               rel="noopener noreferrer"
-                              class="inline-flex items-center gap-1 text-[11px] text-[#6366F1] hover:underline font-medium mt-0.5"
+                              class="inline-flex items-center gap-1 text-[11px] text-[#CE2738] hover:underline font-semibold mt-0.5"
                               title="Buka foto bukti transaksi / pembayaran"
                             >
-                              <Receipt size={11} class="text-[#6366F1]" />
+                              <Receipt size={11} class="text-[#CE2738]" />
                               <span>Bukti Bayar</span>
                               <ExternalLink size={10} />
                             </a>
@@ -267,7 +278,7 @@ export default function AdminOrdersPage() {
                         <td class="p-3">
                           <OrderStatusBadge status={o.status} />
                         </td>
-                        <td class="p-3 text-[#6B6B6B] text-[11px]">
+                        <td class="p-3 text-[#8D7E73] text-[11px]">
                           {formatTanggalWIB(o.createdAt)}
                         </td>
                         <td class="p-3 text-right">
@@ -278,7 +289,7 @@ export default function AdminOrdersPage() {
                                 type="button"
                                 disabled={quickUpdatingId() === o.id}
                                 onClick={() => handleQuickUpdate(o.id, "dikonfirmasi")}
-                                class="px-2.5 py-1 rounded bg-[#10B981] hover:bg-[#059669] text-white text-[11px] font-semibold flex items-center gap-1 shadow-2xs transition cursor-pointer disabled:opacity-50"
+                                class="px-2.5 py-1 rounded bg-[#20970B] hover:bg-[#15803D] text-white text-[11px] font-semibold flex items-center gap-1 shadow-2xs transition cursor-pointer disabled:opacity-50"
                                 title="1-Klik Konfirmasi Pembayaran Sah"
                               >
                                 <Show when={quickUpdatingId() === o.id} fallback={<CheckCircle size={12} />}>
@@ -292,7 +303,7 @@ export default function AdminOrdersPage() {
                                 type="button"
                                 disabled={quickUpdatingId() === o.id}
                                 onClick={() => handleQuickUpdate(o.id, "diproduksi")}
-                                class="px-2.5 py-1 rounded bg-[#6366F1] hover:bg-[#4F46E5] text-white text-[11px] font-semibold flex items-center gap-1 shadow-2xs transition cursor-pointer disabled:opacity-50"
+                                class="px-2.5 py-1 rounded bg-[#CE2738] hover:bg-[#B51F2F] text-white text-[11px] font-semibold flex items-center gap-1 shadow-2xs transition cursor-pointer disabled:opacity-50"
                                 title="1-Klik Mulai Masak / Produksi"
                               >
                                 <Show when={quickUpdatingId() === o.id} fallback={<ChefHat size={12} />}>
@@ -348,30 +359,30 @@ export default function AdminOrdersPage() {
           >
             <div class="space-y-4 text-xs">
               {/* Ringkasan */}
-              <div class="p-3 rounded-lg bg-[#FAFAFA] border border-[#E8E8EC] space-y-1.5">
+              <div class="p-3.5 rounded-2xl bg-[#FAF7F2] border border-[#E8DFD5] space-y-1.5">
                 <div class="flex justify-between">
-                  <span class="text-[#6B6B6B]">Pemesan:</span>
-                  <span class="font-semibold text-[#0A0A0A]">
+                  <span class="text-[#6C5F57]">Pemesan:</span>
+                  <span class="font-semibold text-[#1C1917]">
                     {activeOrder()?.customerName} ({activeOrder()?.customerPhone})
                   </span>
                 </div>
                 <div class="flex justify-between">
-                  <span class="text-[#6B6B6B]">Pengiriman:</span>
-                  <span class="font-semibold uppercase text-[#0A0A0A]">
+                  <span class="text-[#6C5F57]">Pengiriman:</span>
+                  <span class="font-semibold uppercase text-[#1C1917]">
                     {activeOrder()?.fulfillment}
                   </span>
                 </div>
                 <Show when={activeOrder()?.addressText}>
                   <div class="flex justify-between">
-                    <span class="text-[#6B6B6B]">Alamat:</span>
-                    <span class="text-[#0A0A0A] text-right font-medium max-w-xs">
+                    <span class="text-[#6C5F57]">Alamat:</span>
+                    <span class="text-[#1C1917] text-right font-medium max-w-xs">
                       {activeOrder()?.addressText}
                     </span>
                   </div>
                 </Show>
-                <div class="flex justify-between font-bold pt-1 border-t border-[#E8E8EC]">
+                <div class="flex justify-between font-bold pt-1 border-t border-[#E8DFD5]">
                   <span>Total Tagihan:</span>
-                  <span class="font-bold text-[#6366F1] text-sm">
+                  <span class="font-bold text-[#CE2738] text-sm">
                     {formatRupiah(activeOrder()?.total || 0)}
                   </span>
                 </div>
@@ -379,13 +390,13 @@ export default function AdminOrdersPage() {
 
               {/* Rincian Titik Koordinat GPS Lengkap (Requirement 1) */}
               <Show when={activeOrder()?.latitude && activeOrder()?.longitude}>
-                <div class="p-3.5 rounded-xl bg-[#6366F1]/5 border border-[#6366F1]/20 space-y-2">
+                <div class="p-3.5 rounded-2xl bg-[#CE2738]/5 border border-[#CE2738]/20 space-y-2">
                   <div class="flex items-center justify-between">
-                    <span class="font-semibold text-xs text-[#0A0A0A] flex items-center gap-1.5">
-                      <MapPin size={15} class="text-[#6366F1]" />
+                    <span class="font-semibold text-xs text-[#1C1917] flex items-center gap-1.5">
+                      <MapPin size={15} class="text-[#CE2738]" />
                       <span>Informasi Titik Koordinat GPS Pemesan</span>
                     </span>
-                    <span class="text-[10px] bg-[#6366F1]/10 text-[#6366F1] font-semibold px-2 py-0.5 rounded-full">
+                    <span class="text-[10px] bg-[#CE2738]/10 text-[#CE2738] font-semibold px-2 py-0.5 rounded-full">
                       {activeOrder()?.locationSource === "gps_device"
                         ? "Deteksi GPS Otomatis"
                         : activeOrder()?.locationSource === "maps_pin"
@@ -396,15 +407,15 @@ export default function AdminOrdersPage() {
 
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#4B5563]">
                     <div>
-                      <span class="text-[#6B6B6B] block text-[11px]">Latitude, Longitude:</span>
-                      <span class="font-bold text-[#0A0A0A] select-all">
+                      <span class="text-[#6C5F57] block text-[11px]">Latitude, Longitude:</span>
+                      <span class="font-semibold text-[#1C1917] select-all">
                         {activeOrder()?.latitude}, {activeOrder()?.longitude}
                       </span>
                     </div>
                     <Show when={activeOrder()?.gpsAccuracyM}>
                       <div>
-                        <span class="text-[#6B6B6B] block text-[11px]">Estimasi Akurasi:</span>
-                        <span class="font-medium text-[#0A0A0A]">
+                        <span class="text-[#6C5F57] block text-[11px]">Estimasi Akurasi:</span>
+                        <span class="font-medium text-[#1C1917]">
                           ±{activeOrder()?.gpsAccuracyM} meter dari perangkat
                         </span>
                       </div>
@@ -412,9 +423,9 @@ export default function AdminOrdersPage() {
                   </div>
 
                   <Show when={activeOrder()?.addressNote}>
-                    <div class="text-xs pt-1 border-t border-[#6366F1]/10">
-                      <span class="text-[#6B6B6B]">Patokan / Catatan Alamat:</span>
-                      <span class="font-medium text-[#0A0A0A] block">{activeOrder()?.addressNote}</span>
+                    <div class="text-xs pt-1 border-t border-[#CE2738]/10">
+                      <span class="text-[#6C5F57]">Patokan / Catatan Alamat:</span>
+                      <span class="font-medium text-[#1C1917] block">{activeOrder()?.addressNote}</span>
                     </div>
                   </Show>
 
@@ -435,22 +446,22 @@ export default function AdminOrdersPage() {
 
               {/* Rincian Menu Pesanan Pelanggan */}
               <Show when={activeOrder()?.items && activeOrder()?.items.length > 0}>
-                <div class="p-3.5 rounded-xl bg-white border border-[#E8E8EC] space-y-2">
-                  <span class="font-semibold text-xs text-[#0A0A0A] block">
+                <div class="p-3.5 rounded-2xl bg-[#FFFDF9] border border-[#E8DFD5] space-y-2">
+                  <span class="font-semibold text-xs text-[#1C1917] block">
                     Menu yang Dipesan ({activeOrder()?.items.length} item):
                   </span>
-                  <div class="divide-y divide-[#F4F4F6]">
+                  <div class="divide-y divide-[#F8ECD5]">
                     <For each={activeOrder()?.items}>
                       {(item: any) => (
                         <div class="py-1.5 flex items-center justify-between text-xs">
                           <div>
-                            <span class="font-medium text-[#0A0A0A] block">{item.name}</span>
-                            <span class="text-[11px] text-[#6B6B6B]">
+                            <span class="font-medium text-[#1C1917] block">{item.name}</span>
+                            <span class="text-[11px] text-[#6E5D53]">
                               {item.qty} porsi × {formatRupiah(item.price)}
                               {item.notes ? ` • Catatan: ${item.notes}` : ""}
                             </span>
                           </div>
-                          <span class="font-semibold text-[#0A0A0A]">{formatRupiah(item.subtotal)}</span>
+                          <span class="font-semibold text-[#1C1917]">{formatRupiah(item.subtotal)}</span>
                         </div>
                       )}
                     </For>
@@ -460,27 +471,27 @@ export default function AdminOrdersPage() {
 
               {/* Bukti Bayar Thumbnail */}
               <Show when={activeOrder()?.paymentProofPath}>
-                <div class="p-3 rounded-lg bg-white border border-[#E8E8EC] space-y-2">
-                  <span class="font-semibold text-[#0A0A0A] block">
+                <div class="p-3.5 rounded-2xl bg-[#FFFDF9] border border-[#E8DFD5] space-y-2">
+                  <span class="font-semibold text-[#1C1917] block">
                     Foto Bukti Pembayaran:
                   </span>
                   <div class="flex items-center gap-3">
                     <img
                       src={activeOrder()?.paymentProofPath}
                       alt="Bukti Transfer"
-                      class="w-24 h-24 object-cover rounded-lg border border-[#E8E8EC] cursor-pointer hover:opacity-90"
+                      class="w-24 h-24 object-cover rounded-xl border border-[#E8DFD5] cursor-pointer hover:opacity-90"
                       onClick={() => setIsProofZoomed(true)}
                     />
                     <div>
                       <button
                         type="button"
                         onClick={() => setIsProofZoomed(true)}
-                        class="text-[#6366F1] hover:underline flex items-center gap-1 font-medium cursor-pointer"
+                        class="text-[#CE2738] hover:underline flex items-center gap-1 font-semibold cursor-pointer"
                       >
                         <Eye size={13} />
                         <span>Perbesar Foto Bukti</span>
                       </button>
-                      <span class="text-[11px] text-[#6B6B6B] block mt-1">
+                      <span class="text-[11px] text-[#6E5D53] block mt-1">
                         Periksa keaslian nominal dan tanggal transaksi sebelum konfirmasi.
                       </span>
                     </div>

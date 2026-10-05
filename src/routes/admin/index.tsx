@@ -95,13 +95,13 @@ export default function AdminDashboardPage() {
         {/* Quick Shortcuts & Batch Info */}
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Active Batch Card */}
-          <div class="lg:col-span-2 card-surface p-6 bg-white border border-[#E8E8EC] space-y-4">
-            <div class="flex items-center justify-between pb-3 border-b border-[#E8E8EC]">
+          <div class="lg:col-span-2 card-surface p-6 bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl space-y-4 shadow-xs">
+            <div class="flex items-center justify-between pb-3 border-b border-[#E8DFD5]">
               <div>
-                <span class="text-[11px] font-mono uppercase text-[#6B6B6B] block">
+                <span class="text-xs uppercase text-[#6C5F57] block font-semibold">
                   Status Gelombang Pre-Order
                 </span>
-                <h3 class="font-heading font-bold text-base sm:text-lg text-[#0A0A0A]">
+                <h3 class="font-heading font-bold text-base sm:text-lg text-[#1C1917]">
                   {data()?.activeBatch?.title || "Belum Ada Batch Aktif"}
                 </h3>
               </div>
@@ -116,16 +116,16 @@ export default function AdminDashboardPage() {
 
             <Show when={data()?.activeBatch}>
               <div class="space-y-3 text-xs">
-                <div class="flex items-center justify-between text-[#6B6B6B]">
+                <div class="flex items-center justify-between text-[#6C5F57]">
                   <span>Kapasitas Pemesanan Terisi:</span>
-                  <span class="font-mono font-semibold text-[#0A0A0A]">
+                  <span class="font-semibold text-[#1C1917]">
                     {data()!.activeBatch!.quotaUsed} / {data()!.activeBatch!.quotaTotal} slot
                   </span>
                 </div>
 
-                <div class="w-full h-2.5 bg-[#F4F4F6] rounded-full overflow-hidden border border-[#E8E8EC]">
+                <div class="w-full h-2.5 bg-[#E8DFD5] rounded-full overflow-hidden">
                   <div
-                    class="h-full bg-[#6366F1] rounded-full transition-all duration-500"
+                    class="h-full bg-[#CE2738] rounded-full transition-all duration-500"
                     style={{
                       width: `${Math.min(
                         100,
@@ -137,16 +137,16 @@ export default function AdminDashboardPage() {
                   />
                 </div>
 
-                <div class="grid grid-cols-2 gap-2 pt-1 text-[11px] text-[#6B6B6B]">
+                <div class="grid grid-cols-2 gap-2 pt-1 text-xs text-[#6C5F57]">
                   <div>
                     <span>Tutup PO: </span>
-                    <span class="font-medium text-[#0A0A0A]">
+                    <span class="font-medium text-[#1C1917]">
                       {formatTanggalWIB(data()!.activeBatch!.orderCloseAt)}
                     </span>
                   </div>
                   <div>
                     <span>Jadwal Pengiriman: </span>
-                    <span class="font-medium text-[#0A0A0A]">
+                    <span class="font-medium text-[#1C1917]">
                       {formatTanggalWIB(data()!.activeBatch!.deliveryDate, { includeTime: false })}
                     </span>
                   </div>
@@ -156,12 +156,12 @@ export default function AdminDashboardPage() {
           </div>
 
           {/* Quick Actions Panel */}
-          <div class="card-surface p-6 bg-white border border-[#E8E8EC] space-y-3 flex flex-col justify-between">
+          <div class="card-surface p-6 bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl space-y-3 flex flex-col justify-between shadow-xs">
             <div>
-              <h3 class="font-heading font-bold text-base text-[#0A0A0A] pb-2 border-b border-[#E8E8EC]">
+              <h3 class="font-heading font-bold text-base text-[#1C1917] pb-2 border-b border-[#E8DFD5]">
                 Aksi Cepat Operasional
               </h3>
-              <p class="text-xs text-[#6B6B6B] mt-2">
+              <p class="text-xs text-[#6C5F57] mt-2">
                 Akses cepat modul harian operasional Mol-Mol Purwokerto.
               </p>
             </div>
@@ -192,13 +192,13 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* Recent Orders Section */}
-        <div class="card-surface p-6 bg-white border border-[#E8E8EC] space-y-4">
-          <div class="flex items-center justify-between pb-3 border-b border-[#E8E8EC]">
+        <div class="card-surface p-6 bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl space-y-4 shadow-xs">
+          <div class="flex items-center justify-between pb-3 border-b border-[#E8DFD5]">
             <div>
-              <h3 class="font-heading font-bold text-lg text-[#0A0A0A]">
+              <h3 class="font-heading font-bold text-lg text-[#1C1917]">
                 Pesanan Pre-Order Terbaru
               </h3>
-              <p class="text-xs text-[#6B6B6B]">
+              <p class="text-xs text-[#6C5F57]">
                 Daftar pesanan pelanggan yang baru saja masuk ke sistem
               </p>
             </div>
@@ -214,7 +214,7 @@ export default function AdminDashboardPage() {
 
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs min-w-[680px]">
-              <thead class="bg-[#FAFAFA] text-[#6B6B6B] border-b border-[#E8E8EC] font-mono uppercase">
+              <thead class="bg-[#FAF7F2] text-[#6C5F57] border-b border-[#E8DFD5] uppercase text-[11px] font-semibold">
                 <tr>
                   <th class="p-3">Kode</th>
                   <th class="p-3">Pemesan</th>
@@ -225,33 +225,33 @@ export default function AdminDashboardPage() {
                   <th class="p-3 text-right">Aksi</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-[#E8E8EC]">
+              <tbody class="divide-y divide-[#E8DFD5]">
                 <For
                   each={data()?.recentOrders}
                   fallback={
                     <tr>
-                      <td colspan={7} class="p-6 text-center text-[#9C9C9C]">
+                      <td colspan={7} class="p-6 text-center text-[#8D7E73]">
                         Belum ada pesanan yang masuk.
                       </td>
                     </tr>
                   }
                 >
                   {(order) => (
-                    <tr class="hover:bg-[#FAFAFA] transition">
-                      <td class="p-3 font-mono font-bold text-[#0A0A0A]">
+                    <tr class="hover:bg-[#FAF7F2]/60 transition">
+                      <td class="p-3 font-bold text-[#CE2738]">
                         {order.shortCode}
                       </td>
                       <td class="p-3">
-                        <span class="font-semibold text-[#0A0A0A] block">
+                        <span class="font-semibold text-[#1C1917] block">
                           {order.customerName}
                         </span>
-                        <span class="text-[#6B6B6B] font-mono">{order.customerPhone}</span>
+                        <span class="text-[#6C5F57] text-[11px]">{order.customerPhone}</span>
                       </td>
                       <td class="p-3 uppercase font-medium">
                         {order.fulfillment}
                       </td>
                       <td class="p-3">
-                        <span class="font-mono font-semibold text-[#0A0A0A] block">
+                        <span class="font-bold font-heading text-[#1C1917] block text-xs sm:text-sm">
                           {formatRupiah(order.total)}
                         </span>
                         <Show when={order.paymentProofPath}>
@@ -259,10 +259,10 @@ export default function AdminDashboardPage() {
                             href={order.paymentProofPath}
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="inline-flex items-center gap-1 text-[11px] text-[#6366F1] hover:underline font-medium mt-0.5"
+                            class="inline-flex items-center gap-1 text-[11px] text-[#CE2738] hover:underline font-semibold mt-0.5"
                             title="Buka bukti pembayaran"
                           >
-                            <Receipt size={11} class="text-[#6366F1]" />
+                            <Receipt size={11} class="text-[#CE2738]" />
                             <span>Bukti Bayar</span>
                             <ExternalLink size={10} />
                           </a>
@@ -271,14 +271,14 @@ export default function AdminDashboardPage() {
                       <td class="p-3">
                         <OrderStatusBadge status={order.status} />
                       </td>
-                      <td class="p-3 font-mono text-[#9C9C9C]">
+                      <td class="p-3 text-[#8D7E73] text-[11px]">
                         {formatTanggalWIB(order.createdAt)}
                       </td>
                       <td class="p-3 text-right">
                         <A
                           href={`/track/${order.shortCode}`}
                           target="_blank"
-                          class="text-[#6366F1] hover:underline inline-flex items-center gap-1 font-medium"
+                          class="text-[#CE2738] hover:underline inline-flex items-center gap-1 font-semibold"
                         >
                           <span>Detail</span>
                           <ExternalLink size={12} />

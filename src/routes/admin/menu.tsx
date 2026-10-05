@@ -265,10 +265,10 @@ export default function AdminMenuPage() {
         </div>
 
         {/* Menu Items Table */}
-        <div class="card-surface bg-white border border-[#E8E8EC] overflow-hidden">
+        <div class="card-surface bg-[#FFFDF9] border border-[#E8DFD5] overflow-hidden rounded-2xl">
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs min-w-[640px]">
-              <thead class="bg-[#FAFAFA] text-[#6B6B6B] border-b border-[#E8E8EC] font-mono uppercase">
+              <thead class="bg-[#FAF7F2] text-[#6C5F57] border-b border-[#E8DFD5] text-[11px] font-semibold uppercase">
               <tr>
                 <th class="p-3">Foto</th>
                 <th class="p-3">SKU</th>
@@ -305,12 +305,12 @@ export default function AdminMenuPage() {
                           <img
                             src={m.imagePath || m.images[0]}
                             alt={m.name}
-                            class="w-11 h-11 object-cover rounded border border-[#E8E8EC]"
+                            class="w-11 h-11 object-cover rounded-xl border border-[#E8DFD5]"
                           />
                         </Show>
                         <Show when={m.images && m.images.length > 1}>
                           <span
-                            class="absolute -bottom-1 -right-1 bg-[#6366F1] text-white text-[9px] font-bold px-1.5 py-0.2 rounded-full shadow-xs"
+                            class="absolute -bottom-1 -right-1 bg-[#CE2738] text-white text-[9px] font-bold px-1.5 py-0.2 rounded-full shadow-xs"
                             title={`${m.images.length} foto`}
                           >
                             {m.images.length}
@@ -318,12 +318,12 @@ export default function AdminMenuPage() {
                         </Show>
                       </div>
                     </td>
-                    <td class="p-3 font-mono text-[#6B6B6B]">{m.sku}</td>
-                    <td class="p-3 font-semibold text-[#0A0A0A]">{m.name}</td>
-                    <td class="p-3 font-mono font-bold text-[#0A0A0A]">
+                    <td class="p-3 font-semibold text-xs text-[#6C5F57]">{m.sku}</td>
+                    <td class="p-3 font-semibold text-[#1C1917]">{m.name}</td>
+                    <td class="p-3 font-bold font-heading text-[#1C1917]">
                       {formatRupiah(m.basePrice)}
                     </td>
-                    <td class="p-3 font-mono text-[#6B6B6B]">{m.weightGrams}g</td>
+                    <td class="p-3 text-xs text-[#6C5F57] font-medium">{m.weightGrams}g</td>
                     <td class="p-3">
                       <Badge variant={m.isActive ? "success" : "default"}>
                         {m.isActive ? "Aktif" : "Non-aktif"}
@@ -334,7 +334,7 @@ export default function AdminMenuPage() {
                         <button
                           type="button"
                           onClick={() => openEditMenu(m)}
-                          class="text-[#6366F1] hover:bg-[#6366F1]/10 p-1.5 rounded transition cursor-pointer"
+                          class="text-[#CE2738] hover:bg-[#CE2738]/10 p-1.5 rounded-lg transition cursor-pointer"
                           title="Edit Menu"
                         >
                           <Edit3 size={14} />
@@ -342,7 +342,7 @@ export default function AdminMenuPage() {
                         <button
                           type="button"
                           onClick={() => confirmDeleteMenu(m.id, m.name)}
-                          class="text-[#EF4444] hover:bg-[#FFF5F5] p-1.5 rounded transition cursor-pointer"
+                          class="text-[#CE2738] hover:bg-[#FFF5F5] p-1.5 rounded-lg transition cursor-pointer"
                           title="Hapus Menu"
                         >
                           <Trash2 size={14} />
@@ -366,14 +366,14 @@ export default function AdminMenuPage() {
         >
           <form onSubmit={handleSaveMenu} class="space-y-4 text-xs">
             {/* Step Navigation Tabs */}
-            <div class="grid grid-cols-3 gap-1.5 border-b border-[#E8E8EC] pb-3 text-[11px]">
+            <div class="grid grid-cols-3 gap-1.5 border-b border-[#E8DFD5] pb-3 text-[11px]">
               <button
                 type="button"
                 onClick={() => setMenuStep(1)}
-                class={`py-1.5 px-2 rounded-lg font-semibold transition text-center cursor-pointer ${
+                class={`py-1.5 px-2 rounded-xl font-semibold transition text-center cursor-pointer ${
                   menuStep() === 1
-                    ? "bg-[#6366F1] text-white shadow-2xs"
-                    : "bg-[#F4F4F6] text-[#6B6B6B] hover:text-[#0A0A0A]"
+                    ? "bg-[#CE2738] text-white shadow-2xs"
+                    : "bg-[#F3ECE2] text-[#6C5F57] hover:text-[#1C1917]"
                 }`}
               >
                 1. Info Produk
@@ -381,10 +381,10 @@ export default function AdminMenuPage() {
               <button
                 type="button"
                 onClick={() => setMenuStep(2)}
-                class={`py-1.5 px-2 rounded-lg font-semibold transition text-center cursor-pointer ${
+                class={`py-1.5 px-2 rounded-xl font-semibold transition text-center cursor-pointer ${
                   menuStep() === 2
-                    ? "bg-[#6366F1] text-white shadow-2xs"
-                    : "bg-[#F4F4F6] text-[#6B6B6B] hover:text-[#0A0A0A]"
+                    ? "bg-[#CE2738] text-white shadow-2xs"
+                    : "bg-[#F3ECE2] text-[#6C5F57] hover:text-[#1C1917]"
                 }`}
               >
                 2. Harga & Porsi
@@ -392,10 +392,10 @@ export default function AdminMenuPage() {
               <button
                 type="button"
                 onClick={() => setMenuStep(3)}
-                class={`py-1.5 px-2 rounded-lg font-semibold transition text-center cursor-pointer ${
+                class={`py-1.5 px-2 rounded-xl font-semibold transition text-center cursor-pointer ${
                   menuStep() === 3
-                    ? "bg-[#6366F1] text-white shadow-2xs"
-                    : "bg-[#F4F4F6] text-[#6B6B6B] hover:text-[#0A0A0A]"
+                    ? "bg-[#CE2738] text-white shadow-2xs"
+                    : "bg-[#F3ECE2] text-[#6C5F57] hover:text-[#1C1917]"
                 }`}
               >
                 3. Foto & Status ({images().length}/4)
@@ -477,15 +477,15 @@ export default function AdminMenuPage() {
             {/* STEP 3: Foto Menu & Status */}
             <Show when={menuStep() === 3}>
               <div class="space-y-3.5 animate-in fade-in duration-150">
-                <div class="flex items-center gap-2 p-2.5 rounded-lg border border-[#E8E8EC] bg-[#FAFAFA]">
+                <div class="flex items-center gap-2 p-2.5 rounded-xl border border-[#E8DFD5] bg-[#FAF7F2]">
                   <input
                     type="checkbox"
                     id="menuActive"
                     checked={isActive()}
                     onChange={(e) => setIsActive(e.currentTarget.checked)}
-                    class="rounded text-[#6366F1] cursor-pointer"
+                    class="rounded text-[#CE2738] cursor-pointer"
                   />
-                  <label for="menuActive" class="text-xs font-semibold text-[#0A0A0A] cursor-pointer">
+                  <label for="menuActive" class="text-xs font-semibold text-[#1C1917] cursor-pointer">
                     Menu Aktif & Dapat Ditampilkan di Katalog
                   </label>
                 </div>
@@ -493,10 +493,10 @@ export default function AdminMenuPage() {
                 {/* Foto Menu Upload (Maksimal 4 foto, batas 4 MB) */}
                 <div class="space-y-2">
                   <div class="flex items-center justify-between">
-                    <label class="block font-semibold text-[#0A0A0A]">
+                    <label class="block font-semibold text-[#1C1917]">
                       Foto Menu ({images().length}/4)
                     </label>
-                    <span class="text-[11px] text-[#6B6B6B]">Maks 4 foto, maks 4 MB/foto</span>
+                    <span class="text-[11px] text-[#6C5F57]">Maks 4 foto, maks 4 MB/foto</span>
                   </div>
 
                   {/* Upload Input & Status */}
@@ -507,10 +507,10 @@ export default function AdminMenuPage() {
                       accept="image/jpeg,image/png,image/webp"
                       disabled={images().length >= 4 || isUploadingImage()}
                       onChange={handleImageUpload}
-                      class="text-xs file:mr-2 file:py-1 file:px-2.5 file:rounded file:border-0 file:text-xs file:bg-[#6366F1]/10 file:text-[#6366F1] cursor-pointer disabled:opacity-50"
+                      class="text-xs file:mr-2 file:py-1 file:px-2.5 file:rounded-full file:border-0 file:text-xs file:bg-[#CE2738]/10 file:text-[#CE2738] cursor-pointer disabled:opacity-50"
                     />
                     <Show when={isUploadingImage()}>
-                      <div class="flex items-center gap-1.5 text-xs text-[#6366F1]">
+                      <div class="flex items-center gap-1.5 text-xs text-[#CE2738]">
                         <Loader2 size={14} class="animate-spin" />
                         <span>Mengunggah...</span>
                       </div>
@@ -522,15 +522,15 @@ export default function AdminMenuPage() {
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
                       <For each={images()}>
                         {(img, idx) => (
-                          <div class="relative group rounded border border-[#E8E8EC] overflow-hidden bg-[#FAFAFA] flex flex-col items-center">
+                          <div class="relative group rounded-xl border border-[#E8DFD5] overflow-hidden bg-[#FAF7F2] flex flex-col items-center">
                             <img
                               src={img}
                               alt={`Foto ${idx() + 1}`}
                               class="w-full h-20 object-cover"
                             />
-                            <div class="w-full py-0.5 text-center text-[10px] font-medium border-t border-[#E8E8EC] bg-white">
+                            <div class="w-full py-0.5 text-center text-[10px] font-medium border-t border-[#E8DFD5] bg-[#FFFDF9]">
                               <Show when={idx() === 0} fallback={<span>Foto #{idx() + 1}</span>}>
-                                <span class="text-[#6366F1] font-bold">Utama</span>
+                                <span class="text-[#CE2738] font-bold">Utama</span>
                               </Show>
                             </div>
 
