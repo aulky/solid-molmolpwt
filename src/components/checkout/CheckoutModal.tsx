@@ -189,40 +189,40 @@ export function CheckoutModal(props: CheckoutModalProps) {
         fallback={
           /* SUCCESS STATE */
           <div class="py-4 space-y-5 text-center">
-            <div class="w-16 h-16 bg-[#10B981]/15 text-[#10B981] rounded-full flex items-center justify-center mx-auto mb-2">
+            <div class="w-16 h-16 bg-[#20970B]/15 text-[#20970B] rounded-full flex items-center justify-center mx-auto mb-2">
               <CheckCircle2 size={36} />
             </div>
 
             <div>
-              <h4 class="font-heading font-bold text-xl text-[#0A0A0A]">
+              <h4 class="font-heading font-bold text-xl text-[#1C1917]">
                 Terima Kasih, {successOrder()?.customerName}!
               </h4>
-              <p class="text-xs sm:text-sm text-[#6B6B6B] mt-1">
+              <p class="text-xs sm:text-sm text-[#6E5D53] mt-1">
                 Pesanan Pre-Order Anda telah tersimpan dan sedang menunggu verifikasi admin.
               </p>
             </div>
 
             {/* Kode Pesanan Box */}
-            <div class="p-4 bg-[#FAFAFA] border border-[#E8E8EC] rounded-xl text-left space-y-2">
+            <div class="p-4 bg-[#FAF7F2] border border-[#E8DFD5] rounded-2xl text-left space-y-2">
               <div class="flex items-center justify-between">
-                <span class="text-xs font-mono text-[#6B6B6B] uppercase tracking-wider">
+                <span class="text-xs text-[#6C5F57] uppercase tracking-wider font-semibold">
                   Kode Pesanan (Short Code):
                 </span>
                 <button
                   type="button"
                   onClick={() => handleCopyCode(successOrder()!.shortCode)}
-                  class="text-xs text-[#6366F1] hover:underline flex items-center gap-1 cursor-pointer"
+                  class="text-xs text-[#CE2738] hover:underline flex items-center gap-1 cursor-pointer font-semibold"
                 >
                   <Copy size={12} />
                   <span>{copied() ? "Tersalin!" : "Salin"}</span>
                 </button>
               </div>
 
-              <div class="text-2xl font-mono font-bold text-[#0A0A0A]">
+              <div class="text-2xl font-heading font-bold tracking-wide text-[#CE2738]">
                 {successOrder()?.shortCode}
               </div>
 
-              <div class="text-[11px] font-mono text-[#9C9C9C] break-all pt-1 border-t border-[#E8E8EC]">
+              <div class="text-[11px] text-[#8D7E73] break-all pt-1 border-t border-[#E8DFD5]">
                 Order ID: {successOrder()?.orderId}
               </div>
             </div>
@@ -253,17 +253,17 @@ export function CheckoutModal(props: CheckoutModalProps) {
       >
         <form onSubmit={handleSubmit} class="space-y-4">
           {/* Stepper Header Bar */}
-          <div class="flex items-center justify-between pb-3 border-b border-[#E8E8EC] text-xs">
+          <div class="flex items-center justify-between pb-3 border-b border-[#E8DFD5] text-xs">
             <button
               type="button"
               onClick={() => setCurrentStep(1)}
               class={`flex items-center gap-2 font-medium cursor-pointer transition ${
-                currentStep() === 1 ? "text-[#6366F1] font-semibold" : "text-[#10B981]"
+                currentStep() === 1 ? "text-[#CE2738] font-semibold" : "text-[#1B872A]"
               }`}
             >
               <span
                 class={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                  currentStep() === 1 ? "bg-[#6366F1] text-white" : "bg-[#10B981] text-white"
+                  currentStep() === 1 ? "bg-[#CE2738] text-white" : "bg-[#1B872A] text-white"
                 }`}
               >
                 1
@@ -271,10 +271,10 @@ export function CheckoutModal(props: CheckoutModalProps) {
               <span>1. Data Pemesan</span>
             </button>
 
-            <div class="h-0.5 flex-1 mx-3 bg-[#E8E8EC]">
+            <div class="h-0.5 flex-1 mx-3 bg-[#E8DFD5]">
               <div
                 class={`h-full transition-all duration-300 ${
-                  currentStep() === 2 ? "bg-[#6366F1]" : "bg-transparent"
+                  currentStep() === 2 ? "bg-[#CE2738]" : "bg-transparent"
                 }`}
               />
             </div>
@@ -283,12 +283,12 @@ export function CheckoutModal(props: CheckoutModalProps) {
               type="button"
               onClick={goToStep2}
               class={`flex items-center gap-2 font-medium cursor-pointer transition ${
-                currentStep() === 2 ? "text-[#6366F1] font-semibold" : "text-[#9C9C9C]"
+                currentStep() === 2 ? "text-[#CE2738] font-semibold" : "text-[#8D7E73]"
               }`}
             >
               <span
                 class={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                  currentStep() === 2 ? "bg-[#6366F1] text-white" : "bg-[#E8E8EC] text-[#6B6B6B]"
+                  currentStep() === 2 ? "bg-[#CE2738] text-white" : "bg-[#E8DFD5] text-[#6C5F57]"
                 }`}
               >
                 2
@@ -301,13 +301,13 @@ export function CheckoutModal(props: CheckoutModalProps) {
           <Show when={currentStep() === 1}>
             <div class="space-y-4">
               {/* Ringkasan Item Pesanan */}
-              <div class="p-3 bg-[#FAFAFA] rounded-xl border border-[#E8E8EC] space-y-2 max-h-40 overflow-y-auto">
-                <div class="text-xs font-semibold text-[#0A0A0A] flex items-center justify-between pb-1 border-b border-[#E8E8EC]">
+              <div class="p-3 bg-[#FAF7F2] rounded-2xl border border-[#E8DFD5] space-y-2 max-h-40 overflow-y-auto">
+                <div class="text-xs font-semibold text-[#1C1917] flex items-center justify-between pb-1 border-b border-[#E8DFD5]">
                   <div class="flex items-center gap-1.5">
-                    <ShoppingBag size={14} class="text-[#6366F1]" />
+                    <ShoppingBag size={14} class="text-[#CE2738]" />
                     <span>Daftar Menu ({props.cartItems.length} item)</span>
                   </div>
-                  <span class="font-mono text-[11px] text-[#6366F1] font-bold">
+                  <span class="text-[11px] text-[#CE2738] font-bold">
                     Subtotal: {formatRupiah(pricing().subtotal)}
                   </span>
                 </div>
@@ -315,10 +315,10 @@ export function CheckoutModal(props: CheckoutModalProps) {
                 <For each={props.cartItems}>
                   {(ci) => (
                     <div class="flex items-center justify-between text-xs py-0.5">
-                      <span class="text-[#0A0A0A] font-medium">
-                        {ci.product.name} <span class="text-[#6B6B6B]">x{ci.qty}</span>
+                      <span class="text-[#1C1917] font-medium">
+                        {ci.product.name} <span class="text-[#6C5F57]">x{ci.qty}</span>
                       </span>
-                      <span class="font-mono text-[#0A0A0A]">
+                      <span class="font-semibold text-[#1C1917]">
                         {formatRupiah(ci.product.effectivePrice * ci.qty)}
                       </span>
                     </div>
@@ -329,8 +329,8 @@ export function CheckoutModal(props: CheckoutModalProps) {
               {/* Form Input Data Pemesan */}
               <div class="space-y-3">
                 <div>
-                  <label class="block text-xs font-semibold text-[#0A0A0A] mb-1">
-                    Nama Lengkap Pemesan <span class="text-[#EF4444]">*</span>
+                  <label class="block text-xs font-semibold text-[#1C1917] mb-1">
+                    Nama Lengkap Pemesan <span class="text-[#CE2738]">*</span>
                   </label>
                   <input
                     type="text"
@@ -343,8 +343,8 @@ export function CheckoutModal(props: CheckoutModalProps) {
                 </div>
 
                 <div>
-                  <label class="block text-xs font-semibold text-[#0A0A0A] mb-1">
-                    Nomor WhatsApp Aktif <span class="text-[#EF4444]">*</span>
+                  <label class="block text-xs font-semibold text-[#1C1917] mb-1">
+                    Nomor WhatsApp Aktif <span class="text-[#CE2738]">*</span>
                   </label>
                   <input
                     type="tel"
@@ -352,15 +352,15 @@ export function CheckoutModal(props: CheckoutModalProps) {
                     value={customerPhone()}
                     onInput={(e) => setCustomerPhone(e.currentTarget.value)}
                     placeholder="Contoh: 081234567890"
-                    class="input-base text-xs font-mono"
+                    class="input-base text-xs font-medium"
                   />
-                  <span class="text-[11px] text-[#6B6B6B] block mt-1">
+                  <span class="text-[11px] text-[#6C5F57] block mt-1">
                     Tim Mol-Mol akan mengirimkan konfirmasi pesanan ke nomor WhatsApp ini.
                   </span>
                 </div>
 
                 <div>
-                  <label class="block text-xs font-semibold text-[#0A0A0A] mb-1">
+                  <label class="block text-xs font-semibold text-[#1C1917] mb-1">
                     Username Telegram (Opsional)
                   </label>
                   <input
@@ -368,9 +368,9 @@ export function CheckoutModal(props: CheckoutModalProps) {
                     value={customerTelegram()}
                     onInput={(e) => setCustomerTelegram(e.currentTarget.value)}
                     placeholder="@username (opsional)"
-                    class="input-base text-xs font-mono"
+                    class="input-base text-xs font-medium"
                   />
-                  <span class="text-[11px] text-[#6B6B6B] block mt-1">
+                  <span class="text-[11px] text-[#6C5F57] block mt-1">
                     Opsional untuk menerima notifikasi otomatis langsung di bot Telegram.
                   </span>
                 </div>
@@ -385,7 +385,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
               </Show>
 
               {/* Step 1 Actions */}
-              <div class="flex items-center justify-between gap-2 pt-2 border-t border-[#E8E8EC]">
+              <div class="flex items-center justify-between gap-2 pt-2 border-t border-[#E8DFD5]">
                 <button
                   type="button"
                   onClick={props.onClose}
@@ -412,16 +412,16 @@ export function CheckoutModal(props: CheckoutModalProps) {
             <div class="space-y-4">
               {/* Metode Pengantaran */}
               <div class="space-y-2">
-                <label class="block text-xs font-semibold text-[#0A0A0A]">
-                  Pilih Metode Pengambilan / Pengiriman <span class="text-[#EF4444]">*</span>
+                <label class="block text-xs font-semibold text-[#1C1917]">
+                  Pilih Metode Pengambilan / Pengiriman <span class="text-[#CE2738]">*</span>
                 </label>
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                   <label
-                    class={`p-3 rounded-lg border text-xs cursor-pointer flex flex-col justify-between transition ${
+                    class={`p-3 rounded-2xl border text-xs cursor-pointer flex flex-col justify-between transition ${
                       fulfillment() === "pickup"
-                        ? "border-[#6366F1] bg-[#6366F1]/5 text-[#6366F1] font-semibold"
-                        : "border-[#E8E8EC] bg-white text-[#0A0A0A] hover:bg-[#FAFAFA]"
+                        ? "border-[#CE2738] bg-[#CE2738]/5 text-[#CE2738] font-semibold ring-1 ring-[#CE2738]/30"
+                        : "border-[#E8DFD5] bg-[#FFFDF9] text-[#1C1917] hover:bg-[#F3ECE2]"
                     }`}
                   >
                     <input
@@ -433,17 +433,17 @@ export function CheckoutModal(props: CheckoutModalProps) {
                       class="sr-only"
                     />
                     <span>Ambil di Tempat</span>
-                    <span class="text-[11px] font-normal text-[#6B6B6B] mt-1">
+                    <span class="text-[11px] font-normal text-[#6C5F57] mt-1">
                       Gratis • Jam {props.batch?.pickupStart || "13:00"} - {props.batch?.pickupEnd || "17:00"} WIB
                     </span>
                   </label>
 
                   <Show when={props.batch?.allowDelivery ?? true}>
                     <label
-                      class={`p-3 rounded-lg border text-xs cursor-pointer flex flex-col justify-between transition ${
+                      class={`p-3 rounded-2xl border text-xs cursor-pointer flex flex-col justify-between transition ${
                         fulfillment() === "delivery"
-                          ? "border-[#6366F1] bg-[#6366F1]/5 text-[#6366F1] font-semibold"
-                          : "border-[#E8E8EC] bg-white text-[#0A0A0A] hover:bg-[#FAFAFA]"
+                          ? "border-[#CE2738] bg-[#CE2738]/5 text-[#CE2738] font-semibold ring-1 ring-[#CE2738]/30"
+                          : "border-[#E8DFD5] bg-[#FFFDF9] text-[#1C1917] hover:bg-[#F3ECE2]"
                       }`}
                     >
                       <input
@@ -455,7 +455,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
                         class="sr-only"
                       />
                       <span>Diantar Kurir</span>
-                      <span class="text-[11px] font-normal text-[#6B6B6B] mt-1">
+                      <span class="text-[11px] font-normal text-[#6C5F57] mt-1">
                         Area Purwokerto & Sekitarnya
                       </span>
                     </label>
@@ -463,10 +463,10 @@ export function CheckoutModal(props: CheckoutModalProps) {
 
                   <Show when={props.batch?.allowCod ?? false}>
                     <label
-                      class={`p-3 rounded-lg border text-xs cursor-pointer flex flex-col justify-between transition ${
+                      class={`p-3 rounded-2xl border text-xs cursor-pointer flex flex-col justify-between transition ${
                         fulfillment() === "cod"
-                          ? "border-[#6366F1] bg-[#6366F1]/5 text-[#6366F1] font-semibold"
-                          : "border-[#E8E8EC] bg-white text-[#0A0A0A] hover:bg-[#FAFAFA]"
+                          ? "border-[#CE2738] bg-[#CE2738]/5 text-[#CE2738] font-semibold ring-1 ring-[#CE2738]/30"
+                          : "border-[#E8DFD5] bg-[#FFFDF9] text-[#1C1917] hover:bg-[#F3ECE2]"
                       }`}
                     >
                       <input
@@ -478,7 +478,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
                         class="sr-only"
                       />
                       <span>COD (Bayar di Tempat)</span>
-                      <span class="text-[11px] font-normal text-[#6B6B6B] mt-1">
+                      <span class="text-[11px] font-normal text-[#6C5F57] mt-1">
                         Bayar saat kurir tiba
                       </span>
                     </label>
@@ -488,12 +488,12 @@ export function CheckoutModal(props: CheckoutModalProps) {
 
               {/* Info Titik Pengambilan Mandiri bila Pickup */}
               <Show when={fulfillment() === "pickup"}>
-                <div class="p-3.5 rounded-lg border border-[#E8E8EC] bg-[#FAFAFA] space-y-1.5 text-xs">
-                  <div class="flex items-center gap-1.5 font-semibold text-[#0A0A0A]">
-                    <MapPin size={15} class="text-[#6366F1]" />
+                <div class="p-3.5 rounded-2xl border border-[#E8DFD5] bg-[#FAF7F2] space-y-1.5 text-xs">
+                  <div class="flex items-center gap-1.5 font-semibold text-[#1C1917]">
+                    <MapPin size={15} class="text-[#CE2738]" />
                     <span>Lokasi Pengambilan Mandiri (Outlet Toko):</span>
                   </div>
-                  <p class="text-[#0A0A0A] font-medium leading-relaxed pl-5">
+                  <p class="text-[#1C1917] font-medium leading-relaxed pl-5">
                     {props.storeSettings.pickupAddress ||
                       "Jl. Prof. Dr. Suharso No. 45, Arcawinangun, Purwokerto Timur"}
                   </p>
@@ -511,7 +511,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
                         }
                         target="_blank"
                         rel="noreferrer"
-                        class="text-[#6366F1] hover:underline inline-flex items-center gap-1 font-mono text-[11px]"
+                        class="text-[#CE2738] hover:underline inline-flex items-center gap-1 text-xs font-medium"
                       >
                         <span>Buka Titik Outlet di Google Maps</span>
                         <ExternalLink size={12} />
@@ -525,8 +525,8 @@ export function CheckoutModal(props: CheckoutModalProps) {
               <Show when={fulfillment() !== "pickup"}>
                 <div class="space-y-3 pt-1">
                   <div>
-                    <label class="block text-xs font-semibold text-[#0A0A0A] mb-1">
-                      Alamat Lengkap Pengiriman <span class="text-[#EF4444]">*</span>
+                    <label class="block text-xs font-semibold text-[#1C1917] mb-1">
+                      Alamat Lengkap Pengiriman <span class="text-[#CE2738]">*</span>
                     </label>
                     <textarea
                       required
@@ -539,7 +539,7 @@ export function CheckoutModal(props: CheckoutModalProps) {
                   </div>
 
                   <div>
-                    <label class="block text-xs font-semibold text-[#0A0A0A] mb-1">
+                    <label class="block text-xs font-semibold text-[#1C1917] mb-1">
                       Patokan / Catatan Alamat (Opsional)
                     </label>
                     <input
@@ -563,18 +563,18 @@ export function CheckoutModal(props: CheckoutModalProps) {
               {/* Metode Pembayaran & Upload Bukti (kecuali COD) */}
               <Show when={fulfillment() !== "cod"}>
                 <div class="space-y-3 pt-1">
-                  <label class="block text-xs font-semibold text-[#0A0A0A]">
-                    Pilihan Pembayaran <span class="text-[#EF4444]">*</span>
+                  <label class="block text-xs font-semibold text-[#1C1917]">
+                    Pilihan Pembayaran <span class="text-[#CE2738]">*</span>
                   </label>
 
                   <div class="grid grid-cols-2 gap-2">
                     <button
                       type="button"
                       onClick={() => setPaymentMethod("qris")}
-                      class={`p-2.5 rounded-lg border text-xs font-medium cursor-pointer transition ${
+                      class={`p-2.5 rounded-xl border text-xs font-medium cursor-pointer transition ${
                         paymentMethod() === "qris"
-                          ? "border-[#6366F1] bg-[#6366F1]/10 text-[#6366F1]"
-                          : "border-[#E8E8EC] bg-white text-[#0A0A0A]"
+                          ? "border-[#CE2738] bg-[#CE2738]/10 text-[#CE2738] font-semibold"
+                          : "border-[#E8DFD5] bg-[#FFFDF9] text-[#1C1917] hover:bg-[#F3ECE2]"
                       }`}
                     >
                       QRIS (Scan All Bank / E-Wallet)
@@ -583,10 +583,10 @@ export function CheckoutModal(props: CheckoutModalProps) {
                     <button
                       type="button"
                       onClick={() => setPaymentMethod("transfer")}
-                      class={`p-2.5 rounded-lg border text-xs font-medium cursor-pointer transition ${
+                      class={`p-2.5 rounded-xl border text-xs font-medium cursor-pointer transition ${
                         paymentMethod() === "transfer"
-                          ? "border-[#6366F1] bg-[#6366F1]/10 text-[#6366F1]"
-                          : "border-[#E8E8EC] bg-white text-[#0A0A0A]"
+                          ? "border-[#CE2738] bg-[#CE2738]/10 text-[#CE2738] font-semibold"
+                          : "border-[#E8DFD5] bg-[#FFFDF9] text-[#1C1917] hover:bg-[#F3ECE2]"
                       }`}
                     >
                       Transfer Bank ({props.storeSettings.bankName || "BCA"})
@@ -610,26 +610,26 @@ export function CheckoutModal(props: CheckoutModalProps) {
               </Show>
 
               {/* Rincian Subtotal & Total Pembayaran */}
-              <div class="p-3 bg-[#FAFAFA] rounded-xl border border-[#E8E8EC] space-y-1.5 text-xs">
-                <div class="flex justify-between text-[#6B6B6B]">
+              <div class="p-3 bg-[#FAF7F2] rounded-2xl border border-[#E8DFD5] space-y-1.5 text-xs">
+                <div class="flex justify-between text-[#6C5F57]">
                   <span>Subtotal Menu:</span>
-                  <span class="font-mono text-[#0A0A0A] font-semibold">
+                  <span class="font-semibold text-[#1C1917]">
                     {formatRupiah(pricing().subtotal)}
                   </span>
                 </div>
 
-                <div class="flex justify-between text-[#6B6B6B]">
+                <div class="flex justify-between text-[#6C5F57]">
                   <span>Ongkos Kirim:</span>
-                  <span class="font-mono text-[#0A0A0A]">
+                  <span class="text-[#1C1917]">
                     <Show when={pricing().isFreeDelivery} fallback={formatRupiah(pricing().deliveryFee)}>
-                      <span class="text-[#20970B] font-semibold">GRATIS</span>
+                      <span class="text-[#1B872A] font-semibold">GRATIS</span>
                     </Show>
                   </span>
                 </div>
 
-                <div class="flex justify-between text-sm font-bold text-[#0A0A0A] pt-2 border-t border-[#E8E8EC]">
+                <div class="flex justify-between text-sm font-bold text-[#1C1917] pt-2 border-t border-[#E8DFD5]">
                   <span>Total Tagihan:</span>
-                  <span class="font-mono text-[#6366F1] text-base">
+                  <span class="font-heading font-bold text-[#CE2738] text-base">
                     {formatRupiah(pricing().total)}
                   </span>
                 </div>
@@ -637,14 +637,14 @@ export function CheckoutModal(props: CheckoutModalProps) {
 
               {/* Error Alert */}
               <Show when={errorMsg()}>
-                <div class="p-3 rounded-lg bg-[#FFF5F5] border border-[#FCA5A5] text-xs text-[#EF4444] flex items-start gap-2">
+                <div class="p-3 rounded-xl bg-[#FFF5F5] border border-[#FECDD3] text-xs text-[#CE2738] flex items-start gap-2">
                   <AlertCircle size={15} class="shrink-0 mt-0.5" />
                   <span>{errorMsg()}</span>
                 </div>
               </Show>
 
               {/* Step 2 Actions */}
-              <div class="flex items-center justify-between gap-2 pt-2 border-t border-[#E8E8EC]">
+              <div class="flex items-center justify-between gap-2 pt-2 border-t border-[#E8DFD5]">
                 <button
                   type="button"
                   onClick={() => setCurrentStep(1)}
