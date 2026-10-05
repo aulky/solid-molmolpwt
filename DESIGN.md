@@ -3,29 +3,30 @@ version: alpha
 name: Mol-Mol Purwokerto Website Design System
 description: "Warm, rounded design system for Mol-Mol Purwokerto bakery & snack pre-orders. Buttermilk cream, Mol-Mol signature red, oven-ink typography and circular product photos."
 colors:
-  primary: "#CE2738"
-  primary-hover: "#B51F2F"
-  on-primary: "#FFFFFF"
-  secondary: "#2C221E"
-  on-secondary: "#FFFFFF"
-  tertiary: "#F2A054"
-  tertiary-hover: "#E88D3A"
-  on-tertiary: "#2A1405"
-  neutral: "#8D7E73"
-  soft: "#F3ECE2"
-  on-soft: "#2C221E"
-  background: "#FAF7F2"
-  on-background: "#1C1917"
-  surface: "#FFFDF9"
-  surface-alt: "#F5EEE4"
-  on-surface: "#1C1917"
-  on-surface-muted: "#6C5F57"
-  outline: "#E8DFD5"
-  footer: "#2C221E"
-  on-footer: "#F5EBE1"
-  success: "#1B872A"
+  primary: "#D92D3A"
+  primary-hover: "#B92230"
+  on-primary: "#FFFDF8"
+  secondary: "#5B4638"
+  on-secondary: "#FFFDF8"
+  tertiary: "#E9B45B"
+  tertiary-hover: "#D6A045"
+  on-tertiary: "#3A2814"
+  neutral: "#806B5C"
+  soft: "#F9EEDB"
+  on-soft: "#5B4638"
+  background: "#FFF4DE"
+  on-background: "#5B4638"
+  surface: "#FFFDF8"
+  surface-alt: "#F9EEDB"
+  on-surface: "#5B4638"
+  on-surface-muted: "#806B5C"
+  outline: "#E7D8C3"
+  footer: "#241D19"
+  on-footer: "#FFF4DE"
+  on-footer-muted: "#CDBCA9"
+  success: "#7FA37A"
   on-success: "#FFFFFF"
-  error: "#CE2738"
+  error: "#D92D3A"
   on-error: "#FFFFFF"
 typography:
   display:
@@ -222,17 +223,18 @@ Fonts were chosen with full Latin Extended coverage, so Polish, Czech and other 
 
 ## Colors
 
-A warm, balanced bakery palette matching the Mol-Mol Purwokerto logo without visual clashing:
+A warm, friendly, homemade bakery palette matching Mol-Mol Purwokerto (Warm Cream + Ivory + Cocoa Brown + Mol-Mol Red + Caramel + Muted Sage):
 
-- **Mol-Mol Red (#CE2738):** primary brand & action color. Main buttons, active tabs, brand accents, and badges. Matches the iconic Mol-Mol Purwokerto logo. Hover: `#B51F2F`.
-- **Bakery Cream (#FAF7F2):** soft, pleasant warm off-white background with low yellow intensity so cards and content stand out cleanly.
-- **Warm Ivory Card (#FFFDF9):** soft warm cream surface for cards and modals. Eliminates harsh stark white contrast.
-- **Flour Cream (#F3ECE2):** soft neutral surface for secondary buttons, filters, chips, and inactive tabs.
-- **Warm Crust Border (#E8DFD5):** subtle, elegant dividers and card outlines.
-- **Dark Mocha Charcoal (#2C221E):** warm footer background that harmonizes with the bakery palette instead of stark pitch black.
-- **Oven Ink (#1C1917):** high-contrast readable headings and body text.
-- **Muted Earth (#6C5F57):** readable secondary descriptions.
-- **Success Green (#1B872A):** reserved strictly for WhatsApp, confirmed badges, and positive states.
+- **Main Background (#FFF4DE):** warm cream as the overall page backdrop, cozy and appetising.
+- **Secondary Background (#F9EEDB):** soft warm beige for sub-containers and image areas.
+- **Card / Surface (#FFFDF8):** warm ivory for card containers, modals, and product showcases.
+- **Primary Red (#D92D3A):** Mol-Mol signature red for primary CTAs (+ Pesan), active navigation, price highlights, and focus rings. Hover: `#B92230`.
+- **Main Text / Cocoa (#5B4638):** dark cocoa brown for high-contrast, warm, readable headings and text.
+- **Secondary Text (#806B5C):** muted cocoa brown for descriptions and secondary text.
+- **Caramel Accent (#E9B45B):** warm golden caramel for limited slots, notices, and warnings.
+- **Muted Sage Green (#7FA37A):** reserved strictly for positive information (Pre-Order aktif, status tersedia, success states).
+- **Soft Border (#E7D8C3):** subtle warm outline for cards, dividers, and inputs.
+- **Footer / Dark Cocoa (#241D19):** deep dark cocoa background (primary text `#FFF4DE`, secondary text `#CDBCA9`).
 
 ## Typography
 
