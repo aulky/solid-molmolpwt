@@ -25,13 +25,13 @@ export default function TrackDetailPage() {
   const data = createAsync(() => getOrderData(params.id, searchParams.phoneLast4));
 
   return (
-    <div class="min-h-screen bg-[#FAFAFA] py-8 px-4 sm:px-6">
+    <div class="min-h-screen bg-[#FAF7F2] py-8 px-4 sm:px-6">
       <div class="max-w-4xl mx-auto space-y-6">
         {/* Navigation Back */}
         <div class="flex items-center justify-between">
           <A
             href="/track"
-            class="text-xs sm:text-sm font-medium text-[#6B6B6B] hover:text-[#0A0A0A] flex items-center gap-1.5 transition"
+            class="text-xs sm:text-sm font-medium text-[#6C5F57] hover:text-[#1C1917] flex items-center gap-1.5 transition"
           >
             <ArrowLeft size={16} />
             <span>Cari Pesanan Lain</span>
@@ -39,7 +39,7 @@ export default function TrackDetailPage() {
 
           <A
             href="/"
-            class="text-xs sm:text-sm font-medium text-[#6366F1] hover:underline"
+            class="text-xs sm:text-sm font-semibold text-[#CE2738] hover:underline"
           >
             Kembali ke Pre-Order
           </A>
@@ -49,14 +49,14 @@ export default function TrackDetailPage() {
         <Show
           when={data()?.order}
           fallback={
-            <div class="card-surface p-8 bg-white border border-[#E8E8EC] text-center space-y-4 max-w-md mx-auto my-12">
-              <div class="w-12 h-12 rounded-full bg-[#FFF5F5] text-[#EF4444] flex items-center justify-center mx-auto">
+            <div class="card-surface p-8 bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl text-center space-y-4 max-w-md mx-auto my-12 shadow-xs">
+              <div class="w-12 h-12 rounded-full bg-[#FFF5F5] text-[#CE2738] flex items-center justify-center mx-auto">
                 <AlertCircle size={24} />
               </div>
-              <h2 class="font-heading font-bold text-xl text-[#0A0A0A]">
+              <h2 class="font-heading font-bold text-xl text-[#1C1917]">
                 Pesanan Tidak Ditemukan
               </h2>
-              <p class="text-xs sm:text-sm text-[#6B6B6B]">
+              <p class="text-xs sm:text-sm text-[#6C5F57]">
                 {data()?.error ||
                   `Tidak ada pesanan yang cocok dengan kode "${params.id}". Pastikan kode yang Anda masukkan sudah benar.`}
               </p>

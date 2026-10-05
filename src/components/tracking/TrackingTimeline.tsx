@@ -27,22 +27,22 @@ export function TrackingTimeline(props: TrackingTimelineProps) {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "menunggu_verifikasi":
-        return <Clock size={16} class="text-[#F59E0B]" />;
+        return <Clock size={16} class="text-[#D97706]" />;
       case "dikonfirmasi":
-        return <BadgeCheck size={16} class="text-[#6366F1]" />;
+        return <BadgeCheck size={16} class="text-[#CE2738]" />;
       case "diproduksi":
-        return <ChefHat size={16} class="text-[#6366F1]" />;
+        return <ChefHat size={16} class="text-[#CE2738]" />;
       case "siap_diambil":
-        return <PackageCheck size={16} class="text-[#20970B]" />;
+        return <PackageCheck size={16} class="text-[#1B872A]" />;
       case "dikirim":
-        return <Truck size={16} class="text-[#6366F1]" />;
+        return <Truck size={16} class="text-[#CE2738]" />;
       case "selesai":
-        return <CheckCircle2 size={16} class="text-[#10B981]" />;
+        return <CheckCircle2 size={16} class="text-[#1B872A]" />;
       case "ditolak":
       case "dibatalkan":
-        return <XCircle size={16} class="text-[#EF4444]" />;
+        return <XCircle size={16} class="text-[#CE2738]" />;
       default:
-        return <Clock size={16} class="text-[#9C9C9C]" />;
+        return <Clock size={16} class="text-[#8D7E73]" />;
     }
   };
 
@@ -70,7 +70,7 @@ export function TrackingTimeline(props: TrackingTimelineProps) {
   };
 
   return (
-    <div class="relative pl-11 space-y-6 before:absolute before:left-[15px] before:top-3 before:bottom-3 before:w-[2px] before:bg-[#E8E8EC]">
+    <div class="relative pl-11 space-y-6 before:absolute before:left-[15px] before:top-3 before:bottom-3 before:w-[2px] before:bg-[#E8DFD5]">
       <For each={props.history}>
         {(step, index) => {
           const isLatest = index() === 0;
@@ -79,10 +79,10 @@ export function TrackingTimeline(props: TrackingTimelineProps) {
             <div class="relative group">
               {/* Stepper Node Icon dengan Posisi Presisi & Jarak Bernapas */}
               <div
-                class={`absolute left-[-44px] top-0 w-8 h-8 rounded-full flex items-center justify-center bg-white border ${
+                class={`absolute left-[-44px] top-0 w-8 h-8 rounded-full flex items-center justify-center bg-[#FFFDF9] border ${
                   isLatest
-                    ? "border-[#6366F1] shadow-2xs ring-2 ring-[#6366F1]/20"
-                    : "border-[#E8E8EC]"
+                    ? "border-[#CE2738] shadow-2xs ring-2 ring-[#CE2738]/20"
+                    : "border-[#E8DFD5]"
                 }`}
               >
                 {getStatusIcon(step.toStatus)}
@@ -93,18 +93,18 @@ export function TrackingTimeline(props: TrackingTimelineProps) {
                 <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
                   <span
                     class={`text-xs sm:text-sm font-semibold leading-snug ${
-                      isLatest ? "text-[#0A0A0A]" : "text-[#6B6B6B]"
+                      isLatest ? "text-[#1C1917]" : "text-[#6C5F57]"
                     }`}
                   >
                     {getStatusLabel(step.toStatus)}
                   </span>
-                  <span class="text-[11px] font-mono text-[#9C9C9C] shrink-0">
+                  <span class="text-[11px] text-[#8D7E73] shrink-0 font-medium">
                     {formatTanggalWIB(step.createdAt)}
                   </span>
                 </div>
 
                 <Show when={step.note}>
-                  <p class="text-xs text-[#6B6B6B] leading-relaxed bg-[#FAFAFA] p-2.5 rounded-lg border border-[#E8E8EC]/80 mt-1">
+                  <p class="text-xs text-[#6C5F57] leading-relaxed bg-[#FAF7F2] p-2.5 rounded-xl border border-[#E8DFD5] mt-1">
                     {step.note}
                   </p>
                 </Show>

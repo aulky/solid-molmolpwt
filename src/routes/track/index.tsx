@@ -11,7 +11,7 @@ export default function TrackSearchPage() {
     e.preventDefault();
     const q = queryInput().trim();
     if (!q || q.length < 5) {
-      setErrorMsg("Masukkan Kode Pesanan (MM-XXXXXX) atau Order ID pesanan Anda.");
+      setErrorMsg("Masukkan Kode Pesanan (MM-XXXXXX) atau UUID pesanan Anda.");
       return;
     }
 
@@ -20,24 +20,24 @@ export default function TrackSearchPage() {
   };
 
   return (
-    <div class="min-h-[80vh] flex flex-col justify-center items-center px-4 sm:px-6 py-8 sm:py-12">
-      <div class="w-full max-w-md card-surface p-5 sm:p-8 bg-white border border-[#E8E8EC] space-y-5 sm:space-y-6">
+    <div class="min-h-[80vh] flex flex-col justify-center items-center px-4 sm:px-6 py-8 sm:py-12 bg-[#FAF7F2]">
+      <div class="w-full max-w-md card-surface p-6 sm:p-8 bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl space-y-5 sm:space-y-6 shadow-xs">
         <div class="text-center space-y-2">
-          <div class="w-12 h-12 rounded-xl bg-[#6366F1]/10 text-[#6366F1] flex items-center justify-center mx-auto">
+          <div class="w-12 h-12 rounded-full bg-[#CE2738]/10 text-[#CE2738] flex items-center justify-center mx-auto">
             <Search size={24} />
           </div>
-          <h1 class="font-heading font-bold text-2xl text-[#0A0A0A]">
+          <h1 class="font-heading font-bold text-2xl text-[#1C1917]">
             Lacak Pesanan Pre-Order
           </h1>
-          <p class="text-xs sm:text-sm text-[#6B6B6B] leading-relaxed">
+          <p class="text-xs sm:text-sm text-[#6C5F57] leading-relaxed">
             Periksa status verifikasi pembayaran, proses produksi pesanan, dan jadwal pengiriman Anda.
           </p>
         </div>
 
         <form onSubmit={handleSearch} class="space-y-4">
           <div>
-            <label class="block text-xs font-semibold text-[#0A0A0A] mb-1">
-              Kode Pesanan atau Order ID <span class="text-[#EF4444]">*</span>
+            <label class="block text-xs font-semibold text-[#1C1917] mb-1">
+              Kode Pesanan atau Order ID <span class="text-[#CE2738]">*</span>
             </label>
             <input
               type="text"
@@ -45,15 +45,15 @@ export default function TrackSearchPage() {
               value={queryInput()}
               onInput={(e) => setQueryInput(e.currentTarget.value)}
               placeholder="Contoh: MM-7K2P4Q atau Order ID"
-              class="input-base font-mono uppercase"
+              class="input-base uppercase font-semibold text-xs tracking-wider"
             />
-            <span class="text-[11px] text-[#6B6B6B] block mt-1">
+            <span class="text-[11px] text-[#6C5F57] block mt-1">
               Diterbitkan di layar konfirmasi saat Anda berhasil checkout.
             </span>
           </div>
 
           <Show when={errorMsg()}>
-            <div class="p-3 rounded-lg bg-[#FFF5F5] border border-[#FCA5A5] text-xs text-[#EF4444] flex items-center gap-1.5">
+            <div class="p-3 rounded-xl bg-[#FFF5F5] border border-[#FECDD3] text-xs text-[#CE2738] flex items-center gap-1.5">
               <AlertCircle size={14} class="shrink-0" />
               <span>{errorMsg()}</span>
             </div>
@@ -61,15 +61,15 @@ export default function TrackSearchPage() {
 
           <button
             type="submit"
-            class="btn-primary w-full flex items-center justify-center gap-2 h-10 cursor-pointer"
+            class="btn-primary w-full flex items-center justify-center gap-2 h-11 cursor-pointer"
           >
             <Search size={16} />
             <span>Cari Status Pesanan</span>
           </button>
         </form>
 
-        <div class="pt-4 border-t border-[#E8E8EC] text-center">
-          <span class="text-xs text-[#9C9C9C]">
+        <div class="pt-4 border-t border-[#E8DFD5] text-center">
+          <span class="text-xs text-[#8D7E73]">
             Lupa kode pesanan Anda? Silakan hubungi admin via WhatsApp.
           </span>
         </div>

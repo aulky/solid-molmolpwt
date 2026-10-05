@@ -67,14 +67,14 @@ export function OrderDetailView(props: OrderDetailViewProps) {
   return (
     <div class="space-y-6">
       {/* Top Banner Card */}
-      <div class="card-surface p-4 sm:p-6 bg-white border border-[#E8E8EC] space-y-4">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-4 border-b border-[#E8E8EC]">
+      <div class="card-surface p-4 sm:p-6 bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-4 border-b border-[#E8DFD5]">
           <div class="flex items-center justify-between sm:block gap-2">
             <div>
-              <span class="text-[11px] font-mono uppercase text-[#6B6B6B] block tracking-wider">
+              <span class="text-xs uppercase text-[#6C5F57] block tracking-wider font-semibold">
                 Kode Pesanan
               </span>
-              <h2 class="font-heading font-bold text-2xl sm:text-3xl text-[#0A0A0A] leading-tight">
+              <h2 class="font-heading font-bold text-2xl sm:text-3xl text-[#CE2738] leading-tight">
                 {o().shortCode}
               </h2>
             </div>
@@ -82,7 +82,7 @@ export function OrderDetailView(props: OrderDetailViewProps) {
             {/* Tampilan Mobile: Badge status diletakkan sejajar di samping kanan Kode Pesanan agar tidak jatuh ke bawah */}
             <div class="sm:hidden flex flex-col items-end gap-1">
               <OrderStatusBadge status={o().status} />
-              <span class="text-[10px] font-mono text-[#9C9C9C]">
+              <span class="text-[10px] text-[#8D7E73]">
                 {formatTanggalWIB(o().createdAt, { includeTime: false })}
               </span>
             </div>
@@ -91,31 +91,31 @@ export function OrderDetailView(props: OrderDetailViewProps) {
           {/* Tampilan Desktop */}
           <div class="hidden sm:flex flex-col items-end gap-1.5">
             <OrderStatusBadge status={o().status} />
-            <span class="text-[11px] font-mono text-[#9C9C9C]">
+            <span class="text-xs text-[#8D7E73]">
               Dipesan: {formatTanggalWIB(o().createdAt)}
             </span>
           </div>
         </div>
 
         {/* Info Grid */}
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
           {/* Customer */}
-          <div class="p-3 rounded-lg bg-[#FAFAFA] border border-[#E8E8EC] space-y-1">
-            <span class="font-mono text-[#9C9C9C] block uppercase">Pemesan</span>
-            <span class="font-semibold text-sm text-[#0A0A0A] block">
+          <div class="p-3 rounded-xl bg-[#FAF7F2] border border-[#E8DFD5] space-y-1">
+            <span class="text-[#8D7E73] block uppercase font-semibold text-[10px]">Pemesan</span>
+            <span class="font-semibold text-sm text-[#1C1917] block">
               {o().customerName}
             </span>
-            <span class="font-mono text-[#6B6B6B] block">{o().customerPhone}</span>
+            <span class="text-[#6C5F57] block font-medium">{o().customerPhone}</span>
           </div>
 
           {/* Fulfillment */}
-          <div class="p-3 rounded-lg bg-[#FAFAFA] border border-[#E8E8EC] space-y-1">
-            <span class="font-mono text-[#9C9C9C] block uppercase">Metode Pengiriman</span>
-            <span class="font-semibold text-sm text-[#0A0A0A] block">
+          <div class="p-3 rounded-xl bg-[#FAF7F2] border border-[#E8DFD5] space-y-1">
+            <span class="text-[#8D7E73] block uppercase font-semibold text-[10px]">Metode Pengiriman</span>
+            <span class="font-semibold text-sm text-[#1C1917] block">
               {fulfillmentText()}
             </span>
             <Show when={o().batch?.deliveryDate}>
-              <span class="text-[#6B6B6B] flex items-center gap-1">
+              <span class="text-[#6C5F57] flex items-center gap-1 font-medium">
                 <Calendar size={12} />
                 <span>Kirim: {formatTanggalWIB(o().batch.deliveryDate, { includeTime: false })}</span>
               </span>
@@ -123,20 +123,20 @@ export function OrderDetailView(props: OrderDetailViewProps) {
           </div>
 
           {/* Payment Method */}
-          <div class="p-3 rounded-lg bg-[#FAFAFA] border border-[#E8E8EC] space-y-1">
-            <span class="font-mono text-[#9C9C9C] block uppercase">Pembayaran</span>
-            <span class="font-semibold text-sm text-[#0A0A0A] block uppercase">
+          <div class="p-3 rounded-xl bg-[#FAF7F2] border border-[#E8DFD5] space-y-1">
+            <span class="text-[#8D7E73] block uppercase font-semibold text-[10px]">Pembayaran</span>
+            <span class="font-semibold text-sm text-[#1C1917] block uppercase">
               {o().paymentMethod}
             </span>
             <div class="flex items-center gap-2">
-              <span class="font-mono text-xs font-bold text-[#6366F1]">
+              <span class="text-xs font-bold text-[#CE2738] font-heading">
                 Total: {formatRupiah(o().total)}
               </span>
               <Show when={o().paymentProofPath}>
                 <button
                   type="button"
                   onClick={() => setIsProofModalOpen(true)}
-                  class="text-[11px] text-[#6366F1] hover:underline flex items-center gap-0.5 cursor-pointer"
+                  class="text-[11px] text-[#CE2738] hover:underline flex items-center gap-0.5 cursor-pointer font-semibold"
                 >
                   <Eye size={12} />
                   <span>Lihat Bukti</span>
@@ -148,10 +148,10 @@ export function OrderDetailView(props: OrderDetailViewProps) {
 
         {/* Address and GPS if Delivery */}
         <Show when={o().fulfillment !== "pickup"}>
-          <div class="p-4 rounded-lg bg-[#FAFAFA] border border-[#E8E8EC] space-y-2 text-xs">
+          <div class="p-4 rounded-xl bg-[#FAF7F2] border border-[#E8DFD5] space-y-2 text-xs">
             <div class="flex items-center justify-between">
-              <span class="font-semibold text-[#0A0A0A] flex items-center gap-1.5">
-                <MapPin size={15} class="text-[#6366F1]" />
+              <span class="font-semibold text-[#1C1917] flex items-center gap-1.5">
+                <MapPin size={15} class="text-[#CE2738]" />
                 <span>Alamat Pengiriman:</span>
               </span>
               <Show when={mapsUrl()}>
@@ -159,7 +159,7 @@ export function OrderDetailView(props: OrderDetailViewProps) {
                   href={mapsUrl()!}
                   target="_blank"
                   rel="noreferrer"
-                  class="text-[#6366F1] hover:underline flex items-center gap-1 font-mono font-medium"
+                  class="text-[#CE2738] hover:underline flex items-center gap-1 text-xs font-medium"
                 >
                   <span>Buka di Google Maps</span>
                   <ExternalLink size={12} />
@@ -167,12 +167,12 @@ export function OrderDetailView(props: OrderDetailViewProps) {
               </Show>
             </div>
 
-            <p class="text-[#0A0A0A] font-medium leading-relaxed">
+            <p class="text-[#1C1917] font-medium leading-relaxed">
               {o().addressText || "-"}
             </p>
 
             <Show when={o().addressNote}>
-              <p class="text-[11px] text-[#6B6B6B]">
+              <p class="text-[11px] text-[#6C5F57]">
                 Catatan Alamat: {o().addressNote}
               </p>
             </Show>
@@ -181,10 +181,10 @@ export function OrderDetailView(props: OrderDetailViewProps) {
 
         {/* Outlet Pickup Location if Pickup */}
         <Show when={o().fulfillment === "pickup"}>
-          <div class="p-4 rounded-lg bg-[#FAFAFA] border border-[#E8E8EC] space-y-2 text-xs">
+          <div class="p-4 rounded-xl bg-[#FAF7F2] border border-[#E8DFD5] space-y-2 text-xs">
             <div class="flex items-center justify-between">
-              <span class="font-semibold text-[#0A0A0A] flex items-center gap-1.5">
-                <MapPin size={15} class="text-[#6366F1]" />
+              <span class="font-semibold text-[#1C1917] flex items-center gap-1.5">
+                <MapPin size={15} class="text-[#CE2738]" />
                 <span>Titik & Alamat Pengambilan Mandiri (Pickup):</span>
               </span>
               <Show when={pickupMapsUrl()}>
@@ -192,7 +192,7 @@ export function OrderDetailView(props: OrderDetailViewProps) {
                   href={pickupMapsUrl()!}
                   target="_blank"
                   rel="noreferrer"
-                  class="text-[#6366F1] hover:underline flex items-center gap-1 font-mono font-medium text-[11px]"
+                  class="text-[#CE2738] hover:underline flex items-center gap-1 font-medium text-xs"
                 >
                   <span>Buka di Google Maps</span>
                   <ExternalLink size={12} />
@@ -200,13 +200,13 @@ export function OrderDetailView(props: OrderDetailViewProps) {
               </Show>
             </div>
 
-            <p class="text-[#0A0A0A] font-medium leading-relaxed">
+            <p class="text-[#1C1917] font-medium leading-relaxed">
               {pickupAddressText()}
             </p>
 
             <Show when={o().batch?.pickupStart && o().batch?.pickupEnd}>
-              <div class="flex items-center gap-1.5 text-[11px] text-[#6B6B6B] pt-0.5">
-                <Clock size={13} class="text-[#6366F1]" />
+              <div class="flex items-center gap-1.5 text-xs text-[#6C5F57] pt-0.5">
+                <Clock size={13} class="text-[#CE2738]" />
                 <span>
                   Waktu Pengambilan: Jam {o().batch.pickupStart} - {o().batch.pickupEnd} WIB
                 </span>
@@ -219,8 +219,8 @@ export function OrderDetailView(props: OrderDetailViewProps) {
       {/* Stepper Timeline & Order Items Grid */}
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Timeline (Left) */}
-        <div class="lg:col-span-6 card-surface p-6 bg-white border border-[#E8E8EC] space-y-4">
-          <h3 class="font-heading font-semibold text-base text-[#0A0A0A] pb-2 border-b border-[#E8E8EC]">
+        <div class="lg:col-span-6 card-surface p-6 bg-[#FFFDF9] border border-[#E8DFD5] space-y-4 rounded-2xl">
+          <h3 class="font-heading font-semibold text-base text-[#1C1917] pb-2 border-b border-[#E8DFD5]">
             Riwayat Status Pesanan
           </h3>
 
@@ -228,24 +228,24 @@ export function OrderDetailView(props: OrderDetailViewProps) {
         </div>
 
         {/* Items Breakdown (Right) */}
-        <div class="lg:col-span-6 card-surface p-6 bg-white border border-[#E8E8EC] space-y-4 flex flex-col justify-between">
+        <div class="lg:col-span-6 card-surface p-6 bg-[#FFFDF9] border border-[#E8DFD5] space-y-4 flex flex-col justify-between rounded-2xl">
           <div>
-            <h3 class="font-heading font-semibold text-base text-[#0A0A0A] pb-2 border-b border-[#E8E8EC] flex items-center justify-between">
+            <h3 class="font-heading font-semibold text-base text-[#1C1917] pb-2 border-b border-[#E8DFD5] flex items-center justify-between">
               <span>Rincian Menu Pesanan</span>
-              <Package size={16} class="text-[#6366F1]" />
+              <Package size={16} class="text-[#CE2738]" />
             </h3>
 
-            <div class="divide-y divide-[#E8E8EC] mt-2">
+            <div class="divide-y divide-[#E8DFD5] mt-2">
               <For each={o().items}>
                 {(item: any) => (
                   <div class="py-2.5 flex items-center justify-between text-xs sm:text-sm">
                     <div>
-                      <span class="font-medium text-[#0A0A0A]">{item.nameSnapshot}</span>
-                      <span class="text-[#6B6B6B] block text-xs">
+                      <span class="font-medium text-[#1C1917]">{item.nameSnapshot}</span>
+                      <span class="text-[#6C5F57] block text-xs">
                         {item.qty} × {formatRupiah(item.unitPrice)}
                       </span>
                     </div>
-                    <span class="font-mono font-semibold text-[#0A0A0A]">
+                    <span class="font-semibold text-[#1C1917]">
                       {formatRupiah(item.lineTotal)}
                     </span>
                   </div>
@@ -255,21 +255,21 @@ export function OrderDetailView(props: OrderDetailViewProps) {
           </div>
 
           {/* Pricing Totals & WA Button */}
-          <div class="space-y-4 pt-4 border-t border-[#E8E8EC]">
-            <div class="space-y-1.5 text-xs text-[#6B6B6B]">
+          <div class="space-y-4 pt-4 border-t border-[#E8DFD5]">
+            <div class="space-y-1.5 text-xs text-[#6C5F57]">
               <div class="flex justify-between">
                 <span>Subtotal Menu:</span>
-                <span class="font-mono text-[#0A0A0A]">{formatRupiah(o().subtotal)}</span>
+                <span class="font-semibold text-[#1C1917]">{formatRupiah(o().subtotal)}</span>
               </div>
               <div class="flex justify-between">
                 <span>Ongkos Kirim:</span>
-                <span class="font-mono text-[#0A0A0A]">
+                <span class="text-[#1C1917]">
                   {o().deliveryFee === 0 ? "GRATIS" : formatRupiah(o().deliveryFee)}
                 </span>
               </div>
-              <div class="flex justify-between text-base font-bold text-[#0A0A0A] pt-2 border-t border-[#E8E8EC]">
+              <div class="flex justify-between text-base font-bold text-[#1C1917] pt-2 border-t border-[#E8DFD5]">
                 <span>Total:</span>
-                <span class="font-mono text-[#6366F1]">{formatRupiah(o().total)}</span>
+                <span class="font-heading font-bold text-[#CE2738]">{formatRupiah(o().total)}</span>
               </div>
             </div>
 
@@ -298,7 +298,7 @@ export function OrderDetailView(props: OrderDetailViewProps) {
           <img
             src={o().paymentProofPath}
             alt="Bukti Transfer"
-            class="max-h-[75vh] w-auto object-contain rounded-lg border border-[#E8E8EC]"
+            class="max-h-[75vh] w-auto object-contain rounded-2xl border border-[#E8DFD5]"
           />
         </div>
       </Modal>
