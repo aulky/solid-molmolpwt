@@ -49,7 +49,7 @@ export function ConfirmDialog(props: ConfirmDialogProps) {
         <div
           role="dialog"
           aria-modal="true"
-          class="relative w-full max-w-md bg-[#FFFDF8] rounded-2xl border border-[#E7D8C3] p-6 shadow-2xl z-10 space-y-4 animate-in zoom-in-95 fade-in duration-150"
+          class="relative w-full max-w-md bg-[#FFF9EE] rounded-2xl border border-[#E2CCA8] p-6 shadow-2xl z-10 space-y-4 animate-in zoom-in-95 fade-in duration-150"
         >
           {/* Header & Icon */}
           <div class="flex items-start gap-3.5">
@@ -87,7 +87,7 @@ export function ConfirmDialog(props: ConfirmDialogProps) {
               type="button"
               disabled={props.isLoading}
               onClick={props.onClose}
-              class="px-4 py-2 rounded-full border border-[#E7D8C3] text-xs font-semibold text-[#5B4638] bg-[#FFFDF8] hover:bg-[#F9EEDB] transition cursor-pointer disabled:opacity-50"
+              class="px-4 py-2 rounded-full border border-[#E2CCA8] text-xs font-semibold text-[#5B4638] bg-[#FFF9EE] hover:bg-[#F3E2C4] transition cursor-pointer disabled:opacity-50"
             >
               {props.cancelText || "Batal"}
             </button>

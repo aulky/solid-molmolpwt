@@ -8,12 +8,12 @@
   --color-secondary: #5B4638;
   --color-tertiary: #E9B45B;
   --color-neutral-muted: #806B5C;
-  --color-bg-base: #FFF4DE;
-  --color-surface: #FFFDF8;
-  --color-surface-soft: #F9EEDB;
+  --color-bg-base: #F7EBD7;
+  --color-surface: #FFF9EE;
+  --color-surface-soft: #F3E2C4;
   --color-text-main: #5B4638;
   --color-text-muted: #806B5C;
-  --color-border-subtle: #E7D8C3;
+  --color-border-subtle: #E2CCA8;
   --color-success: #7FA37A;
   --color-warning: #E9B45B;
   --color-error: #D92D3A;
@@ -24,16 +24,16 @@
 }
 
 :root {
-  --bg-page: #FFF4DE;
+  --bg-page: #F7EBD7;
   --text-page: #5B4638;
   --color-brand-red: #D92D3A;
   --color-brand-red-hover: #B92230;
-  --color-brand-cream: #FFF4DE;
-  --color-brand-card: #FFFDF8;
-  --color-brand-soft: #F9EEDB;
-  --color-brand-border: #E7D8C3;
+  --color-brand-cream: #F7EBD7;
+  --color-brand-card: #FFF9EE;
+  --color-brand-soft: #F3E2C4;
+  --color-brand-border: #E2CCA8;
   --color-brand-cocoa: #5B4638;
-  --color-brand-footer: #241D19;
+  --color-brand-footer: #EED8B7;
 }
 
 html {
@@ -66,7 +66,7 @@ html {
 }
 
 body {
-  background-color: #FFF4DE;
+  background-color: #F7EBD7;
   color: #5B4638;
   font-family: var(--font-body);
   font-size: 15px;
@@ -119,21 +119,21 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #F9EEDB;
+  background-color: #F3E2C4;
   color: #5B4638;
   border-radius: 9999px;
   font-weight: 600;
   font-size: 14px;
   padding: 0 18px;
   height: 40px;
-  border: 1px solid #E7D8C3;
+  border: 1px solid #E2CCA8;
   transition: all 150ms ease;
   cursor: pointer;
   text-decoration: none;
 }
 .btn-secondary:hover:not(:disabled) {
-  background-color: #EEDEC7;
-  border-color: #DFCCAE;
+  background-color: #E8D4B2;
+  border-color: #D6BD96;
   transform: translateY(-1px);
 }
 .btn-secondary:focus-visible {
@@ -197,23 +197,23 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 
 /* Cards from DESIGN.md */
 .card-surface {
-  background-color: #FFFDF8;
-  border: 1px solid #E7D8C3;
+  background-color: #FFF9EE;
+  border: 1px solid #E2CCA8;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 6px 18px rgba(91, 70, 56, 0.08);
+  box-shadow: 0 4px 16px rgba(91, 70, 56, 0.06);
   transition: transform 200ms ease, box-shadow 200ms ease;
 }
 .card-hover:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(91, 70, 56, 0.12);
+  box-shadow: 0 8px 20px rgba(91, 70, 56, 0.1);
 }
 
 /* Inputs from DESIGN.md */
 .input-base {
   width: 100%;
-  background-color: #FFFFFF;
-  border: 1px solid #E7D8C3;
+  background-color: #FFF9EE;
+  border: 1px solid #E2CCA8;
   border-radius: 12px;
   padding: 10px 14px;
   font-size: 14px;
@@ -244,9 +244,9 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   border-radius: 9999px;
   font-size: 12px;
   font-weight: 500;
-  background-color: #F9EEDB;
+  background-color: #F3E2C4;
   color: #5B4638;
-  border: 1px solid #E7D8C3;
+  border: 1px solid #E2CCA8;
 }
 .chip-primary {
   background-color: rgba(217, 45, 58, 0.1);

@@ -9,7 +9,7 @@ export function Footer(props: FooterProps) {
   const phone = () => props.adminPhone || "081234567890";
 
   return (
-    <footer class="bg-[#241D19] border-t border-[#3A2E27] py-12 mt-16 text-[#CDBCA9] text-xs">
+    <footer class="bg-[#EED8B7] border-t border-[#DFC5A0] py-12 mt-16 text-[#6C5443] text-xs">
       <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-3 gap-8">
         {/* 1. Brand & Social Media */}
         <div class="space-y-3">
@@ -17,13 +17,13 @@ export function Footer(props: FooterProps) {
             <img
               src="/molmol-logo.jpg"
               alt="Logo Mol-Mol"
-              class="w-8 h-8 rounded-full object-cover border border-[#E7D8C3]/30 shadow-xs"
+              class="w-8 h-8 rounded-full object-cover border border-[#DFC5A0] shadow-xs"
             />
-            <h5 class="font-heading font-bold text-base text-[#FFF4DE]">
+            <h5 class="font-heading font-bold text-base text-[#5B4638]">
               Mol-Mol Purwokerto
             </h5>
           </div>
-          <p class="leading-relaxed text-[#CDBCA9]">
+          <p class="leading-relaxed text-[#6C5443]">
             Dessert & Cemilan Purwokerto manis dan gurih dengan resep otentik, higienis, dan cita rasa premium.
           </p>
           <div class="pt-1 flex items-center gap-2">
@@ -31,7 +31,7 @@ export function Footer(props: FooterProps) {
               href="https://www.instagram.com/molmol.purwokerto/"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-8 h-8 rounded-full bg-[#332924] border border-[#4A3C34] flex items-center justify-center text-[#E1306C] hover:bg-[#E1306C] hover:text-white hover:border-[#E1306C] transition shadow-2xs cursor-pointer"
+              class="w-8 h-8 rounded-full bg-[#F8ECD5] border border-[#DFC5A0] flex items-center justify-center text-[#E1306C] hover:bg-[#D92D3A] hover:text-white hover:border-[#D92D3A] transition shadow-2xs cursor-pointer"
               title="Instagram @molmol.purwokerto"
               aria-label="Instagram @molmol.purwokerto"
             >
@@ -46,7 +46,7 @@ export function Footer(props: FooterProps) {
               href="https://www.threads.com/@molmol.purwokerto"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-8 h-8 rounded-full bg-[#332924] border border-[#4A3C34] flex items-center justify-center text-[#FFF4DE] hover:bg-white hover:text-[#241D19] hover:border-white transition shadow-2xs cursor-pointer"
+              class="w-8 h-8 rounded-full bg-[#F8ECD5] border border-[#DFC5A0] flex items-center justify-center text-[#5B4638] hover:bg-[#D92D3A] hover:text-white hover:border-[#D92D3A] transition shadow-2xs cursor-pointer"
               title="Threads @molmol.purwokerto"
               aria-label="Threads @molmol.purwokerto"
             >
@@ -59,7 +59,7 @@ export function Footer(props: FooterProps) {
               href="https://www.tiktok.com/@molmol.purwokerto"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-8 h-8 rounded-full bg-[#332924] border border-[#4A3C34] flex items-center justify-center text-[#FFF4DE] hover:bg-[#000000] hover:text-[#00F2FE] hover:border-[#000000] transition shadow-2xs cursor-pointer"
+              class="w-8 h-8 rounded-full bg-[#F8ECD5] border border-[#DFC5A0] flex items-center justify-center text-[#5B4638] hover:bg-[#D92D3A] hover:text-white hover:border-[#D92D3A] transition shadow-2xs cursor-pointer"
               title="TikTok @molmol.purwokerto"
               aria-label="TikTok @molmol.purwokerto"
             >
@@ -72,10 +72,10 @@ export function Footer(props: FooterProps) {
 
         {/* 2. Kontak & Layanan */}
         <div class="space-y-3">
-          <h5 class="font-heading font-bold text-base text-[#FFF4DE]">
+          <h5 class="font-heading font-bold text-base text-[#5B4638]">
             Layanan & Operasional
           </h5>
-          <div class="space-y-2 text-[#CDBCA9]">
+          <div class="space-y-2 text-[#6C5443]">
             <div class="flex items-center gap-2">
               <MapPin size={15} class="text-[#D92D3A] shrink-0" />
               <span>Purwokerto, Jawa Tengah</span>
@@ -89,22 +89,22 @@ export function Footer(props: FooterProps) {
 
         {/* 3. Ketentuan Pre-Order */}
         <div class="space-y-3">
-          <h5 class="font-heading font-bold text-base text-[#FFF4DE]">
+          <h5 class="font-heading font-bold text-base text-[#5B4638]">
             Ketentuan Pre-Order
           </h5>
-          <p class="leading-relaxed text-[#CDBCA9]">
+          <p class="leading-relaxed text-[#6C5443]">
             Pesanan diproduksi segar sesuai kuota gelombang PO. Bukti pembayaran wajib diunggah untuk konfirmasi jadwal pengantaran.
           </p>
         </div>
       </div>
 
-      <div class="max-w-6xl mx-auto px-4 mt-10 pt-4 border-t border-[#3A2E27] flex flex-wrap items-center justify-between gap-2 text-[11px] text-[#A69584]">
+      <div class="max-w-6xl mx-auto px-4 mt-10 pt-4 border-t border-[#DFC5A0] flex flex-wrap items-center justify-between gap-2 text-[11px] text-[#806B5C]">
         <div class="flex items-center gap-3">
           <span>© 2026 Mol-Mol Purwokerto. Semua hak cipta dilindungi.</span>
           <span>•</span>
           <A href="/terms" class="hover:text-[#D92D3A] underline transition">Syarat & Kebijakan PO</A>
         </div>
-        <A href="/admin" class="hover:text-[#D92D3A] flex items-center gap-1 transition">
+        <A href="/admin" class="hover:text-[#D92D3A] flex items-center gap-1 transition font-medium">
           <ShieldCheck size={13} />
           <span>Login Admin</span>
         </A>

@@ -22,7 +22,7 @@ export function Badge(props: BadgeProps) {
       case "secondary":
         return "bg-[#7FA37A]/15 text-[#547C4F] border border-[#7FA37A]/30";
       default:
-        return "bg-[#F9EEDB] text-[#5B4638] border border-[#E7D8C3]";
+        return "bg-[#F3E2C4] text-[#5B4638] border border-[#E2CCA8]";
     }
   };
 

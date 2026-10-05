@@ -12,18 +12,18 @@ colors:
   tertiary-hover: "#D6A045"
   on-tertiary: "#3A2814"
   neutral: "#806B5C"
-  soft: "#F9EEDB"
+  soft: "#F3E2C4"
   on-soft: "#5B4638"
-  background: "#FFF4DE"
+  background: "#F7EBD7"
   on-background: "#5B4638"
-  surface: "#FFFDF8"
-  surface-alt: "#F9EEDB"
+  surface: "#FFF9EE"
+  surface-alt: "#F3E2C4"
   on-surface: "#5B4638"
   on-surface-muted: "#806B5C"
-  outline: "#E7D8C3"
-  footer: "#241D19"
-  on-footer: "#FFF4DE"
-  on-footer-muted: "#CDBCA9"
+  outline: "#E2CCA8"
+  footer: "#EED8B7"
+  on-footer: "#5B4638"
+  on-footer-muted: "#6C5443"
   success: "#7FA37A"
   on-success: "#FFFFFF"
   error: "#D92D3A"
@@ -223,18 +223,18 @@ Fonts were chosen with full Latin Extended coverage, so Polish, Czech and other 
 
 ## Colors
 
-A warm, friendly, homemade bakery palette matching Mol-Mol Purwokerto (Warm Cream + Ivory + Cocoa Brown + Mol-Mol Red + Caramel + Muted Sage):
+A warm, friendly, homemade bakery palette matching Mol-Mol Purwokerto (Warm Dough Cream + Pastry Cream Cards + Cocoa Brown + Mol-Mol Red + Caramel + Muted Sage):
 
-- **Main Background (#FFF4DE):** warm cream as the overall page backdrop, cozy and appetising.
-- **Secondary Background (#F9EEDB):** soft warm beige for sub-containers and image areas.
-- **Card / Surface (#FFFDF8):** warm ivory for card containers, modals, and product showcases.
+- **Main Background (#F7EBD7):** warm bakery cream / flour dough as the overall page backdrop, cozy, soft, and comfortable.
+- **Secondary Background / Surfaces (#F3E2C4):** soft warm butter-biscuit tone for sub-containers and image areas.
+- **Card / Surface (#FFF9EE):** delicate pastry cream for card containers, modals, and product showcases. Warm and gentle—no harsh stark white.
 - **Primary Red (#D92D3A):** Mol-Mol signature red for primary CTAs (+ Pesan), active navigation, price highlights, and focus rings. Hover: `#B92230`.
 - **Main Text / Cocoa (#5B4638):** dark cocoa brown for high-contrast, warm, readable headings and text.
 - **Secondary Text (#806B5C):** muted cocoa brown for descriptions and secondary text.
 - **Caramel Accent (#E9B45B):** warm golden caramel for limited slots, notices, and warnings.
 - **Muted Sage Green (#7FA37A):** reserved strictly for positive information (Pre-Order aktif, status tersedia, success states).
-- **Soft Border (#E7D8C3):** subtle warm outline for cards, dividers, and inputs.
-- **Footer / Dark Cocoa (#241D19):** deep dark cocoa background (primary text `#FFF4DE`, secondary text `#CDBCA9`).
+- **Soft Border (#E2CCA8):** subtle warm crust outline for cards, dividers, and inputs.
+- **Footer (#EED8B7):** warm toasted bakery cream background harmonizing with the cream theme (border `#DFC5A0`, text `#5B4638` and `#6C5443`). Eliminates dark black clash completely.
 
 ## Typography
 
