@@ -129,7 +129,7 @@ export default function AdminOrdersPage() {
           </div>
         </Show>
         {/* Filter and Search Bar */}
-        <div class="card-surface p-4 bg-white border border-[#E8E8EC] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+        <div class="card-surface p-4 bg-[#FFF9EE] border border-[#E2CCA8] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
           <div class="flex items-center gap-2 flex-1 w-full">
             <div class="relative flex-1">
               <input
@@ -175,10 +175,10 @@ export default function AdminOrdersPage() {
         </div>
 
         {/* Orders Table */}
-        <div class="card-surface bg-[#FFFDF9] border border-[#E8DFD5] overflow-hidden rounded-2xl">
+        <div class="card-surface bg-[#FFF9EE] border border-[#E2CCA8] overflow-hidden rounded-2xl">
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs min-w-[700px]">
-              <thead class="bg-[#F9EEDB] text-[#806B5C] border-b border-[#E7D8C3] text-[11px] font-semibold uppercase">
+              <thead class="bg-[#F3E2C4] text-[#806B5C] border-b border-[#E2CCA8] text-[11px] font-semibold uppercase">
                 <tr>
                   <th class="p-3">Kode</th>
                   <th class="p-3">Pemesan</th>
@@ -189,7 +189,7 @@ export default function AdminOrdersPage() {
                   <th class="p-3 text-right">Aksi</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-[#E7D8C3]">
+              <tbody class="divide-y divide-[#E2CCA8]">
                 <Show when={!isLoading()} fallback={
                   <tr>
                     <td colspan={7} class="p-8 text-center text-[#806B5C]">
@@ -209,7 +209,7 @@ export default function AdminOrdersPage() {
                     }
                   >
                     {(o) => (
-                      <tr class="hover:bg-[#F9EEDB]/50 transition">
+                      <tr class="hover:bg-[#F3E2C4]/50 transition">
                         <td class="p-3 font-bold text-[#D92D3A]">
                           {o.shortCode}
                         </td>
@@ -348,28 +348,28 @@ export default function AdminOrdersPage() {
           >
             <div class="space-y-4 text-xs">
               {/* Ringkasan */}
-              <div class="p-3.5 rounded-2xl bg-[#FAF7F2] border border-[#E8DFD5] space-y-1.5">
+              <div class="p-3.5 rounded-2xl bg-[#F3E2C4] border border-[#E2CCA8] space-y-1.5">
                 <div class="flex justify-between">
-                  <span class="text-[#6C5F57]">Pemesan:</span>
-                  <span class="font-semibold text-[#1C1917]">
+                  <span class="text-[#806B5C]">Pemesan:</span>
+                  <span class="font-semibold text-[#5B4638]">
                     {activeOrder()?.customerName} ({activeOrder()?.customerPhone})
                   </span>
                 </div>
                 <div class="flex justify-between">
-                  <span class="text-[#6C5F57]">Pengiriman:</span>
-                  <span class="font-semibold uppercase text-[#1C1917]">
+                  <span class="text-[#806B5C]">Pengiriman:</span>
+                  <span class="font-semibold uppercase text-[#5B4638]">
                     {activeOrder()?.fulfillment}
                   </span>
                 </div>
                 <Show when={activeOrder()?.addressText}>
                   <div class="flex justify-between">
-                    <span class="text-[#6C5F57]">Alamat:</span>
-                    <span class="text-[#1C1917] text-right font-medium max-w-xs">
+                    <span class="text-[#806B5C]">Alamat:</span>
+                    <span class="text-[#5B4638] text-right font-medium max-w-xs">
                       {activeOrder()?.addressText}
                     </span>
                   </div>
                 </Show>
-                <div class="flex justify-between font-bold pt-1 border-t border-[#E7D8C3]">
+                <div class="flex justify-between font-bold pt-1 border-t border-[#E2CCA8]">
                   <span>Total Tagihan:</span>
                   <span class="font-bold text-[#D92D3A] text-sm">
                     {formatRupiah(activeOrder()?.total || 0)}
@@ -435,22 +435,22 @@ export default function AdminOrdersPage() {
 
               {/* Rincian Menu Pesanan Pelanggan */}
               <Show when={activeOrder()?.items && activeOrder()?.items.length > 0}>
-                <div class="p-3.5 rounded-2xl bg-[#FFFDF9] border border-[#E8DFD5] space-y-2">
-                  <span class="font-semibold text-xs text-[#1C1917] block">
+                <div class="p-3.5 rounded-2xl bg-[#FFF9EE] border border-[#E2CCA8] space-y-2">
+                  <span class="font-semibold text-xs text-[#5B4638] block">
                     Menu yang Dipesan ({activeOrder()?.items.length} item):
                   </span>
-                  <div class="divide-y divide-[#F8ECD5]">
+                  <div class="divide-y divide-[#F3E2C4]">
                     <For each={activeOrder()?.items}>
                       {(item: any) => (
                         <div class="py-1.5 flex items-center justify-between text-xs">
                           <div>
-                            <span class="font-medium text-[#1C1917] block">{item.name}</span>
-                            <span class="text-[11px] text-[#6E5D53]">
+                            <span class="font-medium text-[#5B4638] block">{item.name}</span>
+                            <span class="text-[11px] text-[#806B5C]">
                               {item.qty} porsi × {formatRupiah(item.price)}
                               {item.notes ? ` • Catatan: ${item.notes}` : ""}
                             </span>
                           </div>
-                          <span class="font-semibold text-[#1C1917]">{formatRupiah(item.subtotal)}</span>
+                          <span class="font-semibold text-[#5B4638]">{formatRupiah(item.subtotal)}</span>
                         </div>
                       )}
                     </For>
@@ -460,7 +460,7 @@ export default function AdminOrdersPage() {
 
               {/* Bukti Bayar Thumbnail */}
               <Show when={activeOrder()?.paymentProofPath}>
-                <div class="p-3.5 rounded-2xl bg-[#FFFDF8] border border-[#E7D8C3] space-y-2">
+                <div class="p-3.5 rounded-2xl bg-[#FFF9EE] border border-[#E2CCA8] space-y-2">
                   <span class="font-semibold text-[#5B4638] block">
                     Foto Bukti Pembayaran:
                   </span>
@@ -468,7 +468,7 @@ export default function AdminOrdersPage() {
                     <img
                       src={activeOrder()?.paymentProofPath}
                       alt="Bukti Transfer"
-                      class="w-24 h-24 object-cover rounded-xl border border-[#E7D8C3] cursor-pointer hover:opacity-90"
+                      class="w-24 h-24 object-cover rounded-xl border border-[#E2CCA8] cursor-pointer hover:opacity-90"
                       onClick={() => setIsProofZoomed(true)}
                     />
                     <div>

@@ -265,10 +265,10 @@ export default function AdminMenuPage() {
         </div>
 
         {/* Menu Items Table */}
-        <div class="card-surface bg-[#FFFDF9] border border-[#E8DFD5] overflow-hidden rounded-2xl">
+        <div class="card-surface bg-[#FFF9EE] border border-[#E2CCA8] overflow-hidden rounded-2xl">
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs min-w-[640px]">
-              <thead class="bg-[#FAF7F2] text-[#6C5F57] border-b border-[#E8DFD5] text-[11px] font-semibold uppercase">
+              <thead class="bg-[#F3E2C4] text-[#806B5C] border-b border-[#E2CCA8] text-[11px] font-semibold uppercase">
               <tr>
                 <th class="p-3">Foto</th>
                 <th class="p-3">SKU</th>
@@ -279,25 +279,25 @@ export default function AdminMenuPage() {
                 <th class="p-3 text-right">Aksi</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-[#E8E8EC]">
+            <tbody class="divide-y divide-[#E2CCA8]">
               <For
                 each={menuList()}
                 fallback={
                   <tr>
-                    <td colspan={7} class="p-8 text-center text-[#9C9C9C]">
+                    <td colspan={7} class="p-8 text-center text-[#806B5C]">
                       Belum ada menu di katalog.
                     </td>
                   </tr>
                 }
               >
                 {(m) => (
-                  <tr class="hover:bg-[#FAFAFA] transition">
+                  <tr class="hover:bg-[#F3E2C4]/40 transition">
                     <td class="p-3">
                       <div class="relative w-11 h-11">
                         <Show
                           when={m.imagePath || (m.images && m.images[0])}
                           fallback={
-                            <div class="w-11 h-11 rounded bg-[#F4F4F6] flex items-center justify-center text-[#9C9C9C]">
+                            <div class="w-11 h-11 rounded-lg bg-[#F3E2C4] flex items-center justify-center text-[#806B5C]">
                               <Image size={16} />
                             </div>
                           }
@@ -305,7 +305,7 @@ export default function AdminMenuPage() {
                           <img
                             src={m.imagePath || m.images[0]}
                             alt={m.name}
-                            class="w-11 h-11 object-cover rounded-xl border border-[#E8DFD5]"
+                            class="w-11 h-11 object-cover rounded-xl border border-[#E2CCA8]"
                           />
                         </Show>
                         <Show when={m.images && m.images.length > 1}>
@@ -366,14 +366,14 @@ export default function AdminMenuPage() {
         >
           <form onSubmit={handleSaveMenu} class="space-y-4 text-xs">
             {/* Step Navigation Tabs */}
-            <div class="grid grid-cols-3 gap-1.5 border-b border-[#E7D8C3] pb-3 text-[11px]">
+            <div class="grid grid-cols-3 gap-1.5 border-b border-[#E2CCA8] pb-3 text-[11px]">
               <button
                 type="button"
                 onClick={() => setMenuStep(1)}
                 class={`py-1.5 px-2 rounded-xl font-semibold transition text-center cursor-pointer ${
                   menuStep() === 1
                     ? "bg-[#D92D3A] text-white shadow-2xs"
-                    : "bg-[#F9EEDB] text-[#806B5C] hover:text-[#5B4638]"
+                    : "bg-[#F3E2C4] text-[#806B5C] hover:text-[#5B4638]"
                 }`}
               >
                 1. Info Produk
@@ -384,7 +384,7 @@ export default function AdminMenuPage() {
                 class={`py-1.5 px-2 rounded-xl font-semibold transition text-center cursor-pointer ${
                   menuStep() === 2
                     ? "bg-[#D92D3A] text-white shadow-2xs"
-                    : "bg-[#F9EEDB] text-[#806B5C] hover:text-[#5B4638]"
+                    : "bg-[#F3E2C4] text-[#806B5C] hover:text-[#5B4638]"
                 }`}
               >
                 2. Harga & Porsi
@@ -395,7 +395,7 @@ export default function AdminMenuPage() {
                 class={`py-1.5 px-2 rounded-xl font-semibold transition text-center cursor-pointer ${
                   menuStep() === 3
                     ? "bg-[#D92D3A] text-white shadow-2xs"
-                    : "bg-[#F9EEDB] text-[#806B5C] hover:text-[#5B4638]"
+                    : "bg-[#F3E2C4] text-[#806B5C] hover:text-[#5B4638]"
                 }`}
               >
                 3. Foto & Status ({images().length}/4)
@@ -477,7 +477,7 @@ export default function AdminMenuPage() {
             {/* STEP 3: Foto Menu & Status */}
             <Show when={menuStep() === 3}>
               <div class="space-y-3.5 animate-in fade-in duration-150">
-                <div class="flex items-center gap-2 p-2.5 rounded-xl border border-[#E7D8C3] bg-[#F9EEDB]/60">
+                <div class="flex items-center gap-2 p-2.5 rounded-xl border border-[#E2CCA8] bg-[#F3E2C4]/60">
                   <input
                     type="checkbox"
                     id="menuActive"
@@ -522,13 +522,13 @@ export default function AdminMenuPage() {
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
                       <For each={images()}>
                         {(img, idx) => (
-                          <div class="relative group rounded-xl border border-[#E7D8C3] overflow-hidden bg-[#F9EEDB] flex flex-col items-center">
+                          <div class="relative group rounded-xl border border-[#E2CCA8] overflow-hidden bg-[#F3E2C4] flex flex-col items-center">
                             <img
                               src={img}
                               alt={`Foto ${idx() + 1}`}
                               class="w-full h-20 object-cover"
                             />
-                            <div class="w-full py-0.5 text-center text-[10px] font-medium border-t border-[#E7D8C3] bg-[#FFFDF8]">
+                            <div class="w-full py-0.5 text-center text-[10px] font-medium border-t border-[#E2CCA8] bg-[#FFF9EE]">
                               <Show when={idx() === 0} fallback={<span>Foto #{idx() + 1}</span>}>
                                 <span class="text-[#D92D3A] font-bold">Utama</span>
                               </Show>

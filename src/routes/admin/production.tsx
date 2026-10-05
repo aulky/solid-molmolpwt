@@ -58,9 +58,9 @@ export default function AdminProductionPage() {
     <AdminLayout title="Daftar Rekap Produksi">
       <div class="space-y-6">
         {/* Controls Header */}
-        <div class="card-surface p-4 bg-white border border-[#E8E8EC] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 print:hidden">
+        <div class="card-surface p-4 bg-[#FFF9EE] border border-[#E2CCA8] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 print:hidden">
           <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 w-full sm:w-auto">
-            <span class="text-xs font-semibold text-[#0A0A0A] shrink-0">Pilih Gelombang PO:</span>
+            <span class="text-xs font-semibold text-[#5B4638] shrink-0">Pilih Gelombang PO:</span>
             <div class="flex items-center gap-2 w-full sm:w-auto">
               <select
                 value={selectedBatchId() ?? ""}
@@ -109,8 +109,8 @@ export default function AdminProductionPage() {
         </div>
 
         {/* Printable Paper Card */}
-        <div class="card-surface p-8 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl space-y-6 print:border-none print:shadow-none print:p-0">
-          <div class="border-b border-[#E7D8C3] pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="card-surface p-8 bg-[#FFF9EE] border border-[#E2CCA8] rounded-2xl space-y-6 print:border-none print:shadow-none print:p-0">
+          <div class="border-b border-[#E2CCA8] pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <h2 class="font-heading font-bold text-xl sm:text-2xl text-[#5B4638]">
                 Rekap Kebutuhan Produksi
@@ -133,7 +133,7 @@ export default function AdminProductionPage() {
           {/* Table */}
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs sm:text-sm min-w-[500px]">
-              <thead class="bg-[#F9EEDB] text-[#806B5C] border-b border-[#E7D8C3] uppercase text-[11px] font-semibold">
+              <thead class="bg-[#F3E2C4] text-[#806B5C] border-b border-[#E2CCA8] uppercase text-[11px] font-semibold">
                 <tr>
                   <th class="p-3 w-12 text-center">No</th>
                   <th class="p-3">Nama Varian & Daftar Pemesan</th>
@@ -141,7 +141,7 @@ export default function AdminProductionPage() {
                   <th class="p-3 text-right w-40">Total Kuantitas</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-[#E7D8C3]">
+              <tbody class="divide-y divide-[#E2CCA8]">
                 <For
                   each={productionList()}
                   fallback={
@@ -153,7 +153,7 @@ export default function AdminProductionPage() {
                   }
                 >
                   {(item, idx) => (
-                    <tr class="hover:bg-[#F9EEDB]/40 align-top">
+                    <tr class="hover:bg-[#F3E2C4]/40 align-top">
                       <td class="p-3 text-center text-[#806B5C] font-medium pt-3.5">
                         {idx() + 1}
                       </td>
@@ -171,7 +171,7 @@ export default function AdminProductionPage() {
                             <div class="flex flex-wrap gap-1.5">
                               <For each={item.customers}>
                                 {(c: any) => (
-                                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#F9EEDB]/60 border border-[#E7D8C3] text-xs text-[#5B4638] shadow-2xs">
+                                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#F3E2C4]/60 border border-[#E2CCA8] text-xs text-[#5B4638] shadow-2xs">
                                     <span class="font-semibold text-[#5B4638]">{c.customerName}</span>
                                     <span class="text-[#806B5C] text-[10px]">({c.shortCode})</span>:
                                     <span class="font-bold text-[#D92D3A] bg-[#D92D3A]/10 px-1.5 py-0.2 rounded text-[11px]">
@@ -202,7 +202,7 @@ export default function AdminProductionPage() {
             </table>
           </div>
 
-          <div class="pt-6 border-t border-[#E7D8C3] text-xs text-[#806B5C] flex justify-between">
+          <div class="pt-6 border-t border-[#E2CCA8] text-xs text-[#806B5C] flex justify-between">
             <span>Mol-Mol Purwokerto • Produksi Bersih & Higienis</span>
             <span>Dicetak: {new Date().toLocaleString("id-ID")}</span>
           </div>

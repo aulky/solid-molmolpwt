@@ -9,7 +9,7 @@ interface StatCardProps {
 
 export function StatCard(props: StatCardProps) {
   return (
-    <div class="card-surface p-4 sm:p-5 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl flex items-start justify-between gap-2 shadow-xs">
+    <div class="card-surface p-4 sm:p-5 bg-[#FFF9EE] border border-[#E2CCA8] rounded-2xl flex items-start justify-between gap-2 shadow-xs">
       <div class="space-y-1 min-w-0 flex-1">
         <span class="text-xs font-semibold text-[#806B5C] uppercase tracking-wider block truncate">
           {props.label}

@@ -274,14 +274,14 @@ export default function AdminSettingsPage() {
 
         <form onSubmit={handleSave} class="space-y-6">
         {/* Identitas Toko */}
-        <div class="card-surface p-6 bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl space-y-4 shadow-xs">
-          <h3 class="font-heading font-bold text-base text-[#1C1917] pb-2 border-b border-[#E8DFD5]">
+        <div class="card-surface p-6 bg-[#FFF9EE] border border-[#E2CCA8] rounded-2xl space-y-4 shadow-xs">
+          <h3 class="font-heading font-bold text-base text-[#5B4638] pb-2 border-b border-[#E2CCA8]">
             Identitas Toko & Kontak
           </h3>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
             <div>
-              <label class="block font-semibold text-[#1C1917] mb-1">Nama Toko</label>
+              <label class="block font-semibold text-[#5B4638] mb-1">Nama Toko</label>
               <input
                 type="text"
                 required
@@ -292,7 +292,7 @@ export default function AdminSettingsPage() {
             </div>
 
             <div>
-              <label class="block font-semibold text-[#1C1917] mb-1">Nomor WhatsApp Admin</label>
+              <label class="block font-semibold text-[#5B4638] mb-1">Nomor WhatsApp Admin</label>
               <input
                 type="text"
                 required
@@ -304,7 +304,7 @@ export default function AdminSettingsPage() {
             </div>
 
             <div class="sm:col-span-2">
-              <label class="block font-semibold text-[#1C1917] mb-1">Tagline Toko</label>
+              <label class="block font-semibold text-[#5B4638] mb-1">Tagline Toko</label>
               <input
                 type="text"
                 value={storeTagline()}
@@ -316,13 +316,13 @@ export default function AdminSettingsPage() {
         </div>
 
         {/* Alamat & Titik Koordinat Pengambilan (Pickup) */}
-        <div class="card-surface p-4 sm:p-6 bg-[#FFFDF9] border border-[#E8DFD5] rounded-2xl space-y-4 shadow-xs">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E8DFD5]">
+        <div class="card-surface p-4 sm:p-6 bg-[#FFF9EE] border border-[#E2CCA8] rounded-2xl space-y-4 shadow-xs">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E2CCA8]">
             <div>
-              <h3 class="font-heading font-bold text-base text-[#1C1917]">
+              <h3 class="font-heading font-bold text-base text-[#5B4638]">
                 Alamat & Titik Koordinat Pengambilan (Pickup)
               </h3>
-              <p class="text-xs text-[#6C5F57]">
+              <p class="text-xs text-[#806B5C]">
                 Tentukan alamat outlet toko tempat pembeli mengambil pesanan mandiri (Pickup).
               </p>
             </div>
@@ -341,7 +341,7 @@ export default function AdminSettingsPage() {
 
           <div class="space-y-3 text-xs">
             <div>
-              <label class="block font-semibold text-[#1C1917] mb-1">
+              <label class="block font-semibold text-[#5B4638] mb-1">
                 Alamat Lengkap Outlet Pengambilan (Pickup)
               </label>
               <textarea
@@ -351,14 +351,14 @@ export default function AdminSettingsPage() {
                 placeholder="Contoh: Jl. Prof. Dr. Suharso No. 45, Arcawinangun, Purwokerto Timur"
                 class="input-base text-xs"
               />
-              <span class="text-[11px] text-[#6C5F57] block mt-1">
+              <span class="text-[11px] text-[#806B5C] block mt-1">
                 Alamat ini akan ditampilkan kepada pembeli saat memilih metode Ambil di Tempat.
               </span>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="block font-semibold text-[#1C1917] mb-1">Latitude Titik Toko</label>
+                <label class="block font-semibold text-[#5B4638] mb-1">Latitude Titik Toko</label>
                 <input
                   type="text"
                   value={pickupLatitude()}
@@ -374,7 +374,7 @@ export default function AdminSettingsPage() {
               </div>
 
               <div>
-                <label class="block font-semibold text-[#1C1917] mb-1">Longitude Titik Toko</label>
+                <label class="block font-semibold text-[#5B4638] mb-1">Longitude Titik Toko</label>
                 <input
                   type="text"
                   value={pickupLongitude()}
@@ -419,8 +419,8 @@ export default function AdminSettingsPage() {
         </div>
 
         {/* Rekening & QRIS */}
-        <div class="card-surface p-4 sm:p-6 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl space-y-5 shadow-xs">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E7D8C3]">
+        <div class="card-surface p-4 sm:p-6 bg-[#FFF9EE] border border-[#E2CCA8] rounded-2xl space-y-5 shadow-xs">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E2CCA8]">
             <div>
               <h3 class="font-heading font-bold text-base text-[#5B4638]">
                 Pembayaran QRIS & Rekening Bank
@@ -445,7 +445,7 @@ export default function AdminSettingsPage() {
             </span>
             <For each={bankAccounts()}>
               {(acc, idx) => (
-                <div class="p-3.5 rounded-xl border border-[#E7D8C3] bg-[#F9EEDB] space-y-3">
+                <div class="p-3.5 rounded-xl border border-[#E2CCA8] bg-[#F3E2C4] space-y-3">
                   <div class="flex items-center justify-between">
                     <span class="text-xs font-semibold text-[#D92D3A] uppercase">
                       Rekening #{idx() + 1} {idx() === 0 ? "(Utama)" : ""}
@@ -472,7 +472,7 @@ export default function AdminSettingsPage() {
                         value={acc.bankName}
                         onInput={(e) => updateBankAccount(idx(), "bankName", e.currentTarget.value)}
                         placeholder="Contoh: BCA / Mandiri / SeaBank"
-                        class="input-base text-xs bg-white"
+                        class="input-base text-xs bg-[#FFF9EE] border-[#E2CCA8]"
                       />
                     </div>
 
@@ -484,7 +484,7 @@ export default function AdminSettingsPage() {
                         value={acc.bankAccountNo}
                         onInput={(e) => updateBankAccount(idx(), "bankAccountNo", e.currentTarget.value)}
                         placeholder="Contoh: 0461234567"
-                        class="input-base text-xs font-medium bg-white"
+                        class="input-base text-xs font-medium bg-[#FFF9EE] border-[#E2CCA8]"
                       />
                     </div>
 
@@ -496,7 +496,7 @@ export default function AdminSettingsPage() {
                         value={acc.bankAccountName}
                         onInput={(e) => updateBankAccount(idx(), "bankAccountName", e.currentTarget.value)}
                         placeholder="Contoh: Mol-Mol Purwokerto"
-                        class="input-base text-xs bg-white"
+                        class="input-base text-xs bg-[#FFF9EE] border-[#E2CCA8]"
                       />
                     </div>
                   </div>
@@ -505,7 +505,7 @@ export default function AdminSettingsPage() {
             </For>
           </div>
 
-          <div class="pt-3 border-t border-[#E7D8C3] text-xs space-y-2">
+          <div class="pt-3 border-t border-[#E2CCA8] text-xs space-y-2">
             <label class="block font-semibold text-[#5B4638]">
               Foto Barcode QRIS Resmi Toko
             </label>
@@ -516,11 +516,11 @@ export default function AdminSettingsPage() {
               class="text-xs file:mr-2 file:py-1 file:px-2.5 file:rounded-full file:border-0 file:text-xs file:bg-[#D92D3A]/10 file:text-[#D92D3A] cursor-pointer"
             />
             <Show when={qrisImagePath()}>
-              <div class="mt-2 flex items-center gap-3 p-2 bg-[#F9EEDB] rounded-xl border border-[#E7D8C3] w-fit">
+              <div class="mt-2 flex items-center gap-3 p-2 bg-[#F3E2C4] rounded-xl border border-[#E2CCA8] w-fit">
                 <img
                   src={qrisImagePath()}
                   alt="QRIS Toko"
-                  class="w-32 h-auto rounded-lg border border-[#E7D8C3] bg-white object-contain"
+                  class="w-32 h-auto rounded-lg border border-[#E2CCA8] bg-[#FFF9EE] object-contain"
                 />
                 <button
                   type="button"
@@ -535,8 +535,8 @@ export default function AdminSettingsPage() {
         </div>
 
         {/* Pengiriman & Ongkir */}
-        <div class="card-surface p-6 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl space-y-4 shadow-xs">
-          <h3 class="font-heading font-bold text-base text-[#5B4638] pb-2 border-b border-[#E7D8C3]">
+        <div class="card-surface p-6 bg-[#FFF9EE] border border-[#E2CCA8] rounded-2xl space-y-4 shadow-xs">
+          <h3 class="font-heading font-bold text-base text-[#5B4638] pb-2 border-b border-[#E2CCA8]">
             Ketentuan Pengiriman & Tarif
           </h3>
 
@@ -589,8 +589,8 @@ export default function AdminSettingsPage() {
         </div>
 
         {/* Banner Pengumuman & Telegram */}
-        <div class="card-surface p-6 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl space-y-4 shadow-xs">
-          <h3 class="font-heading font-bold text-base text-[#5B4638] pb-2 border-b border-[#E7D8C3]">
+        <div class="card-surface p-6 bg-[#FFF9EE] border border-[#E2CCA8] rounded-2xl space-y-4 shadow-xs">
+          <h3 class="font-heading font-bold text-base text-[#5B4638] pb-2 border-b border-[#E2CCA8]">
             Pengumuman & Notifikasi Bot Telegram
           </h3>
 
@@ -629,7 +629,7 @@ export default function AdminSettingsPage() {
                 placeholder="Contoh: -100123456789 atau ID Chat"
                 class="input-base text-xs font-medium"
               />
-              <span class="text-[11px] text-[#6C5F57] block mt-1">
+              <span class="text-[11px] text-[#806B5C] block mt-1">
                 Setiap order masuk akan otomatis dikirimkan ke Telegram ID ini.
               </span>
             </div>

@@ -171,20 +171,20 @@ export function AdminLayout(props: AdminLayoutProps) {
     <Show
       when={isAuthenticated()}
       fallback={
-        <div class="min-h-screen bg-[#FFF4DE] flex flex-col items-center justify-center space-y-3">
+        <div class="min-h-screen bg-[#F7EBD7] flex flex-col items-center justify-center space-y-3">
           <Loader2 size={32} class="animate-spin text-[#D92D3A]" />
           <span class="text-xs text-[#806B5C] font-medium">Memeriksa sesi admin...</span>
         </div>
       }
     >
-      <div class="min-h-screen bg-[#FFF4DE] text-[#5B4638] flex flex-col">
+      <div class="min-h-screen bg-[#F7EBD7] text-[#5B4638] flex flex-col">
         {/* Mobile Header Bar */}
-      <div class="md:hidden bg-[#FFFDF8] border-b border-[#E7D8C3] h-16 px-4 sm:px-6 flex items-center justify-between sticky top-0 z-30">
+      <div class="md:hidden bg-[#FFF9EE] border-b border-[#E2CCA8] h-16 px-4 sm:px-6 flex items-center justify-between sticky top-0 z-30">
         <div class="flex items-center gap-2.5">
           <img
             src="/molmol-logo.jpg"
             alt="Logo Mol-Mol"
-            class="w-8 h-8 rounded-full object-cover border border-[#E7D8C3]"
+            class="w-8 h-8 rounded-full object-cover border border-[#E2CCA8]"
           />
           <div class="flex flex-col">
             <span class="font-heading font-bold text-base leading-none text-[#D92D3A]">
@@ -199,7 +199,7 @@ export function AdminLayout(props: AdminLayoutProps) {
         <button
           type="button"
           onClick={() => setMobileSidebarOpen(!mobileSidebarOpen())}
-          class="p-2 rounded-xl text-[#5B4638] hover:bg-[#F9EEDB] transition cursor-pointer"
+          class="p-2 rounded-xl text-[#5B4638] hover:bg-[#F3E2C4] transition cursor-pointer"
           aria-label="Toggle Menu Admin"
         >
           <Show when={mobileSidebarOpen()} fallback={<Menu size={20} />}>
@@ -212,18 +212,18 @@ export function AdminLayout(props: AdminLayoutProps) {
       <div class="flex-1 flex">
         {/* Desktop Fixed Sidebar */}
         <aside
-          class={`fixed inset-y-0 left-0 z-40 w-64 bg-[#FFFDF8] border-r border-[#E7D8C3] flex flex-col justify-between transition-transform duration-200 md:translate-x-0 ${
+          class={`fixed inset-y-0 left-0 z-40 w-64 bg-[#FFF9EE] border-r border-[#E2CCA8] flex flex-col justify-between transition-transform duration-200 md:translate-x-0 ${
             mobileSidebarOpen() ? "translate-x-0 shadow-2xl" : "-translate-x-full"
           }`}
         >
           <div class="flex flex-col h-full">
             {/* Sidebar Brand Header */}
-            <div class="h-16 px-5 border-b border-[#E7D8C3] flex items-center justify-between shrink-0">
+            <div class="h-16 px-5 border-b border-[#E2CCA8] flex items-center justify-between shrink-0">
               <div class="flex items-center gap-2.5">
                 <img
                   src="/molmol-logo.jpg"
                   alt="Logo Mol-Mol"
-                  class="w-8 h-8 rounded-full object-cover border border-[#E7D8C3]"
+                  class="w-8 h-8 rounded-full object-cover border border-[#E2CCA8]"
                 />
                 <div>
                   <span class="font-heading font-bold text-sm text-[#D92D3A] leading-tight block">
@@ -238,7 +238,7 @@ export function AdminLayout(props: AdminLayoutProps) {
               <A
                 href="/"
                 target="_blank"
-                class="text-[#806B5C] hover:text-[#D92D3A] p-1.5 rounded-lg hover:bg-[#F9EEDB] transition"
+                class="text-[#806B5C] hover:text-[#D92D3A] p-1.5 rounded-lg hover:bg-[#F3E2C4] transition"
                 title="Buka Website Publik"
               >
                 <ExternalLink size={14} />
@@ -257,7 +257,7 @@ export function AdminLayout(props: AdminLayoutProps) {
                     class={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition min-h-[40px] ${
                       active()
                         ? "bg-[#D92D3A] text-[#FFFDF8] shadow-xs"
-                        : "text-[#806B5C] hover:text-[#5B4638] hover:bg-[#F9EEDB]"
+                        : "text-[#806B5C] hover:text-[#5B4638] hover:bg-[#F3E2C4]"
                     }`}
                   >
                     <Icon size={16} />
@@ -268,7 +268,7 @@ export function AdminLayout(props: AdminLayoutProps) {
             </div>
 
             {/* User Profile & Actions Footer */}
-            <div class="p-3 border-t border-[#E7D8C3] bg-[#F9EEDB] space-y-2 shrink-0">
+            <div class="p-3 border-t border-[#E2CCA8] bg-[#F3E2C4] space-y-2 shrink-0">
               <div class="px-2 py-1 flex items-center gap-2.5">
                 <div class="w-8 h-8 rounded-full bg-[#D92D3A]/10 text-[#D92D3A] flex items-center justify-center font-bold text-xs shrink-0">
                   <User size={15} />
@@ -283,7 +283,7 @@ export function AdminLayout(props: AdminLayoutProps) {
                 </div>
               </div>
 
-              <div class="grid grid-cols-2 gap-1.5 pt-1 border-t border-[#E7D8C3]">
+              <div class="grid grid-cols-2 gap-1.5 pt-1 border-t border-[#E2CCA8]">
                 <button
                   type="button"
                   onClick={() => setIsPasswordModalOpen(true)}
@@ -319,7 +319,7 @@ export function AdminLayout(props: AdminLayoutProps) {
         {/* Content Wrapper (Offset by sidebar on desktop) */}
         <div class="flex-1 md:pl-64 flex flex-col min-w-0">
           {/* Top Bar for Desktop */}
-          <header class="hidden md:flex h-16 bg-[#FFFDF8] border-b border-[#E7D8C3] px-6 sm:px-8 items-center justify-between sticky top-0 z-20">
+          <header class="hidden md:flex h-16 bg-[#FFF9EE] border-b border-[#E2CCA8] px-6 sm:px-8 items-center justify-between sticky top-0 z-20">
             <div class="flex items-center gap-2 text-xs font-medium text-[#806B5C]">
               <span>Admin</span>
               <span>/</span>
@@ -344,7 +344,7 @@ export function AdminLayout(props: AdminLayoutProps) {
 
           {/* Page Body Container (Full fluid centered max-w-7xl) */}
           <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-            <div class="flex flex-wrap items-center justify-between gap-4 pb-2 border-b border-[#E7D8C3]">
+            <div class="flex flex-wrap items-center justify-between gap-4 pb-2 border-b border-[#E2CCA8]">
               <h1 class="font-heading font-bold text-xl sm:text-2xl lg:text-3xl text-[#5B4638]">
                 {props.title}
               </h1>
@@ -419,7 +419,7 @@ export function AdminLayout(props: AdminLayoutProps) {
             </div>
           </Show>
 
-          <div class="flex items-center justify-end gap-2 pt-3 border-t border-[#E8DFD5]">
+          <div class="flex items-center justify-end gap-2 pt-3 border-t border-[#E2CCA8]">
             <button
               type="button"
               onClick={() => setIsPasswordModalOpen(false)}

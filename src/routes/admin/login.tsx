@@ -81,13 +81,13 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div class="min-h-screen bg-[#FFF4DE] flex flex-col justify-center items-center px-3 sm:px-4 py-8 sm:py-12">
-      <div class="w-full max-w-sm card-surface p-6 sm:p-8 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl space-y-5 sm:space-y-6 shadow-xs">
+    <div class="min-h-screen bg-[#F7EBD7] flex flex-col justify-center items-center px-3 sm:px-4 py-8 sm:py-12">
+      <div class="w-full max-w-sm card-surface p-6 sm:p-8 bg-[#FFF9EE] border border-[#E2CCA8] rounded-2xl space-y-5 sm:space-y-6 shadow-xs">
         <div class="text-center space-y-2">
           <img
             src="/molmol-logo.jpg"
             alt="Logo Mol-Mol"
-            class="w-16 h-16 rounded-full object-cover mx-auto border border-[#E7D8C3] shadow-xs"
+            class="w-16 h-16 rounded-full object-cover mx-auto border border-[#E2CCA8] shadow-xs"
           />
           <h1 class="font-heading font-bold text-xl sm:text-2xl text-[#5B4638]">
             Login Admin Mol-Mol
@@ -171,7 +171,7 @@ export default function AdminLoginPage() {
           </button>
         </form>
 
-        <div class="pt-4 border-t border-[#E7D8C3] text-center">
+        <div class="pt-4 border-t border-[#E2CCA8] text-center">
           <a href="/" class="text-xs text-[#D92D3A] font-semibold hover:underline inline-flex items-center gap-1">
             <ArrowLeft size={13} />
             <span>Kembali ke Website Pre-Order</span>

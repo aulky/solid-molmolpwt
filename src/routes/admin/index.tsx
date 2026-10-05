@@ -95,8 +95,8 @@ export default function AdminDashboardPage() {
         {/* Quick Shortcuts & Batch Info */}
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Active Batch Card */}
-          <div class="lg:col-span-2 card-surface p-6 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl space-y-4 shadow-xs">
-            <div class="flex items-center justify-between pb-3 border-b border-[#E7D8C3]">
+          <div class="lg:col-span-2 card-surface p-6 bg-[#FFF9EE] border border-[#E2CCA8] rounded-2xl space-y-4 shadow-xs">
+            <div class="flex items-center justify-between pb-3 border-b border-[#E2CCA8]">
               <div>
                 <span class="text-xs uppercase text-[#806B5C] block font-semibold">
                   Status Gelombang Pre-Order
@@ -156,9 +156,9 @@ export default function AdminDashboardPage() {
           </div>
 
           {/* Quick Actions Panel */}
-          <div class="card-surface p-6 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl space-y-3 flex flex-col justify-between shadow-xs">
+          <div class="card-surface p-6 bg-[#FFF9EE] border border-[#E2CCA8] rounded-2xl space-y-3 flex flex-col justify-between shadow-xs">
             <div>
-              <h3 class="font-heading font-bold text-base text-[#5B4638] pb-2 border-b border-[#E7D8C3]">
+              <h3 class="font-heading font-bold text-base text-[#5B4638] pb-2 border-b border-[#E2CCA8]">
                 Aksi Cepat Operasional
               </h3>
               <p class="text-xs text-[#806B5C] mt-2">
@@ -192,8 +192,8 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* Recent Orders Section */}
-        <div class="card-surface p-6 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl space-y-4 shadow-xs">
-          <div class="flex items-center justify-between pb-3 border-b border-[#E7D8C3]">
+        <div class="card-surface p-6 bg-[#FFF9EE] border border-[#E2CCA8] rounded-2xl space-y-4 shadow-xs">
+          <div class="flex items-center justify-between pb-3 border-b border-[#E2CCA8]">
             <div>
               <h3 class="font-heading font-bold text-lg text-[#5B4638]">
                 Pesanan Pre-Order Terbaru
@@ -214,7 +214,7 @@ export default function AdminDashboardPage() {
 
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs min-w-[680px]">
-              <thead class="bg-[#F9EEDB] text-[#806B5C] border-b border-[#E7D8C3] uppercase text-[11px] font-semibold">
+              <thead class="bg-[#F3E2C4] text-[#806B5C] border-b border-[#E2CCA8] uppercase text-[11px] font-semibold">
                 <tr>
                   <th class="p-3">Kode</th>
                   <th class="p-3">Pemesan</th>
@@ -225,7 +225,7 @@ export default function AdminDashboardPage() {
                   <th class="p-3 text-right">Aksi</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-[#E7D8C3]">
+              <tbody class="divide-y divide-[#E2CCA8]">
                 <For
                   each={data()?.recentOrders}
                   fallback={
@@ -237,7 +237,7 @@ export default function AdminDashboardPage() {
                   }
                 >
                   {(order) => (
-                    <tr class="hover:bg-[#F9EEDB]/50 transition">
+                    <tr class="hover:bg-[#F3E2C4]/50 transition">
                       <td class="p-3 font-bold text-[#D92D3A]">
                         {order.shortCode}
                       </td>

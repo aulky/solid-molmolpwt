@@ -453,8 +453,8 @@ export default function AdminBatchesPage() {
             }
           >
             {(b) => (
-              <div class="card-surface p-5 bg-[#FFFDF8] border border-[#E7D8C3] rounded-2xl space-y-4 shadow-xs">
-                <div class="flex items-center justify-between pb-3 border-b border-[#E7D8C3]">
+              <div class="card-surface p-5 bg-[#FFF9EE] border border-[#E2CCA8] rounded-2xl space-y-4 shadow-xs">
+                <div class="flex items-center justify-between pb-3 border-b border-[#E2CCA8]">
                   <div>
                     <span class="text-xs font-bold text-[#D92D3A] block font-heading">
                       {b.code}
@@ -472,7 +472,7 @@ export default function AdminBatchesPage() {
                       class={`px-2.5 py-1 rounded-full text-[11px] font-semibold flex items-center gap-1.5 transition cursor-pointer disabled:opacity-50 ${
                         b.status === "open"
                           ? "bg-[#7FA37A]/15 text-[#547C4F] border border-[#7FA37A]/30 hover:bg-[#7FA37A]/25"
-                          : "bg-[#F9EEDB] text-[#806B5C] border border-[#E7D8C3] hover:bg-[#EEDEC7]"
+                          : "bg-[#F3E2C4] text-[#806B5C] border border-[#E2CCA8] hover:bg-[#E8D4B2]"
                       }`}
                       title={b.status === "open" ? "Klik untuk Tutup PO" : "Klik untuk Buka PO"}
                     >
@@ -530,7 +530,7 @@ export default function AdminBatchesPage() {
                     </span>
                   </div>
 
-                  <div class="flex items-center justify-between pt-1 border-t border-[#E7D8C3]/60">
+                  <div class="flex items-center justify-between pt-1 border-t border-[#E2CCA8]/60">
                     <span class="flex items-center gap-1">
                       <UtensilsCrossed size={13} class="text-[#D92D3A]" /> Menu Pre-Order:
                     </span>
@@ -540,7 +540,7 @@ export default function AdminBatchesPage() {
                   </div>
                 </div>
 
-                <div class="pt-3 border-t border-[#E7D8C3] flex flex-wrap items-center justify-between gap-2 text-xs text-[#806B5C]">
+                <div class="pt-3 border-t border-[#E2CCA8] flex flex-wrap items-center justify-between gap-2 text-xs text-[#806B5C]">
                   <div class="space-x-1.5 sm:space-x-2 text-xs">
                     <span>Ongkir: {formatRupiah(b.deliveryFeeFlat)}</span>
                     <span>• Min Gratis: {formatRupiah(b.freeDeliveryMin || 0)}</span>
@@ -595,14 +595,14 @@ export default function AdminBatchesPage() {
             </Show>
 
             {/* Step Navigation Tabs */}
-            <div class="grid grid-cols-4 gap-1.5 border-b border-[#E8DFD5] pb-3 text-[11px]">
+            <div class="grid grid-cols-4 gap-1.5 border-b border-[#E2CCA8] pb-3 text-[11px]">
               <button
                 type="button"
                 onClick={() => setBatchStep(1)}
                 class={`py-1.5 px-2 rounded-xl font-semibold transition text-center cursor-pointer ${
                   batchStep() === 1
                     ? "bg-[#D92D3A] text-white shadow-2xs"
-                    : "bg-[#F9EEDB] text-[#806B5C] hover:text-[#5B4638]"
+                    : "bg-[#F3E2C4] text-[#806B5C] hover:text-[#5B4638]"
                 }`}
               >
                 1. Info Dasar
@@ -613,7 +613,7 @@ export default function AdminBatchesPage() {
                 class={`py-1.5 px-2 rounded-xl font-semibold transition text-center cursor-pointer ${
                   batchStep() === 2
                     ? "bg-[#D92D3A] text-white shadow-2xs"
-                    : "bg-[#F9EEDB] text-[#806B5C] hover:text-[#5B4638]"
+                    : "bg-[#F3E2C4] text-[#806B5C] hover:text-[#5B4638]"
                 }`}
               >
                 2. Jadwal & Kuota
@@ -624,7 +624,7 @@ export default function AdminBatchesPage() {
                 class={`py-1.5 px-2 rounded-xl font-semibold transition text-center cursor-pointer ${
                   batchStep() === 3
                     ? "bg-[#D92D3A] text-white shadow-2xs"
-                    : "bg-[#F9EEDB] text-[#806B5C] hover:text-[#5B4638]"
+                    : "bg-[#F3E2C4] text-[#806B5C] hover:text-[#5B4638]"
                 }`}
               >
                 3. Menu PO ({selectedMenuItemIds().length})
@@ -635,7 +635,7 @@ export default function AdminBatchesPage() {
                 class={`py-1.5 px-2 rounded-xl font-semibold transition text-center cursor-pointer ${
                   batchStep() === 4
                     ? "bg-[#D92D3A] text-white shadow-2xs"
-                    : "bg-[#F9EEDB] text-[#806B5C] hover:text-[#5B4638]"
+                    : "bg-[#F3E2C4] text-[#806B5C] hover:text-[#5B4638]"
                 }`}
               >
                 4. Lokasi & Kirim
@@ -809,7 +809,7 @@ export default function AdminBatchesPage() {
                   </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-60 overflow-y-auto p-1.5 rounded-xl border border-[#E7D8C3] bg-[#F9EEDB]/40">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-60 overflow-y-auto p-1.5 rounded-xl border border-[#E2CCA8] bg-[#F3E2C4]/40">
                   <For
                     each={availableMenus()}
                     fallback={
@@ -833,8 +833,8 @@ export default function AdminBatchesPage() {
                           onClick={toggle}
                           class={`flex items-center gap-2.5 p-2.5 rounded-xl border text-xs cursor-pointer transition select-none ${
                             isChecked()
-                              ? "bg-[#FFFDF8] border-[#D92D3A] shadow-2xs ring-1 ring-[#D92D3A]/30"
-                              : "bg-[#FFFDF8]/80 border-[#E7D8C3] opacity-60 hover:opacity-100"
+                              ? "bg-[#FFF9EE] border-[#D92D3A] shadow-2xs ring-1 ring-[#D92D3A]/30"
+                              : "bg-[#FFF9EE]/80 border-[#E2CCA8] opacity-60 hover:opacity-100"
                           }`}
                         >
                           <input
@@ -846,7 +846,7 @@ export default function AdminBatchesPage() {
                           <Show
                             when={m.imagePath}
                             fallback={
-                              <div class="w-8 h-8 rounded-lg bg-[#F9EEDB] flex items-center justify-center text-[#806B5C] shrink-0">
+                              <div class="w-8 h-8 rounded-lg bg-[#F3E2C4] flex items-center justify-center text-[#806B5C] shrink-0">
                                 <UtensilsCrossed size={14} />
                               </div>
                             }
@@ -854,7 +854,7 @@ export default function AdminBatchesPage() {
                             <img
                               src={m.imagePath}
                               alt={m.name}
-                              class="w-8 h-8 rounded-lg object-cover border border-[#E7D8C3] shrink-0"
+                              class="w-8 h-8 rounded-lg object-cover border border-[#E2CCA8] shrink-0"
                             />
                           </Show>
                           <div class="min-w-0 flex-1">
@@ -879,7 +879,7 @@ export default function AdminBatchesPage() {
                     Metode Pemenuhan yang Diizinkan
                   </label>
                   <div class="grid grid-cols-3 gap-2">
-                    <label class="flex items-center gap-2 p-2.5 rounded-xl border border-[#E7D8C3] bg-[#F9EEDB]/60 cursor-pointer">
+                    <label class="flex items-center gap-2 p-2.5 rounded-xl border border-[#E2CCA8] bg-[#F3E2C4]/60 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={allowPickup()}
@@ -888,7 +888,7 @@ export default function AdminBatchesPage() {
                       />
                       <span>Ambil Sendiri</span>
                     </label>
-                    <label class="flex items-center gap-2 p-2.5 rounded-xl border border-[#E7D8C3] bg-[#F9EEDB]/60 cursor-pointer">
+                    <label class="flex items-center gap-2 p-2.5 rounded-xl border border-[#E2CCA8] bg-[#F3E2C4]/60 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={allowDelivery()}
@@ -897,7 +897,7 @@ export default function AdminBatchesPage() {
                       />
                       <span>Diantar Toko</span>
                     </label>
-                    <label class="flex items-center gap-2 p-2.5 rounded-xl border border-[#E7D8C3] bg-[#F9EEDB]/60 cursor-pointer">
+                    <label class="flex items-center gap-2 p-2.5 rounded-xl border border-[#E2CCA8] bg-[#F3E2C4]/60 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={allowCod()}
@@ -925,7 +925,7 @@ export default function AdminBatchesPage() {
                         >
                           Salin dari Toko
                         </button>
-                        <span class="text-[#E7D8C3]">•</span>
+                        <span class="text-[#E2CCA8]">•</span>
                         <button
                           type="button"
                           onClick={handleGetBatchGps}
@@ -942,41 +942,41 @@ export default function AdminBatchesPage() {
 
                     <div class="grid grid-cols-2 gap-2">
                       <div>
-                        <span class="text-[11px] text-[#6B6B6B]">Jam Mulai Ambil:</span>
+                        <span class="text-[11px] text-[#806B5C]">Jam Mulai Ambil:</span>
                         <input
                           type="text"
                           placeholder="13:00"
                           value={pickupStart()}
                           onInput={(e) => setPickupStart(e.currentTarget.value)}
-                          class="input-base text-xs bg-white"
+                          class="input-base text-xs bg-[#FFF9EE] border-[#E2CCA8]"
                         />
                       </div>
                       <div>
-                        <span class="text-[11px] text-[#6B6B6B]">Jam Selesai Ambil:</span>
+                        <span class="text-[11px] text-[#806B5C]">Jam Selesai Ambil:</span>
                         <input
                           type="text"
                           placeholder="17:00"
                           value={pickupEnd()}
                           onInput={(e) => setPickupEnd(e.currentTarget.value)}
-                          class="input-base text-xs bg-white"
+                          class="input-base text-xs bg-[#FFF9EE] border-[#E2CCA8]"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <span class="text-[11px] text-[#6B6B6B]">Alamat Pengambilan Lengkap:</span>
+                      <span class="text-[11px] text-[#806B5C]">Alamat Pengambilan Lengkap:</span>
                       <textarea
                         rows={2}
                         value={pickupAddress()}
                         onInput={(e) => setPickupAddress(e.currentTarget.value)}
                         placeholder="Contoh: Jl. Ringin Tirto No. 12, Bancarkembar"
-                        class="input-base text-xs bg-white"
+                        class="input-base text-xs bg-[#FFF9EE] border-[#E2CCA8]"
                       />
                     </div>
 
                     <div class="grid grid-cols-2 gap-2">
                       <div>
-                        <span class="text-[11px] text-[#6B6B6B]">Latitude:</span>
+                        <span class="text-[11px] text-[#806B5C]">Latitude:</span>
                         <input
                           type="text"
                           value={pickupLatitude()}
@@ -989,11 +989,11 @@ export default function AdminBatchesPage() {
                             }
                           }}
                           placeholder="-7.4243120"
-                          class="input-base text-xs bg-white"
+                          class="input-base text-xs bg-[#FFF9EE] border-[#E2CCA8]"
                         />
                       </div>
                       <div>
-                        <span class="text-[11px] text-[#6B6B6B]">Longitude:</span>
+                        <span class="text-[11px] text-[#806B5C]">Longitude:</span>
                         <input
                           type="text"
                           value={pickupLongitude()}
@@ -1006,7 +1006,7 @@ export default function AdminBatchesPage() {
                             }
                           }}
                           placeholder="109.2486710"
-                          class="input-base text-xs bg-white"
+                          class="input-base text-xs bg-[#FFF9EE] border-[#E2CCA8]"
                         />
                       </div>
                     </div>
@@ -1032,7 +1032,7 @@ export default function AdminBatchesPage() {
             </Show>
 
             {/* Stepper Bottom Action Buttons */}
-            <div class="pt-3 border-t border-[#E7D8C3] flex items-center justify-between gap-2">
+            <div class="pt-3 border-t border-[#E2CCA8] flex items-center justify-between gap-2">
               <button
                 type="button"
                 onClick={() => setIsModalOpen(false)}
